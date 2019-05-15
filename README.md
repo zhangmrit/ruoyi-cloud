@@ -8,6 +8,7 @@
 
 - eureka
 - gateway
+- config
 - system
 - admin
 
