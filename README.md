@@ -4,8 +4,11 @@
 
 蓝本是[zhangmrit/Ruoyi](https://gitee.com/zhangmrit/RuoYi)
 
+先绑定host：127.0.0.1 eureka7001.com
+
+如果要使用eureka集群，请依次绑定eureka7002.com,eureka7003.com后修改各项目中的注释部分
+
 启动顺序：
-- 先绑定host：127.0.0.1 eureka7001.com(如果集群，请依次绑定eureka7002.com,eureka7003.com)
 - eureka
 - gateway
 - config
