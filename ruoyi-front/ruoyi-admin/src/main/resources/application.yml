@@ -42,6 +42,14 @@ user:
 spring:
   application:
     name: ruoyi-admin
+  cloud:
+    config:
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: ruoyi-config
   # 模板引擎
   thymeleaf:
     mode: HTML
