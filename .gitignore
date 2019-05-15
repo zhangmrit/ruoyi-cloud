@@ -1,0 +1,49 @@
+######################################################################
+# Build Tools
+
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+######################################################################
+# IDE
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/*
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### IntelliJ IDEA ###
+.scannerwork
+sonar-project.properties
+
+
+######################################################################
+# Others
+*.log
+*.xml.versionsBackup
+logs
+
+!*/build/*.java
+!*/build/*.html
+!*/build/*.xml

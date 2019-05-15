@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head>
+	<th:block th:include="include :: header('文件修改')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-oss-edit" th:object="${sysOss}">
+			<input name="id"   type="hidden" th:field="*{id}"   />
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">文件名：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="fileName" id="fileName" th:field="*{fileName}"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">文件后缀：</label>
+				<div class="col-sm-8">
+					<p class="form-control-static" th:text="*{fileSuffix}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">文件地址：</label>
+				<div class="col-sm-8">
+					<p class="form-control-static" th:text="*{url}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">上传时间：</label>
+				<div class="col-sm-8">
+            		<p class="form-control-static" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label ">上传人：</label>
+				<div class="col-sm-8">
+					<p class="form-control-static" th:text="*{createBy}"></p>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript">
+		var prefix = ctx + "system/oss";
+	
+		$("#form-oss-edit").validate({
+			rules:{
+				fileName:{
+					required:true,
+				}
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	$.operate.save(prefix + "/edit", $('#form-oss-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

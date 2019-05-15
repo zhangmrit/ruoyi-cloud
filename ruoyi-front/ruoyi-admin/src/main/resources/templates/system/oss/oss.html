@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head>
+	<th:block th:include="include :: header('文件管理')" />
+</head>
+<body class="gray-bg">
+	
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="data-form">
+					<div class="select-list">
+						<ul>
+							<li>
+								文件名：<input type="text" name="fileName"/>
+							</li>
+							<li>
+								文件后缀：<input type="text" name="fileSuffix"/>
+							</li>
+							<li>
+								上传人：<input type="text" name="createBy"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	       <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+	            <a class="btn btn-success" id="upload" shiro:hasPermission="system:dict:add">
+	                <i class="fa fa-plus"></i> 上传
+	            </a>
+				<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:dict:remove">
+		            <i class="fa fa-remove"></i> 删除
+		        </a>
+		        <a class="btn btn-primary" onclick="javascript:ossfig()" shiro:hasPermission="system:dict:config">
+		            <i class="fa fa-cogs"></i> 云储存配置
+		        </a>
+		        <a class="btn btn-warning" onclick="javascript:osseditor()" shiro:hasPermission="system:dict:add">
+		            <i class="fa fa-image"></i> 结合editor
+		        </a>
+	        </div>
+	        
+	        <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script th:src="@{/ajax/libs/ajaxfile/ajaxupload.js}"></script>
+	<script th:inline="javascript">
+		var editFlag = [[${@permission.hasPermi('system:oss:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('system:oss:remove')}]];
+		var prefix = ctx + "system/oss";
+
+		$(function() {
+			var options = {
+				url: prefix + "/list",
+				createUrl: prefix + "/add/{id}",
+				updateUrl: prefix + "/edit/{id}",
+				removeUrl: prefix + "/remove",
+				queryParams: queryParams,
+				sortName: "createTime",
+		        sortOrder: "desc",
+				modalName: "文件",
+				showPageGo: true,
+				search: false,
+		        showExport: false,
+				columns: [{
+						checkbox: true
+					},
+					{
+						field: 'id',
+						title: '文件编号'
+					},
+					{
+						field: 'fileName',
+						title: '文件名'
+					},
+					{
+						field: 'fileSuffix',
+						title: '文件后缀'
+					},
+					{
+						title: '文件预览',
+						formatter:function(value,row,index){
+		                    var s = '<a class = "view"  href="javascript:void(0)"><img style="width:30;height:30px;"  src="'+row.url+'" /></a>';
+		                    return s;
+		                },
+		                events: 'operateEvents'
+						
+					},
+					{
+						field: 'createTime',
+						title: '创建时间',
+						sortable: true
+					},
+					{
+						field: 'createBy',
+						title: '上传人'
+					},
+					{
+						field: 'service',
+						title: '服务商',
+						formatter: function(value, item, index) {
+			                if (item.service == '1') {
+			                    return '七牛';
+			                }
+			                else if (item.service == '2') {
+			                    return '阿里云';
+			                }
+			                else if (item.service == '3') {
+			                    return '腾讯云';
+				            }
+				        }
+					},
+					{
+						title: '操作',
+						align: 'center',
+						formatter: function(value, row, index) {
+							var actions = [];
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+							return actions.join('');
+						}
+					}]
+				};
+			$.table.init(options);
+		});
+		
+		function queryParams(params) {
+			return {
+				dictType:       $("#dictType").val(),
+				pageSize:       params.limit,
+    			pageNum:        params.offset / params.limit + 1,
+    			searchValue:    params.search,
+    			orderByColumn:  params.sort,
+    			isAsc:          params.order
+			};
+		}
+		
+		function ossfig() {
+			var url = prefix+'/config';
+			$.modal.open("云储存配置", url);
+		}
+		
+		function osseditor() {
+			var url = prefix+'/editor';
+			$.modal.open("结合editor", url,"1000");
+		}
+		
+		
+		new AjaxUpload('#upload', {
+	        action: prefix+"/upload",
+	        name: 'file',
+	        autoSubmit:true,
+	        responseType:"json",
+	        onSubmit:function(file, extension){
+	            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
+	                alert('只支持jpg、png、gif格式的图片！');
+	                return false;
+	            }
+	        },
+	        onComplete : function(file, r){
+	            $.operate.ajaxSuccess(r);
+	        }
+	    });
+	    var layindex;
+	    window.operateEvents = {'click .view': function (e, value, row, index) {
+	    		var img='<img src="'+row.url+'"/>';
+				layindex=layer.open({
+		           	type: 1,
+		          	title: false,
+		            closeBtn: 1,
+		          	area: ['auto','auto'],
+		          	skin: 'layui-layer-nobg', //没有背景色
+		          	//shadeClose: true,
+		          	content: img
+		        });
+		    }
+		};
+		$(document).keydown(function(event){
+			if(event.keyCode == 27){
+				layer.close(layindex);
+			}
+		});
+	</script>
+</body>
+</html>

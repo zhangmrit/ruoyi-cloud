@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head>
+	<th:block th:include="include :: header('地区编辑')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-districts-edit" th:object="${districts}">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">编号：</label>
+				<div class="col-sm-8">
+					<input id="id" name="id" th:field="*{id}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">层级：</label>
+				<div class="col-sm-8">
+					<select name="deep" class="form-control">
+						<option value="0" th:selected="*{deep==0}">省</option>
+						<option value="1" th:selected="*{deep==1}">市</option>
+						<option value="2" th:selected="*{deep==2}">区/县</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">拼音：</label>
+				<div class="col-sm-8">
+					<input id="pinyin" name="pinyin" th:field="*{pinyin}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">拼音缩写：</label>
+				<div class="col-sm-8">
+					<input id="pinyinShor" name="pinyinShor" th:field="*{pinyinShor}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展名：</label>
+				<div class="col-sm-8">
+					<input id="extName" name="extName" th:field="*{extName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建时间：</label>
+				<div class="col-sm-8">
+					<p class="form-control-static" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">最后更新时间：</label>
+				<div class="col-sm-8">
+					<p class="form-control-static" th:text="*{#dates.format(updateTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/districts"
+		$("#form-districts-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-districts-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head>
+	<th:block th:include="include :: header('地区demo')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    		
+    		<div class="form-inline">
+    			<label class="col-sm-3 control-label">插件使用演示：</label>
+      			<div data-toggle="distpicker" data-autoselect="3">
+			        <select class="form-control" data-province="---- 选择省 ----"></select>
+			        <select class="form-control" data-city="---- 选择市 ----"></select>
+			        <select class="form-control" id="plugdistrict" data-district="---- 选择区 ----"></select>
+      			</div>
+    		</div>
+    		<div class="form-inline">	
+				<label class="col-sm-3 control-label">不使用插件：</label>
+				<div class="col-sm-9">
+					<select name="province" class="form-control">
+						<option value="" >---- 选择省 ----</option>
+					</select>
+					<select name="city" class="form-control">
+						<option value="" >---- 选择市 ----</option>
+					</select>
+					<select name="district" class="form-control">
+						<option value="" >---- 选择区 ----</option>
+					</select>
+				</div>
+			</div>
+	</div>
+    <div th:include="include::footer"></div>
+    <script th:src="@{/ajax/libs/distpicker/distpicker.js}"></script>
+    <script type="text/javascript">
+    	var codeurl = ctx + "system/districts/list"
+    	$(function() {
+			// 初始化省市区
+			initAddress();
+			// 更改省份后的操作
+			$("select[name='province']").change(function() {
+				var provCode = $("select[name='province']").val();
+				getCity(provCode);
+			});
+			// 更改城市后的操作
+			$("select[name='city']").change(function() {
+				var cityCode = $("select[name='city']").val();
+				getDistrict(cityCode);
+			});
+	 
+		});
+		function initAddress() {
+			var firstProvCode;
+			// ajax请求所有省份
+			$("select[name='province']").empty();
+			$.post(codeurl,{pid:0},function(data) {
+				$.each(data.rows, function(i, d) {
+					$("select[name='province']").append("<option value='"+d.id+"'>" + d.name+ "</option>");
+				});
+				firstProvCode = data.rows[0].id;
+				// 根据第一个省份code获取对应城市列表
+				getCity(firstProvCode);
+			}, 'json');
+	 
+		}
+		//获取对应城市列表（里面包括获取第一个城市的区县列表）
+		function getCity(provCode) {
+			// ajax请求所有市级单位
+			$.post(codeurl, {pid : provCode}, function(data) {
+				// 先清空城市下拉框
+				$("select[name='city']").empty();
+				$.each(data.rows, function(i, d) {
+					$("select[name='city']").append("<option value='"+d.id+"'>" + d.name + "</option>");
+				});
+				// 获取第一个城市的code
+				firstCityCode = data.rows[0].id;
+				// 根据第一个城市code获取对应区县列表
+				getDistrict(firstCityCode);
+			}, 'json');
+		}
+ 
+		function getDistrict(cityCode) {
+			// ajax请求所有区县单位
+	 		$.post(codeurl, {pid : cityCode}, function(data) {
+				// 先清空城市下拉框
+				$("select[name='district']").empty();
+				$.each(data.rows, function(i, d) {
+					$("select[name='district']").append("<option value='"+d.id+"'>" + d.name + "</option>");
+				});
+			}, 'json');
+		}
+		function submitHandler() {
+			var mgs='分别选中了'+$("#plugdistrict").find("option:selected").data("code")+" "+
+				$("#plugdistrict").val()+" "+$("select[name='district']").val()+" "+
+				$("select[name='district']").find("option:selected").text();
+			layer.alert(mgs, function(index){
+				$.modal.close();
+			});    
+	    }
+    </script>
+</body>
+</html>

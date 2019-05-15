@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DistrictsMapper">
+    
+    <resultMap type="Districts" id="DistrictsResult">
+        <result property="id"    column="id"    />
+        <result property="pid"    column="pid"    />
+        <result property="deep"    column="deep"    />
+        <result property="name"    column="name"    />
+        <result property="pname"    column="pname"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="pinyinShor"    column="pinyin_shor"    />
+        <result property="extName"    column="ext_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="operator"    column="operator"    />
+    </resultMap>
+	
+	<sql id="selectDistrictsVo">
+        select d.id, d.pid, d.deep, d.name, d.pinyin, d.pinyin_shor, d.ext_name, d.create_time, d.update_time, d.operator,p.name as pname 
+        from districts d left join districts p on d.pid=p.id
+    </sql>
+	
+    <select id="selectDistrictsList" parameterType="Districts" resultMap="DistrictsResult">
+        <include refid="selectDistrictsVo"/>
+        <where>  
+            <if test="id != null "> and d.id = #{id}</if>
+             <if test="pid != null "> and d.pid = #{pid}</if>
+             <if test="deep != null "> and d.deep = #{deep}</if>
+             <if test="name != null  and name != '' "> and d.name like concat('%',#{name},'%')</if>
+             <if test="pinyin != null  and pinyin != '' "> and d.pinyin = #{pinyin}</if>
+             <if test="pinyinShor != null  and pinyinShor != '' "> and d.pinyin_shor = #{pinyinShor}</if>
+             <if test="createTime != null "> and d.create_time &gt;= #{createTime}</if>
+             <if test="updateTime != null "> and d.update_time &lt;= #{updateTime}</if>
+             <if test="operator != null  and operator != '' "> and operator = #{operator}</if>
+         </where>
+    </select>
+    
+    <select id="selectDistrictsById" parameterType="Integer" resultMap="DistrictsResult">
+        <include refid="selectDistrictsVo"/>
+        where d.id = #{id}
+    </select>
+        
+    <insert id="insertDistricts" parameterType="Districts">
+        insert into districts
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="pid != null  ">pid,</if>
+			<if test="deep != null  ">deep,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="pinyin != null  and pinyin != ''  ">pinyin,</if>
+			<if test="pinyinShor != null  and pinyinShor != ''  ">pinyin_shor,</if>
+			<if test="extName != null  and extName != ''  ">ext_name,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="operator != null  and operator != ''  ">operator,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="pid != null  ">#{pid},</if>
+			<if test="deep != null  ">#{deep},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="pinyin != null  and pinyin != ''  ">#{pinyin},</if>
+			<if test="pinyinShor != null  and pinyinShor != ''  ">#{pinyinShor},</if>
+			<if test="extName != null  and extName != ''  ">#{extName},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="operator != null  and operator != ''  ">#{operator},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateDistricts" parameterType="Districts">
+        update districts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null  ">pid = #{pid},</if>
+            <if test="deep != null  ">deep = #{deep},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="pinyin != null  and pinyin != ''  ">pinyin = #{pinyin},</if>
+            <if test="pinyinShor != null  and pinyinShor != ''  ">pinyin_shor = #{pinyinShor},</if>
+            <if test="extName != null  and extName != ''  ">ext_name = #{extName},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="operator != null  and operator != ''  ">operator = #{operator},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteDistrictsById" parameterType="Integer">
+        delete from districts where id = #{id}
+    </delete>
+	
+    <delete id="deleteDistrictsByIds" parameterType="String">
+        delete from districts where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

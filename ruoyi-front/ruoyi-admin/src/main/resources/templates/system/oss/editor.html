@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<head>
+	<th:block th:include="include :: header('结合editor')" />
+</head>
+<link th:href="@{/ajax/libs/summernote/summernote.css}" rel="stylesheet"/>
+<link th:href="@{/ajax/libs/summernote/summernote-bs3.css}" rel="stylesheet"/>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-oss-edit">
+			<input name="editorcode" id="editorcode"   type="hidden"    />
+			<div class="summernote"></div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
+	<script th:src="@{/ajax/libs/summernote/summernote-zh-CN.js}"></script>
+	<script type="text/javascript">
+		var prefix = ctx + "system/oss";
+		$('.summernote').summernote({
+			height : '600px',
+			lang : 'zh-CN',
+			callbacks: {
+				onImageUpload: function (files) {
+					sendFile(files[0], this);
+				}
+			}
+		});
+
+		// 上传文件
+		function sendFile(file, obj) {
+			var data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				type: "POST",
+				url: prefix+"/upload",
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				success: function(result) {
+					if (result.code == web_status.SUCCESS) {
+						$(obj).summernote('editor.insertImage', result.url, result.fileName);
+					} else {
+						$.modal.alertError(result.msg);
+					}
+				},
+				error: function(error) {
+					$.modal.alertWarning("图片上传失败。");
+				}
+			});
+		}
+		function submitHandler() {
+			var content = $('.summernote').summernote('code');//获取编辑器内容
+			alert(content);
+		}
+	    
+	</script>
+</body>
+</html>
