@@ -2,23 +2,26 @@ package com.ruoyi.generator.controller;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.IOUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.common.enums.BusinessType;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.ruoyi.generator.domain.GenQo;
 import com.ruoyi.generator.domain.TableInfo;
 import com.ruoyi.generator.service.IGenService;
+import com.ruoyi.generator.util.Page;
+import com.ruoyi.generator.util.R;
 
 /**
  * 代码生成 操作处理
@@ -27,63 +30,58 @@ import com.ruoyi.generator.service.IGenService;
  */
 @Controller
 @RequestMapping("/tool/gen")
-public class GenController extends BaseController
+public class GenController
 {
-    private String prefix = "tool/gen";
-
     @Autowired
     private IGenService genService;
 
-    @RequiresPermissions("tool:gen:view")
-    @GetMapping()
-    public String gen()
-    {
-        return prefix + "/gen";
-    }
-
-    @RequiresPermissions("tool:gen:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(TableInfo tableInfo)
+    public Page list(TableInfo tableInfo, Page page)
     {
-        startPage();
+        PageHelper.startPage(page.getPage(), page.getPageSize(), "create_time desc");
         List<TableInfo> list = genService.selectTableList(tableInfo);
-        return getDataTable(list);
+        page.setRows(list);
+        page.setTotal(new PageInfo<TableInfo>(list).getTotal());
+        return page;
     }
 
     /**
      * 生成代码
      */
-    @RequiresPermissions("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
-    @GetMapping("/genCode/{tableName}")
-    public void genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException
+    @RequestMapping("/genCode/{tableName}")
+    @ResponseBody
+    public R genCode(HttpServletResponse response, @PathVariable("tableName") String tableName, GenQo gq)
+            throws IOException
     {
-        byte[] data = genService.generatorCode(tableName);
-        response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"ruoyi.zip\"");
-        response.addHeader("Content-Length", "" + data.length);
-        response.setContentType("application/octet-stream; charset=UTF-8");
-
-        IOUtils.write(data, response.getOutputStream());
+        byte[] data = genService.generatorCode(tableName, gq);
+        if (null != data)
+        {
+            response.reset();
+            response.setHeader("Content-Disposition", "attachment; filename=\"ruoyi.zip\"");
+            response.addHeader("Content-Length", "" + data.length);
+            response.setContentType("application/octet-stream; charset=UTF-8");
+            IOUtils.write(data, response.getOutputStream());
+        }
+        return R.ok("代码已经生成");
     }
 
     /**
      * 批量生成代码
      */
-    @RequiresPermissions("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
-    @GetMapping("/batchGenCode")
+    @RequestMapping("/batchGenCode")
     @ResponseBody
-    public void batchGenCode(HttpServletResponse response, String tables) throws IOException
+    public R batchGenCode(HttpServletResponse response, String tables, GenQo gq) throws IOException
     {
-        String[] tableNames = Convert.toStrArray(tables);
-        byte[] data = genService.generatorCode(tableNames);
-        response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"ruoyi.zip\"");
-        response.addHeader("Content-Length", "" + data.length);
-        response.setContentType("application/octet-stream; charset=UTF-8");
-
-        IOUtils.write(data, response.getOutputStream());
+        byte[] data = genService.generatorCode(tables, gq);
+        if (null != data)
+        {
+            response.reset();
+            response.setHeader("Content-Disposition", "attachment; filename=\"ruoyi.zip\"");
+            response.addHeader("Content-Length", "" + data.length);
+            response.setContentType("application/octet-stream; charset=UTF-8");
+            IOUtils.write(data, response.getOutputStream());
+        }
+        return R.ok("代码已经生成");
     }
 }

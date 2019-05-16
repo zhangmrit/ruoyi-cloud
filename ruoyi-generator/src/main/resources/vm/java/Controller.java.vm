@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import ${package}.domain.${className};
-import ${package}.service.I${className}Service;
+import ${package}.feign.I${className}Client;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -32,7 +32,7 @@ public class ${className}Controller extends BaseController
     private String prefix = "${moduleName}/${classname}";
 	
 	@Autowired
-	private I${className}Service ${classname}Service;
+	private I${className}Client ${classname}Client;
 	
 	@RequiresPermissions("${moduleName}:${classname}:view")
 	@GetMapping()
@@ -49,8 +49,8 @@ public class ${className}Controller extends BaseController
 	@ResponseBody
 	public TableDataInfo list(${className} ${classname})
 	{
-		startPage();
-        List<${className}> list = ${classname}Service.select${className}List(${classname});
+		PageDomain page = TableSupport.buildPageRequest();
+        List<${className}> list = ${classname}Client.select${className}List(${classname},page);
 		return getDataTable(list);
 	}
 	
@@ -63,7 +63,8 @@ public class ${className}Controller extends BaseController
     @ResponseBody
     public AjaxResult export(${className} ${classname})
     {
-    	List<${className}> list = ${classname}Service.select${className}List(${classname});
+    	PageDomain page = TableSupport.buildPageRequest();
+    	List<${className}> list = ${classname}Client.select${className}List(${classname},page);
         ExcelUtil<${className}> util = new ExcelUtil<${className}>(${className}.class);
         return util.exportExcel(list, "${classname}");
     }
@@ -86,7 +87,7 @@ public class ${className}Controller extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(${className} ${classname})
 	{		
-		return toAjax(${classname}Service.insert${className}(${classname}));
+		return toAjax(${classname}Client.insert${className}(${classname}));
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class ${className}Controller extends BaseController
 	@GetMapping("/edit/{${primaryKey.attrname}}")
 	public String edit(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}, ModelMap mmap)
 	{
-		${className} ${classname} = ${classname}Service.select${className}ById(${primaryKey.attrname});
+		${className} ${classname} = ${classname}Client.select${className}ById(${primaryKey.attrname});
 		mmap.put("${classname}", ${classname});
 	    return prefix + "/edit";
 	}
@@ -109,7 +110,7 @@ public class ${className}Controller extends BaseController
 	@ResponseBody
 	public AjaxResult editSave(${className} ${classname})
 	{		
-		return toAjax(${classname}Service.update${className}(${classname}));
+		return toAjax(${classname}Client.update${className}(${classname}));
 	}
 	
 	/**
@@ -121,7 +122,7 @@ public class ${className}Controller extends BaseController
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{		
-		return toAjax(${classname}Service.delete${className}ByIds(ids));
+		return toAjax(${classname}Client.delete${className}ByIds(ids));
 	}
 	
 }

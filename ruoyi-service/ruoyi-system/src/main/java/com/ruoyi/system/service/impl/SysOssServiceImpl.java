@@ -13,23 +13,40 @@ import com.ruoyi.system.service.ISysOssService;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
-@Service("sysOssService")
-public class SysOssServiceImpl implements ISysOssService
+/**
+ * 文件上传 服务层实现
+ * 
+ * @author zmr
+ * @date 2019-05-16
+ */
+@Service
+public class SysOssServiceImpl implements ISysOssService 
 {
-    @Autowired
-    private SysOssMapper sysOssMapper;
+	@Autowired
+	private SysOssMapper sysOssMapper;
 
-    /*
-     * (non-Javadoc)
+	/**
+     * 查询文件上传信息
      * 
-     * @see
-     * com.zmr.wind.modules.sys.service.ISysOssService#getList(com.zmr.wind.
-     * modules.sys.entity.SysOss)
+     * @param id 文件上传ID
+     * @return 文件上传信息
      */
     @Override
-    public List<SysOss> getList(SysOss sysOss)
-    {
-        Example example = new Example(SysOss.class);
+	public SysOss selectSysOssById(Long id)
+	{
+	    return sysOssMapper.selectByPrimaryKey(id);
+	}
+	
+	/**
+     * 查询文件上传列表
+     * 
+     * @param sysOss 文件上传信息
+     * @return 文件上传集合
+     */
+	@Override
+	public List<SysOss> selectSysOssList(SysOss sysOss)
+	{
+	    Example example = new Example(SysOss.class);
         Criteria criteria = example.createCriteria();
         if (StringUtils.isNotBlank(sysOss.getFileName()))
         {
@@ -44,41 +61,42 @@ public class SysOssServiceImpl implements ISysOssService
             criteria.andLike("createBy", sysOss.getCreateBy());
         }
         return sysOssMapper.selectByExample(example);
-    }
-
-    /* (non-Javadoc)
-     * @see com.ruoyi.system.service.ISysOssService#save(com.ruoyi.system.domain.SysOss)
+	}
+	
+    /**
+     * 新增文件上传
+     * 
+     * @param sysOss 文件上传信息
+     * @return 结果
      */
-    @Override
-    public int save(SysOss ossEntity)
-    {
-        return sysOssMapper.insertSelective(ossEntity);
-    }
-
-    /* (non-Javadoc)
-     * @see com.ruoyi.system.service.ISysOssService#findById(java.lang.Long)
+	@Override
+	public int insertSysOss(SysOss sysOss)
+	{
+	    return sysOssMapper.insertSelective(sysOss);
+	}
+	
+	/**
+     * 修改文件上传
+     * 
+     * @param sysOss 文件上传信息
+     * @return 结果
      */
-    @Override
-    public SysOss findById(Long ossId)
-    {
-        return sysOssMapper.selectByPrimaryKey(ossId);
-    }
+	@Override
+	public int updateSysOss(SysOss sysOss)
+	{
+	    return sysOssMapper.updateByPrimaryKeySelective(sysOss);
+	}
 
-    /* (non-Javadoc)
-     * @see com.ruoyi.system.service.ISysOssService#update(com.ruoyi.system.domain.SysOss)
+	/**
+     * 删除文件上传对象
+     * 
+     * @param ids 需要删除的数据ID
+     * @return 结果
      */
-    @Override
-    public int update(SysOss sysOss)
-    {
-        return sysOssMapper.updateByPrimaryKeySelective(sysOss);
-    }
-
-    /* (non-Javadoc)
-     * @see com.ruoyi.system.service.ISysOssService#deleteByIds(java.lang.String)
-     */
-    @Override
-    public int deleteByIds(String ids)
-    {
-        return sysOssMapper.deleteByIds(ids);
-    }
+	@Override
+	public int deleteSysOssByIds(String ids)
+	{
+		return sysOssMapper.deleteByIds(ids);
+	}
+	
 }

@@ -1,13 +1,11 @@
 package com.ruoyi.generator.mapper;
-
 import java.util.List;
+
 import com.ruoyi.generator.domain.ColumnInfo;
 import com.ruoyi.generator.domain.TableInfo;
 
 /**
  * 代码生成 数据层
- * 
- * @author ruoyi
  */
 public interface GenMapper
 {

@@ -1,35 +1,57 @@
 package com.ruoyi.generator.domain;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.utils.StringUtils;
+import java.util.Map;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * ry 数据库表
  * 
  * @author ruoyi
  */
-public class TableInfo extends BaseEntity
+public class TableInfo implements Serializable
 {
-    private static final long serialVersionUID = 1L;
+    //
+    private static final long   serialVersionUID = -6129919011541035736L;
 
     /** 表名称 */
-    private String tableName;
+    private String              tableName;
 
     /** 表描述 */
-    private String tableComment;
+    private String              tableComment;
 
     /** 表的主键列信息 */
-    private ColumnInfo primaryKey;
+    private ColumnInfo          primaryKey;
 
     /** 表的列名(不包含主键) */
-    private List<ColumnInfo> columns;
+    private List<ColumnInfo>    columns;
 
     /** 类名(第一个字母大写) */
-    private String className;
+    private String              className;
 
     /** 类名(第一个字母小写) */
-    private String classname;
+    private String              classname;
+
+    /** 请求参数 */
+    private Map<String, Object> params;
+
+    /** 开始时间 */
+    private String              beginTime;
+
+    /** 结束时间 */
+    private String              endTime;
+
+    /** 创建时间 */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date                createTime;
+
+    /** 创建时间 */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date                updateTime;
 
     public String getTableName()
     {
@@ -59,7 +81,7 @@ public class TableInfo extends BaseEntity
     public ColumnInfo getColumnsLast()
     {
         ColumnInfo columnInfo = null;
-        if (StringUtils.isNotNull(columns) && columns.size() > 0)
+        if (null != columns && columns.size() > 0)
         {
             columnInfo = columns.get(0);
         }
@@ -99,5 +121,59 @@ public class TableInfo extends BaseEntity
     public void setPrimaryKey(ColumnInfo primaryKey)
     {
         this.primaryKey = primaryKey;
+    }
+
+    public Map<String, Object> getParams()
+    {
+        if (params == null)
+        {
+            params = new HashMap<>();
+        }
+        return params;
+    }
+
+    public void setParams(Map<String, Object> params)
+    {
+        this.params = params;
+    }
+
+    public String getBeginTime()
+    {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime)
+    {
+        this.beginTime = beginTime;
+    }
+
+    public String getEndTime()
+    {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime)
+    {
+        this.endTime = endTime;
+    }
+
+    public Date getCreateTime()
+    {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime)
+    {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime()
+    {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime)
+    {
+        this.updateTime = updateTime;
     }
 }

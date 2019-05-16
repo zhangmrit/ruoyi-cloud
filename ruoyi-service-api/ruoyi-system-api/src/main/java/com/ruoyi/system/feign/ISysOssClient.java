@@ -12,24 +12,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ruoyi.common.constant.ServiceNameConstants;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysOss;
+import com.ruoyi.system.feign.factory.SysOssClientFallbackFactory;
 
+/**
+ * 文件上传 Feign服务层
+ * 
+ * @author zmr
+ * @date 2019-05-16
+ */
 @FeignClient(name = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = SysOssClientFallbackFactory.class)
 public interface ISysOssClient
 {
-    String API_PREFIX = "system/oss/";
+    String PREFIX = "system/sysOss";
 
-    @RequestMapping(API_PREFIX + "list")
-    List<SysOss> getList(@RequestParam("sysOss") SysOss sysOss, @RequestParam("page") PageDomain page);
+    @GetMapping(PREFIX + "get/{id}")
+    public SysOss selectSysOssById(@PathVariable("id") Long id);
 
-    @RequestMapping(API_PREFIX + "save")
-    int save(SysOss ossEntity);
+    @RequestMapping(PREFIX + "list")
+    public List<SysOss> selectSysOssList(@RequestParam(name = "sysOss") SysOss sysOss,@RequestParam(name = "page") PageDomain page);
 
-    @GetMapping(API_PREFIX + "get/{ossId}")
-    SysOss findById(@PathVariable("ossId") Long ossId);
+    @PostMapping(PREFIX + "save")
+    public int insertSysOss(SysOss sysOss);
 
-    @PostMapping(API_PREFIX + "update")
-    int update(SysOss sysOss);
+    @PostMapping(PREFIX + "update")
+    public int updateSysOss(SysOss sysOss);
 
-    @RequestMapping(API_PREFIX + "remove")
-    int deleteByIds(String ids);
+    @RequestMapping(PREFIX + "remove")
+    public int deleteSysOssByIds(String ids);
 }

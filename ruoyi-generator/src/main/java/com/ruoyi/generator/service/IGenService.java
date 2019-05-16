@@ -1,6 +1,8 @@
 package com.ruoyi.generator.service;
 
 import java.util.List;
+
+import com.ruoyi.generator.domain.GenQo;
 import com.ruoyi.generator.domain.TableInfo;
 
 /**
@@ -24,7 +26,7 @@ public interface IGenService
      * @param tableName 表名称
      * @return 数据
      */
-    public byte[] generatorCode(String tableName);
+    public byte[] generatorCode(String tableName, GenQo gq);
 
     /**
      * 批量生成代码
@@ -32,5 +34,5 @@ public interface IGenService
      * @param tableNames 表数组
      * @return 数据
      */
-    public byte[] generatorCode(String[] tableNames);
+    public byte[] generatorCode(String[] tableNames, GenQo pathInfo);
 }

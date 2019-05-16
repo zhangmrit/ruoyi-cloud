@@ -1,7 +1,10 @@
 package com.ruoyi.generator.domain;
 
-import com.ruoyi.common.json.JSON;
-import com.ruoyi.common.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.alibaba.fastjson.JSON;
+
+
 
 /**
  * ry数据库表列信息
@@ -64,7 +67,7 @@ public class ColumnInfo
         // 根据列描述解析列的配置信息
         if (StringUtils.isNotEmpty(columnComment) && columnComment.startsWith("{"))
         {
-            this.configInfo = JSON.unmarshal(columnComment, ColumnConfigInfo.class);
+            this.configInfo = JSON.parseObject(columnComment, ColumnConfigInfo.class);
             this.columnComment = configInfo.getTitle();
         }
         else
