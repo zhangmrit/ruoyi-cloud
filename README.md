@@ -8,6 +8,32 @@
 
 如果要使用eureka集群，请依次绑定eureka7002.com,eureka7003.com后修改各项目中的注释部分
 
+ruoyi-cloud
+|
+|---ruoyi-common 通用工具包
+|
+|---ruoyi-config cloud统一配置中心
+|
+|---ruoyi-eureka 注册中心
+|
+|---ruoyi-front 工程前端相关
+|   |
+|   |---ruoyi-admin 管理后台
+|
+|---ruoyi-gateway zuul网关
+|
+|---ruoyi-service-api 服务api模块
+|   |
+|   |---ruoyi-system-api 系统业务api
+|
+|---ruoyi-service 服务提供者
+|   |
+|   |---ruoyi-system 系统业务提供者
+|
+|---ruoyi-generator 代码生成工具
+
+
+
 启动顺序：
 - eureka
 - gateway
@@ -15,6 +41,10 @@
 - system
 - admin
 
+
+注意：实现cloud功能的模块只有SysOss
+
 目前只是演示一下改造的方法，并没有实际功能迁移，有需要着得自行添加功能
 
-欢迎pr或者加入
+欢迎pr或者加入，给个star是最好的鞭策
+
