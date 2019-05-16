@@ -11,27 +11,27 @@
 ```
 ruoyi-cloud
 |
-|---ruoyi-common 通用工具包
+├──ruoyi-common --通用工具包
 |
-|---ruoyi-config cloud统一配置中心
+├──ruoyi-config --cloud统一配置中心
 |
-|---ruoyi-eureka 注册中心
+├──ruoyi-eureka --注册中心
 |
-|---ruoyi-front 工程前端相关
-|   |
-|   |---ruoyi-admin 管理后台
+├──ruoyi-front --工程前端相关
+|  |
+|  ├──ruoyi-admin --管理后台
 |
-|---ruoyi-gateway zuul网关
+├──ruoyi-gateway --zuul网关
 |
-|---ruoyi-service-api 服务api模块
-|   |
-|   |---ruoyi-system-api 系统业务api
+├──ruoyi-service-api --服务api模块
+|  |
+|  ├──ruoyi-system-api --系统业务api
 |
-|---ruoyi-service 服务提供者
-|   |
-|   |---ruoyi-system 系统业务提供者
+├──ruoyi-service --服务提供者
+|  |
+|  ├──ruoyi-system --系统业务提供者
 |
-|---ruoyi-generator 代码生成工具
+├──ruoyi-generator --代码生成工具
 
 ```
 
