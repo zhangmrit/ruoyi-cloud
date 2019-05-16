@@ -8,6 +8,7 @@
 
 如果要使用eureka集群，请依次绑定eureka7002.com,eureka7003.com后修改各项目中的注释部分
 
+```
 ruoyi-cloud
 |
 |---ruoyi-common 通用工具包
@@ -31,6 +32,10 @@ ruoyi-cloud
 |   |---ruoyi-system 系统业务提供者
 |
 |---ruoyi-generator 代码生成工具
+
+```
+
+
 
 
 
