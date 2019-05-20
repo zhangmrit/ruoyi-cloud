@@ -23,6 +23,9 @@ import com.ruoyi.generator.service.IGenService;
 import com.ruoyi.generator.util.Page;
 import com.ruoyi.generator.util.R;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
+
 /**
  * 代码生成 操作处理
  * 
@@ -73,7 +76,8 @@ public class GenController
     @ResponseBody
     public R batchGenCode(HttpServletResponse response, String tables, GenQo gq) throws IOException
     {
-        byte[] data = genService.generatorCode(tables, gq);
+        String[] tableNames = Convert.toStrArray(tables);
+        byte[] data = genService.generatorCode(tableNames, gq);
         if (null != data)
         {
             response.reset();

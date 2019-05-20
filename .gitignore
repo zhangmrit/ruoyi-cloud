@@ -47,3 +47,4 @@ logs
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+ruoyi-ant

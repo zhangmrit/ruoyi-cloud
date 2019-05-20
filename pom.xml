@@ -219,7 +219,7 @@
 		<module>ruoyi-gateway</module>
 		<module>ruoyi-service-api</module>
 		<module>ruoyi-service</module>
-		<module>ruoyi-front</module>
+<!-- 		<module>ruoyi-front</module> -->
 		<module>ruoyi-generator</module>
 	</modules>
 	<packaging>pom</packaging>
