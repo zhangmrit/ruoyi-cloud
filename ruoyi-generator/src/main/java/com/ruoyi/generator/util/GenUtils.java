@@ -64,7 +64,7 @@ public class GenUtils
         velocityContext.put("className", table.getClassName());
         velocityContext.put("classname", table.getClassname());
         velocityContext.put("moduleName", gq.getModulename());
-        velocityContext.put("MODULENAME",  gq.getModulename().toUpperCase());
+        velocityContext.put("MODULENAME", gq.getModulename().toUpperCase());
         velocityContext.put("columns", table.getColumns());
         velocityContext.put("package", packageName + "." + gq.getModulename());
         velocityContext.put("author", gq.getAuthor());
@@ -86,9 +86,9 @@ public class GenUtils
         templates.add("vm/java/Service.java.vm");
         templates.add("vm/java/ServiceImpl.java.vm");
         templates.add("vm/java/Controller.java.vm");
-        templates.add("vm/java/Client.java.vm");
-        templates.add("vm/java/ClientFallback.java.vm");
-        templates.add("vm/java/ClientController.java.vm");
+        // templates.add("vm/java/Client.java.vm");
+        // templates.add("vm/java/ClientFallback.java.vm");
+        // templates.add("vm/java/ClientController.java.vm");
         templates.add("vm/xml/Mapper.xml.vm");
         if (gq.getPageSwitch())
         {
@@ -134,8 +134,8 @@ public class GenUtils
         String moduleName = gq.getModulename();
         String javaPath = gq.getProjectpath() + MAVEN_PATH + gq.getPackname() + "/" + moduleName + "/";
         javaPath = javaPath.replace(".", "/");
-        String mybatisPath = gq.getProjectpath() + "/" + gq.getMapperpath() + "/"+ moduleName;
-        String htmlPath = gq.getProjectpath() + "/" + gq.getTemplatepath() + "/"+ moduleName + "/" + classname;
+        String mybatisPath = gq.getProjectpath() + "/" + gq.getMapperpath() + "/" + moduleName;
+        String htmlPath = gq.getProjectpath() + "/" + gq.getTemplatepath() + "/" + moduleName + "/" + classname;
         if (template.contains("domain.java.vm"))
         {
             return javaPath + "entity" + "/" + className + ".java";
@@ -152,18 +152,19 @@ public class GenUtils
         {
             return javaPath + "service" + "/" + "impl/" + className + "ServiceImpl.java";
         }
-        if (template.contains("Client.java.vm"))
-        {
-            return javaPath + "feign" + "/" + "I" + className + "Client.java";
-        }
-        if (template.contains("ClientFallback.java.vm"))
-        {
-            return javaPath + "feign" + "/" + "factory/" + className + "ClientFallbackFactory.java";
-        }
-        if (template.contains("ClientController.java.vm"))
-        {
-            return javaPath + "client" + "/" + className + "Client.java";
-        }
+        // if (template.contains("Client.java.vm"))
+        // {
+        // return javaPath + "feign" + "/" + "I" + className + "Client.java";
+        // }
+        // if (template.contains("ClientFallback.java.vm"))
+        // {
+        // return javaPath + "feign" + "/" + "factory/" + className +
+        // "ClientFallbackFactory.java";
+        // }
+        // if (template.contains("ClientController.java.vm"))
+        // {
+        // return javaPath + "client" + "/" + className + "Client.java";
+        // }
         if (template.contains("Controller.java.vm"))
         {
             return javaPath + "controller" + "/" + className + "Controller.java";

@@ -209,18 +209,26 @@
 				<artifactId>hutool-all</artifactId>
 				<version>${hutool.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<modules>
+	
 		<module>ruoyi-common</module>
 		<module>ruoyi-config</module>
 		<module>ruoyi-eureka</module>
 		<module>ruoyi-gateway</module>
 		<module>ruoyi-service-api</module>
 		<module>ruoyi-service</module>
-<!-- 		<module>ruoyi-front</module> -->
+		<!-- <module>ruoyi-front</module> -->
 		<module>ruoyi-generator</module>
+		<module>ruoyi-auth</module>
 	</modules>
 	<packaging>pom</packaging>
 
