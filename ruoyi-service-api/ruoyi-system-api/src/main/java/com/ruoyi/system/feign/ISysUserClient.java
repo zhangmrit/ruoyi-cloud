@@ -17,8 +17,8 @@ import com.ruoyi.system.feign.factory.SysUserClientFallbackFactory;
 @FeignClient(name = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = SysUserClientFallbackFactory.class)
 public interface ISysUserClient
 {
-    String PREFIX = "user";
+    String PREFIX = "user/";
 
-    @GetMapping(PREFIX + "get/{username}")
+    @GetMapping(PREFIX + "find/{username}")
     public SysUser selectSysUserByUsername(@PathVariable("username") String username);
 }
