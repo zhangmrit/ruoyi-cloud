@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +22,6 @@ import com.ruoyi.generator.util.Page;
 import com.ruoyi.generator.util.R;
 
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.StrUtil;
 
 /**
  * 代码生成 操作处理
@@ -85,6 +82,7 @@ public class GenController
             response.addHeader("Content-Length", "" + data.length);
             response.setContentType("application/octet-stream; charset=UTF-8");
             IOUtils.write(data, response.getOutputStream());
+            return null;
         }
         return R.ok("代码已经生成");
     }
