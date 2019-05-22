@@ -40,6 +40,7 @@
 		<fastjson.version>1.2.49</fastjson.version>
 		<lombok.version>1.18.4</lombok.version>
 		<hutool.version>4.1.19</hutool.version>
+		<common-pool.version>2.6.2</common-pool.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -215,11 +216,17 @@
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-pool2</artifactId>
+				<version>${common-pool.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<modules>
-	
+
 		<module>ruoyi-common</module>
 		<module>ruoyi-config</module>
 		<module>ruoyi-eureka</module>

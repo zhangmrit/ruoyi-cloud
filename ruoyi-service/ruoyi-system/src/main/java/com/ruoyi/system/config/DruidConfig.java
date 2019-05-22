@@ -1,4 +1,4 @@
-package com.ruoyi.common.config;
+package com.ruoyi.system.config;
 
 import java.util.HashMap;
 import java.util.Map;

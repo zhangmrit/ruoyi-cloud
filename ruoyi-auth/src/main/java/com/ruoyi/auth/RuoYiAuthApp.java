@@ -2,17 +2,20 @@ package com.ruoyi.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 启动程序
  * 
  * @author ruoyi
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableEurekaClient
 @EnableFeignClients(basePackages = {"com.ruoyi"})
+@ComponentScan("com.ruoyi")
 public class RuoYiAuthApp
 {
     public static void main(String[] args)

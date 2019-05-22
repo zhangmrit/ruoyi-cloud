@@ -3,18 +3,21 @@ package com.ruoyi.auth.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.auth.entity.AccessToken;
 import com.ruoyi.auth.form.LoginForm;
 import com.ruoyi.auth.service.AccessTokenService;
+import com.ruoyi.auth.service.SysPasswordService;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.exception.RuoyiException;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.feign.ISysUserClient;
 
+@RestController
 public class TokenController
 {
     @Autowired
@@ -22,20 +25,23 @@ public class TokenController
 
     @Autowired
     private ISysUserClient     userClient;
+    
+    @Autowired
+    private SysPasswordService passwordService;
 
+    @PostMapping("login")
     public R login(@RequestBody LoginForm form)
     {
         // 用户登录
         SysUser user = userClient.selectSysUserByUsername(form.getUsername());
-        Assert.isNull(user, "手机号或密码错误");
         // 密码错误
-        if (!user.getPassword().equals(DigestUtils.sha256Hex(form.getPassword())))
+        if (null==user||!passwordService.matches(user, form.getPassword()))
         {
-            throw new RuntimeException("手机号或密码错误");
+            throw new RuoyiException("手机号或密码错误");
         }
         // 获取登录token
         AccessToken accessToken = tokenService.createToken(user.getUserId());
-        Map<String, Object> map = new HashMap<>(2);
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("token", accessToken.getToken());
         map.put("expire", accessToken.getExpireTime().getTime() - System.currentTimeMillis());
         return R.ok(map);
