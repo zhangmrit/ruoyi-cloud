@@ -13,7 +13,7 @@ import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysMenuService;
 
 /**
- * 菜单权限 提供者
+ * 菜单权限 
  * 
  * @author zmr
  * @date 2019-05-20

@@ -1,11 +1,16 @@
 package com.ruoyi.system.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
@@ -35,7 +40,7 @@ public class SysUserController extends BaseController
 	}
 
     @GetMapping("info")
-    public SysUser info()
+    public SysUser info(HttpServletRequest request)
     {
         long userId = getCurrentUserId();
         return sysUserService.selectUserById(userId);
@@ -53,11 +58,11 @@ public class SysUserController extends BaseController
 	/**
 	 * 查询用户列表
 	 */
-	@RequestMapping("list")
-	public List<SysUser> list(SysUser sysUser, PageDomain page)
+	@GetMapping("list")
+	public R list(SysUser sysUser, PageDomain page)
 	{
 		startPage(page);
-        return sysUserService.selectUserList(sysUser);
+        return result(sysUserService.selectUserList(sysUser));
 	}
 	
 	
@@ -65,18 +70,18 @@ public class SysUserController extends BaseController
 	 * 新增保存用户
 	 */
 	@PostMapping("save")
-	public int addSave(SysUser sysUser)
+	public R addSave(SysUser sysUser)
 	{		
-		return sysUserService.insertUser(sysUser);
+		return toAjax(sysUserService.insertUser(sysUser));
 	}
 
 	/**
 	 * 修改保存用户
 	 */
 	@PostMapping("update")
-	public int editSave(SysUser sysUser)
+	public R editSave(SysUser sysUser)
 	{		
-		return sysUserService.updateUser(sysUser);
+		return toAjax(sysUserService.updateUser(sysUser));
 	}
 	
 	/**
@@ -84,9 +89,9 @@ public class SysUserController extends BaseController
 	 * @throws Exception 
 	 */
 	@PostMapping("remove")
-	public int remove(String ids) throws Exception
+	public R remove(String ids) throws Exception
 	{		
-		return sysUserService.deleteUserByIds(ids);
+		return toAjax(sysUserService.deleteUserByIds(ids));
 	}
 	
 }

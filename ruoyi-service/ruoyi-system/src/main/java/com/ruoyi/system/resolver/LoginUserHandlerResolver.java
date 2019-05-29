@@ -1,11 +1,12 @@
-package com.ruoyi.system;
+package com.ruoyi.system.resolver;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
@@ -17,8 +18,9 @@ import com.ruoyi.system.service.ISysUserService;
 /**
  * 有@LoginUser注解的方法参数，注入当前登录用户
  */
-@Component
-public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver
+
+@Configuration
+public class LoginUserHandlerResolver implements HandlerMethodArgumentResolver
 {
     @Autowired
     private ISysUserService userService;
@@ -31,11 +33,12 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container, NativeWebRequest request,
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container, NativeWebRequest nativeWebRequest,
             WebDataBinderFactory factory) throws Exception
     {
+        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         // 获取用户ID
-        Long userid = (Long) request.getAttribute(Constants.USER_KEY, RequestAttributes.SCOPE_REQUEST);
+        Long userid = Long.valueOf(request.getHeader(Constants.USER_KEY));
         if (userid == null)
         {
             return null;

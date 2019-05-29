@@ -101,7 +101,7 @@ public class BaseController
 
     public long getCurrentUserId()
     {
-        Long id = (Long) getRequest().getAttribute(Constants.USER_KEY);
+        Long id = Long.valueOf(getRequest().getHeader(Constants.USER_KEY));
         if (null == id)
         {
             id = 0l;
@@ -121,13 +121,14 @@ public class BaseController
         return rspData;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected R result(List<?> list)
     {
         PageInfo<?> pageInfo = new PageInfo(list);
-        Map m = new HashMap();
+        Map<String, Object> m = new HashMap<String, Object>();
         m.put("rows", list);
         m.put("pageNo", pageInfo.getPageNum());
-        m.put("pageSize", pageInfo.getPageSize());
+        m.put("totalCount", pageInfo.getTotal());
         return R.ok(m);
     }
 

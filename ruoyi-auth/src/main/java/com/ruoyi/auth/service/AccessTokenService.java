@@ -2,32 +2,39 @@ package com.ruoyi.auth.service;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.auth.entity.AccessToken;
-import com.ruoyi.common.util.RedisUtils;
 
 @Service("accessTokenService")
 public class AccessTokenService
 {
     @Autowired
-    private RedisUtils          redis;
+    private StringRedisTemplate             redisTemplate;
+
+    @Resource(name = "stringRedisTemplate")
+    private ValueOperations<String, String> ops;
 
     /**
      * 12小时后过期
      */
-    private final static int    EXPIRE        = 3600 * 12;
+    private final static long               EXPIRE        = 3600 * 12;
 
-    private final static String ACCESS_TOKEN  = "access_token_";
+    private final static String             ACCESS_TOKEN  = "access_token_";
 
-    private final static String ACCESS_USERID = "access_userid_";
+    private final static String             ACCESS_USERID = "access_userid_";
 
     public Long queryByToken(String token)
     {
-        return Long.valueOf(redis.get(ACCESS_TOKEN + token));
+        return Long.valueOf(ops.get(ACCESS_TOKEN + token));
     }
 
     public AccessToken createToken(long userId)
@@ -44,18 +51,18 @@ public class AccessTokenService
         accessToken.setToken(token);
         accessToken.setExpireTime(expireTime);
         expireToken(userId);
-        redis.set(ACCESS_TOKEN + token, userId, EXPIRE);
-        redis.set(ACCESS_USERID + userId, token, EXPIRE);
+        ops.set(ACCESS_TOKEN + token, userId + "", EXPIRE, TimeUnit.SECONDS);
+        ops.set(ACCESS_USERID + userId, token, EXPIRE, TimeUnit.SECONDS);
         return accessToken;
     }
 
     public void expireToken(long userId)
     {
-        String token = redis.get(ACCESS_USERID + userId);
+        String token = ops.get(ACCESS_USERID + userId);
         if (StringUtils.isNotBlank(token))
         {
-            redis.delete(ACCESS_USERID + userId);
-            redis.delete(ACCESS_TOKEN + token);
+            redisTemplate.delete(ACCESS_USERID + userId);
+            redisTemplate.delete(ACCESS_TOKEN + token);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.ruoyi.common.util;
+package com.ruoyi.common.redis.util;
 
 import java.util.concurrent.TimeUnit;
 

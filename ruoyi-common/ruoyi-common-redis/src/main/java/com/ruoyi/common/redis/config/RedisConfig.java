@@ -1,4 +1,4 @@
-package com.ruoyi.common.config;
+package com.ruoyi.common.redis.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

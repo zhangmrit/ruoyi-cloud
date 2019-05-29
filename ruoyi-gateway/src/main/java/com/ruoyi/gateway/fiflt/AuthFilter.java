@@ -6,11 +6,11 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -35,13 +35,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class AuthFilter extends ZuulFilter
 {
-    @Autowired
-    private StringRedisTemplate   redisTemplate;
+    
+    @Resource(name = "stringRedisTemplate")
+    private ValueOperations<String, String> ops;
 
     // 排除过滤的 uri 地址
     private static final String[] whiteList    = {"/api/auth/login", "/user/user/register"};
-
-    private static final String   REGISTER_URI = "/user/user/register";
 
     private static final String   TOKEN        = "token";
 
@@ -65,7 +64,7 @@ public class AuthFilter extends ZuulFilter
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String uri = request.getRequestURI();
-        log.info("uri:{}", uri);
+        log.debug("uri:{}", uri);
         // 注册和登录接口不拦截，其他接口都要拦截校验 token
         for (String whiteUrl : whiteList)
         {
@@ -97,18 +96,16 @@ public class AuthFilter extends ZuulFilter
         }
         if (StringUtils.isNotBlank(token))
         {
+            String userId=ops.get(ACCESS_TOKEN+token);
             // 查询token信息
-            log.info(ACCESS_TOKEN + TOKEN);
-            String accessToken = redisTemplate.opsForValue().get(ACCESS_TOKEN + token);
-            log.info(accessToken);
-            if (accessToken == null)
+            if (StringUtils.isBlank(userId))
             {
                 setUnauthorizedResponse(requestContext, "token verify error");
             }
             else
             {
                 // 设置userId到request里，后续根据userId，获取用户信息
-                request.setAttribute(Constants.USER_KEY, accessToken);
+                requestContext.addZuulRequestHeader(Constants.USER_KEY, userId);
             }
         }
         return null;
@@ -119,7 +116,7 @@ public class AuthFilter extends ZuulFilter
     {
         requestContext.setSendZuulResponse(false);
         requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
-        Map map = new HashMap<>();
+        Map<Object, Object> map = new HashMap<>();
         map.put("code", 401);
         map.put("msg", msg);
         requestContext.setResponseBody(JSON.toJSONString(map));
