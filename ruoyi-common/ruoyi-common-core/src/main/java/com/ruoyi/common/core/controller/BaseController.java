@@ -2,18 +2,25 @@ package com.ruoyi.common.core.controller;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.AjaxResult.Type;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
@@ -92,6 +99,15 @@ public class BaseController
         return getRequest().getSession();
     }
 
+    public long getCurrentUserId()
+    {
+        Long id = (Long) getRequest().getAttribute(Constants.USER_KEY);
+        if (null == id)
+        {
+            id = 0l;
+        }
+        return id;
+    }
     /**
      * 响应请求分页数据
      */
@@ -105,15 +121,25 @@ public class BaseController
         return rspData;
     }
 
+    protected R result(List<?> list)
+    {
+        PageInfo<?> pageInfo = new PageInfo(list);
+        Map m = new HashMap();
+        m.put("rows", list);
+        m.put("pageNo", pageInfo.getPageNum());
+        m.put("pageSize", pageInfo.getPageSize());
+        return R.ok(m);
+    }
+
     /**
      * 响应返回结果
      * 
      * @param rows 影响行数
      * @return 操作结果
      */
-    protected AjaxResult toAjax(int rows)
+    protected R toAjax(int rows)
     {
-        return rows > 0 ? success() : error();
+        return rows > 0 ? R.ok() : R.error();
     }
 
     /**
@@ -122,18 +148,11 @@ public class BaseController
      * @param result 结果
      * @return 操作结果
      */
-    protected AjaxResult toAjax(boolean result)
+    protected R toAjax(boolean result)
     {
-        return result ? success() : error();
+        return result ? R.ok() : R.error();
     }
 
-    /**
-     * 返回成功
-     */
-    public AjaxResult success()
-    {
-        return AjaxResult.success();
-    }
 
     /**
      * 返回失败消息
@@ -143,13 +162,6 @@ public class BaseController
         return AjaxResult.error();
     }
 
-    /**
-     * 返回成功消息
-     */
-    public AjaxResult success(String message)
-    {
-        return AjaxResult.success(message);
-    }
 
     /**
      * 返回失败消息

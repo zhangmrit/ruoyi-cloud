@@ -5,42 +5,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.system.mapper.SysMenuMapper">
 
 	<resultMap type="SysMenu" id="SysMenuResult">
-		<id     property="menuId"         column="menu_id"        />
-		<result property="menuName"       column="menu_name"      />
-		<result property="parentName"     column="parent_name"    />
-		<result property="parentId"       column="parent_id"      />
-		<result property="orderNum"       column="order_num"      />
-		<result property="url"            column="url"            />
-		<result property="menuType"       column="menu_type"      />
-		<result property="visible"        column="visible"        />
-		<result property="perms"          column="perms"          />
-		<result property="icon"           column="icon"           />
-		<result property="createBy"       column="create_by"      />
-		<result property="createTime"     column="create_time"    />
-		<result property="updateTime"     column="update_time"    />
-		<result property="updateBy"       column="update_by"      />
-		<result property="remark"         column="remark"         />
+		<id property="menuId" column="menu_id"/>
+		<result property="menuName" column="menu_name"/>
+		<result property="parentName" column="parent_name"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="orderNum" column="order_num"/>
+		<result property="url" column="url"/>
+		<result property="menuType" column="menu_type"/>
+		<result property="menuKey" column="menu_key"/>
+		<result property="menuLay" column="menu_lay"/>
+		<result property="visible" column="visible"/>
+		<result property="perms" column="perms"/>
+		<result property="icon" column="icon"/>
+		<result property="createBy" column="create_by"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="updateBy" column="update_by"/>
+		<result property="remark" column="remark"/>
 	</resultMap>
 	
 	<sql id="selectMenuVo">
-        select menu_id, menu_name, parent_id, order_num, url, menu_type, visible, ifnull(perms,'') as perms, icon, create_by, create_time 
+        select menu_id, menu_name, parent_id, order_num, url, menu_type, menu_key, menu_lay, visible, ifnull(perms,'') as perms, icon, create_by, create_time
 		from sys_menu
     </sql>
     
     <select id="selectMenusByUserId" parameterType="Long" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.menu_type, m.icon, m.order_num, m.create_time
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.menu_type,m.menu_key,m.menu_lay, m.icon, m.order_num, m.create_time
 		from sys_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 			 LEFT JOIN sys_role ro on ur.role_id = ro.role_id
-		where ur.user_id = #{userId} and m.menu_type in ('M', 'C') and m.visible = 0  AND ro.status = 0
+		where ur.user_id = #{userId} and m.menu_type in ('M', 'C') and m.visible = 0  AND ro.status = 0 and length(m.menu_key)>0
 		order by m.order_num
 	</select>
 
 	<select id="selectMenuNormalAll" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms, m.menu_type, m.icon, m.order_num, m.create_time
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.menu_key,m.menu_lay,m.url, m.perms, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m
-		where m.menu_type in ('M', 'C') and m.visible = 0
+		where m.menu_type in ('M', 'C') and m.visible = 0 and length(m.menu_key)>0
 		order by m.order_num
 	</select>
 	

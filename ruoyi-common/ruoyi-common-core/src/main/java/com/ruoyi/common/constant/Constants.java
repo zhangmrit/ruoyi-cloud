@@ -61,4 +61,6 @@ public class Constants
      * 排序的方向 "desc" 或者 "asc".
      */
     public static final String IS_ASC = "isAsc";
+
+    public static final String USER_KEY        = "currentUserId";
 }

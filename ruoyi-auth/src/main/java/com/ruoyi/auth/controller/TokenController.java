@@ -32,6 +32,7 @@ public class TokenController
     @PostMapping("login")
     public R login(@RequestBody LoginForm form)
     {
+        System.out.println(form);
         // 用户登录
         SysUser user = userClient.selectSysUserByUsername(form.getUsername());
         // 密码错误
@@ -46,4 +47,5 @@ public class TokenController
         map.put("expire", accessToken.getExpireTime().getTime() - System.currentTimeMillis());
         return R.ok(map);
     }
+
 }

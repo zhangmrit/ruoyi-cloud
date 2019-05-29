@@ -25,9 +25,9 @@ public class AccessTokenService
 
     private final static String ACCESS_USERID = "access_userid_";
 
-    public AccessToken queryByToken(String token)
+    public Long queryByToken(String token)
     {
-        return redis.get(ACCESS_TOKEN + token, AccessToken.class);
+        return Long.valueOf(redis.get(ACCESS_TOKEN + token));
     }
 
     public AccessToken createToken(long userId)
@@ -44,7 +44,7 @@ public class AccessTokenService
         accessToken.setToken(token);
         accessToken.setExpireTime(expireTime);
         expireToken(userId);
-        redis.set(ACCESS_TOKEN + token, accessToken, EXPIRE);
+        redis.set(ACCESS_TOKEN + token, userId, EXPIRE);
         redis.set(ACCESS_USERID + userId, token, EXPIRE);
         return accessToken;
     }
