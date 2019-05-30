@@ -49,7 +49,7 @@ ruoyi-cloud
 
 注意：实现cloud功能的模块只有SysOss
 
-目前只是演示一下改造的方法，并没有实际功能迁移，有需要着得自行添加功能
+该分支是ant分支，前端使用ant-design-vue 项目地址 [ruoyi-ant](https://gitee.com/zhangmrit/ruoyi-ant)
 
 欢迎pr或者加入，给个star是最好的鞭策
 
