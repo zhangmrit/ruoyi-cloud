@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysOperLog;
 import com.ruoyi.system.service.ISysOperLogService;
 
@@ -40,9 +39,9 @@ public class SysOperLogClient extends BaseController
      * 查询操作日志记录列表
      */
     @PostMapping("list")
-    public List<SysOperLog> list(SysOperLog sysOperLog, PageDomain page)
+    public List<SysOperLog> list(SysOperLog sysOperLog)
     {
-        startPage(page);
+        startPage();
         return sysOperLogService.selectOperLogList(sysOperLog);
     }
 

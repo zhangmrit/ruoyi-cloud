@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.service.ISysDeptService;
 
@@ -39,9 +39,9 @@ public class SysDeptController extends BaseController
      * 查询部门列表
      */
     @GetMapping("list")
-    public R list(SysDept sysDept, PageDomain page)
+    public R list(SysDept sysDept)
     {
-        startPage(page);
+        startPage();
         return result(sysDeptService.selectDeptList(sysDept));
     }
 
@@ -49,7 +49,7 @@ public class SysDeptController extends BaseController
      * 新增保存部门
      */
     @PostMapping("save")
-    public R addSave(SysDept sysDept)
+    public R addSave(@RequestBody SysDept sysDept)
     {
         return toAjax(sysDeptService.insertDept(sysDept));
     }
@@ -58,7 +58,7 @@ public class SysDeptController extends BaseController
      * 修改保存部门
      */
     @PostMapping("update")
-    public R editSave(SysDept sysDept)
+    public R editSave(@RequestBody SysDept sysDept)
     {
         return toAjax(sysDeptService.updateDept(sysDept));
     }

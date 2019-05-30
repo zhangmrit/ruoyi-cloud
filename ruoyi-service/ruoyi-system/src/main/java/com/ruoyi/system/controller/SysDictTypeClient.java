@@ -44,7 +44,7 @@ public class SysDictTypeClient extends BaseController
 	@PostMapping("list")
 	public List<SysDictType> list(SysDictType sysDictType, PageDomain page)
 	{
-		startPage(page);
+		startPage();
         return sysDictTypeService.selectDictTypeList(sysDictType);
 	}
 	

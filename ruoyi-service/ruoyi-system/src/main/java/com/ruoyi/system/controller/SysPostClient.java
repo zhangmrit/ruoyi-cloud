@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.service.ISysPostService;
 
@@ -42,9 +41,9 @@ public class SysPostClient extends BaseController
 	 * 查询岗位列表
 	 */
 	@PostMapping("list")
-	public List<SysPost> list(SysPost sysPost, PageDomain page)
+	public List<SysPost> list(SysPost sysPost)
 	{
-		startPage(page);
+		startPage();
         return sysPostService.selectPostList(sysPost);
 	}
 	

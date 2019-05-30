@@ -18,6 +18,9 @@ spring:
         service-id: ruoyi-config
   profiles: 
     active: dev
+  devtools:
+    restart:
+      enabled: false
   
 feign: 
   hystrix: 

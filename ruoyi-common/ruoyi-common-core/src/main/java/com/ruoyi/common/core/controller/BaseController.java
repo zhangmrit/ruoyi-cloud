@@ -61,10 +61,6 @@ public class BaseController
     protected void startPage()
     {
         PageDomain pageDomain = TableSupport.buildPageRequest();
-        startPage(pageDomain);
-    }
-    protected void startPage(PageDomain pageDomain)
-    {
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize))
@@ -73,7 +69,6 @@ public class BaseController
             PageHelper.startPage(pageNum, pageSize, orderBy);
         }
     }
-
 
     /**
      * 获取request
@@ -108,10 +103,11 @@ public class BaseController
         }
         return id;
     }
+
     /**
      * 响应请求分页数据
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected TableDataInfo getDataTable(List<?> list)
     {
         TableDataInfo rspData = new TableDataInfo();
@@ -121,14 +117,14 @@ public class BaseController
         return rspData;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected R result(List<?> list)
     {
         PageInfo<?> pageInfo = new PageInfo(list);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("rows", list);
-        m.put("pageNo", pageInfo.getPageNum());
-        m.put("totalCount", pageInfo.getTotal());
+        m.put("pageNum", pageInfo.getPageNum());
+        m.put("total", pageInfo.getTotal());
         return R.ok(m);
     }
 
@@ -154,7 +150,6 @@ public class BaseController
         return result ? R.ok() : R.error();
     }
 
-
     /**
      * 返回失败消息
      */
@@ -162,7 +157,6 @@ public class BaseController
     {
         return AjaxResult.error();
     }
-
 
     /**
      * 返回失败消息

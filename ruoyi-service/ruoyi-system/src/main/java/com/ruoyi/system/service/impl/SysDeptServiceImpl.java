@@ -168,13 +168,16 @@ public class SysDeptServiceImpl implements ISysDeptService
     @Override
     public int insertDept(SysDept dept)
     {
-        SysDept info = deptMapper.selectDeptById(dept.getParentId());
-        // 如果父节点不为"正常"状态,则不允许新增子节点
-        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus()))
-        {
-            throw new BusinessException("部门停用，不允许新增");
+        if(dept.getParentId()>0) {
+            
+            SysDept info = deptMapper.selectDeptById(dept.getParentId());
+            // 如果父节点不为"正常"状态,则不允许新增子节点
+            if (!UserConstants.DEPT_NORMAL.equals(info.getStatus()))
+            {
+                throw new BusinessException("部门停用，不允许新增");
+            }
+            dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         }
-        dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         return deptMapper.insertDept(dept);
     }
 

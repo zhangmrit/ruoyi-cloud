@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysOss;
 import com.ruoyi.system.service.ISysOssService;
 
@@ -40,9 +39,9 @@ public class SysOssClient extends BaseController
      * 查询文件上传列表
      */
     @PostMapping("list")
-    public List<SysOss> list(SysOss sysOss, PageDomain page)
+    public List<SysOss> list(SysOss sysOss)
     {
-        startPage(page);
+        startPage();
         return sysOssService.selectSysOssList(sysOss);
     }
 

@@ -98,6 +98,14 @@ public class SysMenuServiceImpl implements ISysMenuService
         }
         return permsSet;
     }
+    
+    @Override
+    public Set<String> selectMenuIdsByRoleId(Long roleId)
+    {
+        List<String> menuIds = menuMapper.selectMenuIdsByRoleId(roleId);
+        Set<String> idsSet = new HashSet<>(menuIds);
+        return idsSet;
+    }
 
     /**
      * 根据角色ID查询菜单

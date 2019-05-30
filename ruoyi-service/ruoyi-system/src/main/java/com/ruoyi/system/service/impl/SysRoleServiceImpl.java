@@ -32,7 +32,7 @@ import com.ruoyi.system.service.ISysRoleService;
 public class SysRoleServiceImpl implements ISysRoleService
 {
     @Autowired
-    private SysRoleMapper roleMapper;
+    private SysRoleMapper     roleMapper;
 
     @Autowired
     private SysRoleMenuMapper roleMenuMapper;
@@ -155,7 +155,8 @@ public class SysRoleServiceImpl implements ISysRoleService
                 throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
             }
         }
-        return roleMapper.deleteRoleByIds(roleIds);
+       if (roleIds.length>0) return roleMapper.deleteRoleByIds(roleIds);
+       return 0;
     }
 
     /**
@@ -315,6 +316,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     {
         return roleMapper.updateRole(role);
     }
+
     /**
      * 取消授权用户角色
      * 

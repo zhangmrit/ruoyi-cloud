@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysDictData;
 import com.ruoyi.system.service.ISysDictDataService;
 
@@ -42,9 +41,9 @@ public class SysDictDataClient extends BaseController
 	 * 查询字典数据列表
 	 */
 	@PostMapping("list")
-	public List<SysDictData> list(SysDictData sysDictData, PageDomain page)
+	public List<SysDictData> list(SysDictData sysDictData)
 	{
-		startPage(page);
+		startPage();
         return sysDictDataService.selectDictDataList(sysDictData);
 	}
 	

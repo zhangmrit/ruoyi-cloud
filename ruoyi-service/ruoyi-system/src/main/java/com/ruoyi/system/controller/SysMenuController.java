@@ -1,9 +1,15 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.annotation.LoginUser;
 import com.ruoyi.common.core.controller.BaseController;
@@ -22,19 +28,17 @@ import com.ruoyi.system.service.ISysMenuService;
 @RequestMapping("menu")
 public class SysMenuController extends BaseController
 {
-	
-	@Autowired
-	private ISysMenuService sysMenuService;
-	
-	/**
-	 * 查询菜单权限
-	 */
-	@GetMapping("get/{menuId}")
-	public SysMenu get(@PathVariable("menuId") Long menuId)
-	{
-		return sysMenuService.selectMenuById(menuId);
-		
-	}
+    @Autowired
+    private ISysMenuService sysMenuService;
+
+    /**
+     * 查询菜单权限
+     */
+    @GetMapping("get/{menuId}")
+    public SysMenu get(@PathVariable("menuId") Long menuId)
+    {
+        return sysMenuService.selectMenuById(menuId);
+    }
 
     /**
      * 查询菜单权限
@@ -44,42 +48,53 @@ public class SysMenuController extends BaseController
     {
         return sysMenuService.selectMenusByUser(sysUser);
     }
-	
-	/**
-	 * 查询菜单权限列表
-	 */
+
+    /**
+     * 根据角色编号查询菜单编号（用于勾选）
+     * @param roleId
+     * @return
+     * @author zmr
+     */
+    @GetMapping("role/{roleId}")
+    public Set<String> role(@PathVariable("roleId") Long roleId)
+    {
+        if (null == roleId || roleId <= 0) return null;
+        return sysMenuService.selectMenuIdsByRoleId(roleId);
+    }
+
+    /**
+     * 查询菜单权限列表
+     */
     @GetMapping("list")
     public R list(SysMenu sysMenu)
-	{
+    {
         return result(sysMenuService.selectMenuList(sysMenu));
-	}
-	
-	
-	/**
-	 * 新增保存菜单权限
-	 */
-	@PostMapping("save")
-    public R addSave(SysMenu sysMenu)
-	{		
-        return toAjax(sysMenuService.insertMenu(sysMenu));
-	}
+    }
 
-	/**
-	 * 修改保存菜单权限
-	 */
-	@PostMapping("update")
-    public R editSave(SysMenu sysMenu)
-	{		
+    /**
+     * 新增保存菜单权限
+     */
+    @PostMapping("save")
+    public R addSave(@RequestBody SysMenu sysMenu)
+    {
+        return toAjax(sysMenuService.insertMenu(sysMenu));
+    }
+
+    /**
+     * 修改保存菜单权限
+     */
+    @PostMapping("update")
+    public R editSave(@RequestBody SysMenu sysMenu)
+    {
         return toAjax(sysMenuService.updateMenu(sysMenu));
-	}
-	
-	/**
-	 * 删除菜单权限
-	 */
-	@GetMapping("remove/{menuId}")
+    }
+
+    /**
+     * 删除菜单权限
+     */
+    @PostMapping("remove/{menuId}")
     public R remove(@PathVariable("menuId") Long menuId)
-	{		
+    {
         return toAjax(sysMenuService.deleteMenuById(menuId));
-	}
-	
+    }
 }

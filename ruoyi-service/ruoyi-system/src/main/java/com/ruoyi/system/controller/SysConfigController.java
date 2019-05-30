@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.system.domain.SysConfig;
 import com.ruoyi.system.service.ISysConfigService;
 
@@ -42,9 +41,9 @@ public class SysConfigController extends BaseController
 	 * 查询参数配置列表
 	 */
 	@PostMapping("list")
-	public List<SysConfig> list(SysConfig sysConfig, PageDomain page)
+	public List<SysConfig> list(SysConfig sysConfig)
 	{
-		startPage(page);
+		startPage();
         return sysConfigService.selectConfigList(sysConfig);
 	}
 	

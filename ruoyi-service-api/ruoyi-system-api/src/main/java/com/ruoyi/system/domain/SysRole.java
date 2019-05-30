@@ -1,5 +1,7 @@
 package com.ruoyi.system.domain;
 
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -45,7 +47,7 @@ public class SysRole extends BaseEntity
     private boolean flag = false;
 
     /** 菜单组 */
-    private Long[] menuIds;
+    private List<Long> menuIds;
 
     /** 部门组（数据权限） */
     private Long[] deptIds;
@@ -130,12 +132,13 @@ public class SysRole extends BaseEntity
         this.flag = flag;
     }
 
-    public Long[] getMenuIds()
+
+    public List<Long> getMenuIds()
     {
         return menuIds;
     }
 
-    public void setMenuIds(Long[] menuIds)
+    public void setMenuIds(List<Long> menuIds)
     {
         this.menuIds = menuIds;
     }

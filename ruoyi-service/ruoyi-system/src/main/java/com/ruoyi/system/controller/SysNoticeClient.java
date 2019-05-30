@@ -44,7 +44,7 @@ public class SysNoticeClient extends BaseController
 	@PostMapping("list")
 	public List<SysNotice> list(SysNotice sysNotice, PageDomain page)
 	{
-		startPage(page);
+		startPage();
         return sysNoticeService.selectNoticeList(sysNotice);
 	}
 	

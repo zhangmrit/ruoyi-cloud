@@ -17,14 +17,14 @@ public interface SysMenuMapper
      * @return 菜单列表
      */
     public List<SysMenu> selectMenuAll();
-    
+
     /**
      * 查询系统正常显示菜单（不含按钮）
      * 
      * @return 菜单列表
      */
     public List<SysMenu> selectMenuNormalAll();
-    
+
     /**
      * 根据用户ID查询菜单
      * 
@@ -40,6 +40,14 @@ public interface SysMenuMapper
      * @return 权限列表
      */
     public List<String> selectPermsByUserId(Long userId);
+
+    /**
+      * 根据角色ID查询菜单ID
+     * 
+     * @param roleId 角色ID
+     * @return 权限列表
+     */
+    public List<String> selectMenuIdsByRoleId(Long roleId);
 
     /**
      * 根据角色ID查询菜单

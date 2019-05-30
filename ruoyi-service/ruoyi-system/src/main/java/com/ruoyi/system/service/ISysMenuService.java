@@ -45,6 +45,15 @@ public interface ISysMenuService
      * @return 权限列表
      */
     public Set<String> selectPermsByUserId(Long userId);
+    
+    
+    /**
+     * 根据角色ID查询菜单ID
+    * 
+    * @param roleId 角色ID
+    * @return 权限列表
+    */
+   public Set<String> selectMenuIdsByRoleId(Long roleId);
 
     /**
      * 根据角色ID查询菜单
