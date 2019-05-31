@@ -1,0 +1,11 @@
+spring:
+  #安全配置
+  security:
+    user:
+      name: admin
+      password: admin
+  boot:
+    admin:
+      ui:
+        title: 服务监控中心
+        brand: "<img src='assets/img/icon-spring-boot-admin.svg'><span>应用监控管理</span>"   
