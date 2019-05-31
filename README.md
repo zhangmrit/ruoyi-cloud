@@ -11,15 +11,19 @@
 ```
 ruoyi-cloud
 |
+├──ruoyi-auth --授权中心
+|
 ├──ruoyi-common --通用工具包
+|  |
+|  ├──ruoyi-common-core --核心工具包
+|  |
+|  ├──ruoyi-common-redis --redis工具包
 |
 ├──ruoyi-config --cloud统一配置中心
 |
 ├──ruoyi-eureka --注册中心
 |
-├──ruoyi-front --工程前端相关
-|  |
-|  ├──ruoyi-admin --管理后台
+├──ruoyi-ant --前端 使用ant design框架
 |
 ├──ruoyi-gateway --zuul网关
 |
