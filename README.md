@@ -50,7 +50,7 @@ ruoyi-cloud
 - system
 - auth
 
-菜单sql有增加字段，以上传到doc文件
+菜单sql有增加字段，以上传到sql文件
 该分支是ant分支，前端使用ant-design-vue 项目地址 [ruoyi-ant](https://gitee.com/zhangmrit/ruoyi-ant)
 
 欢迎pr或者加入，给个star是最好的鞭策

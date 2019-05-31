@@ -31,13 +31,10 @@ eureka:
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
 
+# 暴露监控端点
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS 
-      
+        include: '*'      
         
