@@ -45,10 +45,10 @@ ruoyi-cloud
 
 启动顺序：
 - eureka
-- gateway
 - config
+- gateway
 - system
-- admin
+- auth
 
 菜单sql有增加字段，以上传到doc文件
 该分支是ant分支，前端使用ant-design-vue 项目地址 [ruoyi-ant](https://gitee.com/zhangmrit/ruoyi-ant)
