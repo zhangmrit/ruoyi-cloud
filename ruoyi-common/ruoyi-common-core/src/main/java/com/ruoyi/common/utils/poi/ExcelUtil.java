@@ -3,7 +3,7 @@ package com.ruoyi.common.utils.poi;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.config.Global;
-import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.DateUtils;
@@ -240,7 +240,7 @@ public class ExcelUtil<T>
      * @param sheetName 工作表的名称
      * @return 结果
      */
-    public AjaxResult exportExcel(List<T> list, String sheetName)
+    public R exportExcel(List<T> list, String sheetName)
     {
         this.init(list, sheetName, Type.EXPORT);
         return exportExcel();
@@ -252,7 +252,7 @@ public class ExcelUtil<T>
      * @param sheetName 工作表的名称
      * @return 结果
      */
-    public AjaxResult importTemplateExcel(String sheetName)
+    public R importTemplateExcel(String sheetName)
     {
         this.init(null, sheetName, Type.IMPORT);
         return exportExcel();
@@ -263,7 +263,7 @@ public class ExcelUtil<T>
      *
      * @return 结果
      */
-    public AjaxResult exportExcel()
+    public R exportExcel()
     {
         OutputStream out = null;
         try
@@ -337,7 +337,7 @@ public class ExcelUtil<T>
             String filename = encodingFilename(sheetName);
             out = new FileOutputStream(getAbsoluteFile(filename));
             wb.write(out);
-            return AjaxResult.success(filename);
+            return R.ok(filename);
         }
         catch (Exception e)
         {

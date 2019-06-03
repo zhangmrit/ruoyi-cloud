@@ -1,4 +1,4 @@
-package com.ruoyi.common.enums;
+package com.ruoyi.common.log.enums;
 
 /**
  * 业务操作类型

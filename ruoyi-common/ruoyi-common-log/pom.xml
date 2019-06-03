@@ -4,14 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.ruoyi</groupId>
-		<artifactId>ruoyi</artifactId>
+		<artifactId>ruoyi-common</artifactId>
 		<version>3.3</version>
 	</parent>
-	<artifactId>ruoyi-common</artifactId>
-	<packaging>pom</packaging>
-	<modules>
-		<module>ruoyi-common-core</module>
-		<module>ruoyi-common-redis</module>
-		<module>ruoyi-common-log</module>
-	</modules>
+	<artifactId>ruoyi-common-log</artifactId>
+	<dependencies>
+		<!-- 系统模块 -->
+		<dependency>
+			<groupId>com.ruoyi</groupId>
+			<artifactId>ruoyi-system-api</artifactId>
+			<version>${ruoyi.version}</version>
+		</dependency>
+	</dependencies>
 </project>

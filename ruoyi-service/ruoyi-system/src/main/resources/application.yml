@@ -20,7 +20,10 @@ spring:
     active: dev
   devtools:
     restart:
-      enabled: false
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+  
   
 feign: 
   hystrix: 

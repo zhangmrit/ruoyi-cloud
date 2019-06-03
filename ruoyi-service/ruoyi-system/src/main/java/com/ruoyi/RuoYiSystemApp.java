@@ -1,4 +1,4 @@
-package com.ruoyi.system;
+package com.ruoyi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,9 +13,9 @@ import tk.mybatis.spring.annotation.MapperScan;
  * 
  * @author ruoyi
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableEurekaClient
-@EnableFeignClients(basePackages= {"com.ruoyi.system"})
+@EnableFeignClients(basePackages = {"com.ruoyi"})
 @MapperScan("com.ruoyi.*.mapper")
 public class RuoYiSystemApp
 {

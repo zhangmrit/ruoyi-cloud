@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.LoginUser;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.log.annotation.OperLog;
+import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.system.domain.SysMenu;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysMenuService;
@@ -83,6 +85,7 @@ public class SysMenuController extends BaseController
     /**
      * 修改保存菜单权限
      */
+    @OperLog(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PostMapping("update")
     public R editSave(@RequestBody SysMenu sysMenu)
     {
