@@ -19,6 +19,7 @@ import com.ruoyi.common.log.enums.BusinessStatus;
 import com.ruoyi.common.log.event.SysOperLogEvent;
 import com.ruoyi.common.utils.AddressUtils;
 import com.ruoyi.common.utils.IpUtils;
+import com.ruoyi.common.utils.JwtUtil;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.spring.SpringContextHolder;
@@ -83,7 +84,8 @@ public class OperLogAspect
             operLog.setOperIp(ip);
             operLog.setOperUrl(request.getRequestURI());
             operLog.setOperLocation(AddressUtils.getRealAddressByIP(ip));
-            operLog.setOperName("admin");
+            String token = request.getHeader("token");
+            operLog.setOperName(JwtUtil.getUsername(token));
             if (e != null)
             {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());

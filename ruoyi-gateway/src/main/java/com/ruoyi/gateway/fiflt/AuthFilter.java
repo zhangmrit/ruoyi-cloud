@@ -84,11 +84,6 @@ public class AuthFilter extends ZuulFilter
         HttpServletRequest request = requestContext.getRequest();
         // 从header中获取token
         String token = request.getHeader(TOKEN);
-        // 如果header中不存在token，则从参数中获取token
-        if (StringUtils.isBlank(token))
-        {
-            token = request.getParameter(TOKEN);
-        }
         // token为空
         if (StringUtils.isBlank(token))
         {

@@ -4,7 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+
+import com.ruoyi.system.config.EnableRyFeignClients;
 
 import tk.mybatis.spring.annotation.MapperScan;
 
@@ -15,7 +16,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableEurekaClient
-@EnableFeignClients(basePackages = {"com.ruoyi"})
+@EnableRyFeignClients
 @MapperScan("com.ruoyi.*.mapper")
 public class RuoYiSystemApp
 {

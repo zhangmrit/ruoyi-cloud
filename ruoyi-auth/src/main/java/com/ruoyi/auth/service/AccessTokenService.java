@@ -1,7 +1,8 @@
 package com.ruoyi.auth.service;
 
 import java.util.Date;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -12,7 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.auth.entity.AccessToken;
+import com.ruoyi.common.utils.JwtUtil;
 
 @Service("accessTokenService")
 public class AccessTokenService
@@ -37,23 +38,23 @@ public class AccessTokenService
         return Long.valueOf(ops.get(ACCESS_TOKEN + token));
     }
 
-    public AccessToken createToken(long userId)
+    public Map<String, Object> createToken(long userId, String username, String password)
     {
         // 当前时间
         Date now = new Date();
         // 过期时间
         Date expireTime = new Date(now.getTime() + EXPIRE * 1000);
         // 生成token
-        String token = generateToken();
+        String token = JwtUtil.sign(username, password);
         // 保存或更新用户token
-        AccessToken accessToken = new AccessToken();
-        accessToken.setUserId(userId);
-        accessToken.setToken(token);
-        accessToken.setExpireTime(expireTime);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userId", userId);
+        map.put("token", token);
+        map.put("expire", expireTime.getTime() - System.currentTimeMillis());
         expireToken(userId);
         ops.set(ACCESS_TOKEN + token, userId + "", EXPIRE, TimeUnit.SECONDS);
         ops.set(ACCESS_USERID + userId, token, EXPIRE, TimeUnit.SECONDS);
-        return accessToken;
+        return map;
     }
 
     public void expireToken(long userId)
@@ -64,10 +65,5 @@ public class AccessTokenService
             redisTemplate.delete(ACCESS_USERID + userId);
             redisTemplate.delete(ACCESS_TOKEN + token);
         }
-    }
-
-    private String generateToken()
-    {
-        return UUID.randomUUID().toString().replace("-", "");
     }
 }

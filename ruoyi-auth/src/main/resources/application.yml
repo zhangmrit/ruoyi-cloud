@@ -18,6 +18,8 @@ spring:
         service-id: ruoyi-config
   profiles: 
     active: dev
+  main:
+    allow-bean-definition-overriding: true
   
 feign: 
   hystrix: 
