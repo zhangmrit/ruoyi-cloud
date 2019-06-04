@@ -12,5 +12,6 @@
 	<build />
 	<modules>
 		<module>ruoyi-system</module>
+		<module>ruoyi-auth</module>
 	</modules>
 </project>

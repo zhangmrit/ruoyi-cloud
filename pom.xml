@@ -242,7 +242,6 @@
 		<module>ruoyi-gateway</module>
 		<module>ruoyi-service-api</module>
 		<module>ruoyi-service</module>
-		<module>ruoyi-auth</module>
 		<module>ruoyi-tool</module>
 	</modules>
 	<packaging>pom</packaging>
