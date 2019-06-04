@@ -11,13 +11,15 @@
 ```
 ruoyi-cloud
 |
-├──ruoyi-auth --授权中心
-|
 ├──ruoyi-common --通用包
 |  |
 |  ├──ruoyi-common-core --核心工具包
 |  |
 |  ├──ruoyi-common-redis --redis工具包
+|  |
+|  ├──ruoyi-common-log --日志工具包
+|  |
+|  ├──ruoyi-common-auth --权限工具包
 |
 ├──ruoyi-config --cloud统一配置中心
 |
@@ -29,9 +31,11 @@ ruoyi-cloud
 |  |
 |  ├──ruoyi-system-api --系统业务api
 |
-├──ruoyi-service --服务提供者
+├──ruoyi-service --微服务
 |  |
-|  ├──ruoyi-system --系统业务提供者
+|  ├──ruoyi-system --系统业务
+|  |
+|  ├──ruoyi-auth --授权中心
 |
 ├──ruoyi-tool --工具
 |  |
