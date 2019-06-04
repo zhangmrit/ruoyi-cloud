@@ -5,8 +5,11 @@
 蓝本是[zhangmrit/Ruoyi](https://gitee.com/zhangmrit/RuoYi)
 
 依次绑定host：
+
 127.0.0.1 eureka7001.com
+
 127.0.0.1 gateway-9527.com
+
 127.0.0.1 myzuul.com
 
 如果要使用eureka集群，请依次绑定eureka7002.com,eureka7003.com后修改各项目中的注释部分
@@ -49,8 +52,6 @@ ruoyi-cloud
 ├──ruoyi-ant --前端 使用ant design框架
 
 ```
-
-
 
 
 
