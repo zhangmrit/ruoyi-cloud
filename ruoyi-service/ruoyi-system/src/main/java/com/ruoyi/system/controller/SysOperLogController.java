@@ -2,7 +2,6 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.log.annotation.OperLog;
@@ -44,7 +44,7 @@ public class SysOperLogController extends BaseController
     /**
      * 查询操作日志记录列表
      */
-    @RequiresPermissions("monitor:operlog:list")
+    @HasPermissions("monitor:operlog:list")
     @GetMapping("list")
     public R list(SysOperLog sysOperLog)
     {
@@ -53,7 +53,7 @@ public class SysOperLogController extends BaseController
     }
 
     @OperLog(title = "操作日志", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("monitor:operlog:export")
+    @HasPermissions("monitor:operlog:export")
     @PostMapping("/export")
     public R export(SysOperLog operLog)
     {
@@ -74,7 +74,7 @@ public class SysOperLogController extends BaseController
     /**
      * 删除操作日志记录
      */
-    @RequiresPermissions("monitor:operlog:remove")
+    @HasPermissions("monitor:operlog:remove")
     @PostMapping("remove")
     public int remove(String ids)
     {
@@ -82,7 +82,7 @@ public class SysOperLogController extends BaseController
     }
 
     @OperLog(title = "操作日志", businessType = BusinessType.CLEAN)
-    @RequiresPermissions("monitor:operlog:remove")
+    @HasPermissions("monitor:operlog:remove")
     @PostMapping("/clean")
     public R clean()
     {

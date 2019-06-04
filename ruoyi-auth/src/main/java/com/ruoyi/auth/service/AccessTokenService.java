@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import com.ruoyi.common.redis.annotation.RedisEvict;
 import com.ruoyi.common.utils.JwtUtil;
 
 @Service("accessTokenService")
@@ -38,6 +39,7 @@ public class AccessTokenService
         return Long.valueOf(ops.get(ACCESS_TOKEN + token));
     }
 
+    @RedisEvict(key = "user_perms",fieldKey="#userId")
     public Map<String, Object> createToken(long userId, String username, String password)
     {
         // 当前时间

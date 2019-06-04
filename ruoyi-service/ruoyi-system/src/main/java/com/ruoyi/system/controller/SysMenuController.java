@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.annotation.LoginUser;
+import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.log.annotation.OperLog;
@@ -42,6 +43,12 @@ public class SysMenuController extends BaseController
         return sysMenuService.selectMenuById(menuId);
     }
 
+    @GetMapping("perms/{userId}")
+    public Set<String> perms(@PathVariable("userId") Long userId)
+    {
+        return sysMenuService.selectPermsByUserId(userId);
+    }
+
     /**
      * 查询菜单权限
      */
@@ -67,6 +74,7 @@ public class SysMenuController extends BaseController
     /**
      * 查询菜单权限列表
      */
+    @HasPermissions("system:menu:view")
     @GetMapping("list")
     public R list(SysMenu sysMenu)
     {

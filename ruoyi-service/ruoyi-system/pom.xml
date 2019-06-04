@@ -77,6 +77,18 @@
 			<artifactId>ruoyi-common-log</artifactId>
 			<version>${ruoyi.version}</version>
 		</dependency>
+		<!-- 权限模块 -->
+		<dependency>
+			<groupId>com.ruoyi</groupId>
+			<artifactId>ruoyi-common-auth</artifactId>
+			<version>${ruoyi.version}</version>
+		</dependency>
+		<!-- redis模块 -->
+		<dependency>
+			<groupId>com.ruoyi</groupId>
+			<artifactId>ruoyi-common-redis</artifactId>
+			<version>${ruoyi.version}</version>
+		</dependency>
 
 		<!-- 获取系统信息 -->
 		<dependency>
@@ -107,17 +119,6 @@
 		</dependency>
 
 
-		<!--Shiro核心框架 -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-		</dependency>
-
-		<!-- Shiro使用Srping框架 -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-spring</artifactId>
-		</dependency>
 
 	</dependencies>
 	<build>

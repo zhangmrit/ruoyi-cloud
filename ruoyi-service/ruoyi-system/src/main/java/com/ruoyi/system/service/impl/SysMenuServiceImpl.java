@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
+import com.ruoyi.common.redis.annotation.RedisCache;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysMenu;
 import com.ruoyi.system.domain.SysRole;
@@ -85,6 +86,7 @@ public class SysMenuServiceImpl implements ISysMenuService
      * @return 权限列表
      */
     @Override
+    @RedisCache(key = "user_perms",fieldKey="#userId")
     public Set<String> selectPermsByUserId(Long userId)
     {
         List<String> perms = menuMapper.selectPermsByUserId(userId);
