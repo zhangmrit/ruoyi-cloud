@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-import com.ruoyi.system.config.EnableRyFeignClients;
+import com.ruoyi.system.annotation.EnableRyFeignClients;
 
 import tk.mybatis.spring.annotation.MapperScan;
 

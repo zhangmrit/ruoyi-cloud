@@ -23,6 +23,9 @@ spring:
       enabled: true
   main:
     allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   
   
 feign: 

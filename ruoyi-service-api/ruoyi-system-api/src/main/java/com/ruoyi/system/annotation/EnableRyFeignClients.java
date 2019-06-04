@@ -1,4 +1,4 @@
-package com.ruoyi.system.config;
+package com.ruoyi.system.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

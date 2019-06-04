@@ -76,9 +76,9 @@ public class SysOperLogController extends BaseController
      */
     @HasPermissions("monitor:operlog:remove")
     @PostMapping("remove")
-    public int remove(String ids)
+    public R remove(String ids)
     {
-        return sysOperLogService.deleteOperLogByIds(ids);
+        return toAjax(sysOperLogService.deleteOperLogByIds(ids));
     }
 
     @OperLog(title = "操作日志", businessType = BusinessType.CLEAN)
