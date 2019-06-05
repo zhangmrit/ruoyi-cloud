@@ -20,7 +20,7 @@ import com.ruoyi.system.service.ISysDictDataService;
  * @date 2019-05-20
  */
 @RestController
-@RequestMapping("/sys/sysDictData")
+@RequestMapping("dict/data")
 public class SysDictDataClient extends BaseController
 {
 	
@@ -40,12 +40,37 @@ public class SysDictDataClient extends BaseController
 	/**
 	 * 查询字典数据列表
 	 */
-	@PostMapping("list")
+	@GetMapping("list")
 	public List<SysDictData> list(SysDictData sysDictData)
 	{
 		startPage();
         return sysDictDataService.selectDictDataList(sysDictData);
 	}
+	
+	/**
+     * 根据字典类型查询字典数据信息
+     * 
+     * @param dictType 字典类型
+     * @return 参数键值
+     */
+	@GetMapping("type")
+    public List<SysDictData> getType(String dictType)
+    {
+        return sysDictDataService.selectDictDataByType(dictType);
+    }
+
+    /**
+     * 根据字典类型和字典键值查询字典数据信息
+     * 
+     * @param dictType 字典类型
+     * @param dictValue 字典键值
+     * @return 字典标签
+     */
+	@GetMapping("label")
+    public String getLabel(String dictType, String dictValue)
+    {
+        return sysDictDataService.selectDictLabel(dictType, dictValue);
+    }
 	
 	
 	/**

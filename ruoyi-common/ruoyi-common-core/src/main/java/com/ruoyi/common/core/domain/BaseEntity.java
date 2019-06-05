@@ -13,27 +13,31 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class BaseEntity implements Serializable
 {
-    private static final long serialVersionUID = 1L;
+    private static final long   serialVersionUID = 1L;
 
     /** 搜索值 */
-    private String searchValue;
+    private String              searchValue;
 
     /** 创建者 */
-    private String createBy;
+    private String              createBy;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private Date                createTime;
 
     /** 更新者 */
-    private String updateBy;
+    private String              updateBy;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+    private Date                updateTime;
 
     /** 备注 */
-    private String remark;
+    private String              remark;
+
+    private String              beginTime;
+
+    private String              endTime;
 
     /** 请求参数 */
     private Map<String, Object> params;
@@ -96,6 +100,26 @@ public class BaseEntity implements Serializable
     public void setRemark(String remark)
     {
         this.remark = remark;
+    }
+
+    public String getBeginTime()
+    {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime)
+    {
+        this.beginTime = beginTime;
+    }
+
+    public String getEndTime()
+    {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime)
+    {
+        this.endTime = endTime;
     }
 
     public Map<String, Object> getParams()

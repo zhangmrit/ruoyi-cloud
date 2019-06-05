@@ -45,7 +45,7 @@ public class SysOperLogController extends BaseController
      * 查询操作日志记录列表
      */
     @HasPermissions("monitor:operlog:list")
-    @GetMapping("list")
+    @RequestMapping("list")
     public R list(SysOperLog sysOperLog)
     {
         startPage();

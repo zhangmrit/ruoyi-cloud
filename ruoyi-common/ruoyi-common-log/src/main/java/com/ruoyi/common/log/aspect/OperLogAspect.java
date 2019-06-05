@@ -141,7 +141,7 @@ public class OperLogAspect
      */
     private void setRequestValue(SysOperLog operLog, Object[] args) throws Exception
     {
-        String params = JSON.toJSONString(args);
+        String params = JSON.toJSONString(args,true);
         operLog.setOperParam(StringUtils.substring(params, 0, 2000));
     }
 

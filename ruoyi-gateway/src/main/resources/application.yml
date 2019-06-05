@@ -4,6 +4,9 @@ server:
 spring: 
   application:
     name: ruoyi-zuul-gateway
+  devtools:
+    restart:
+      enabled: true
   redis:
     database: 1
     host: 192.168.0.185
