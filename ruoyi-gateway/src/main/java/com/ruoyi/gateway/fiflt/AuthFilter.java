@@ -40,7 +40,7 @@ public class AuthFilter extends ZuulFilter
     private ValueOperations<String, String> ops;
 
     // 排除过滤的 uri 地址
-    private static final String[] whiteList    = {"/api/auth/login", "/user/user/register"};
+    private static final String[] whiteList    = {"/auth/login", "/user/register"};
 
     private static final String   TOKEN        = "token";
 
@@ -64,7 +64,7 @@ public class AuthFilter extends ZuulFilter
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String uri = request.getRequestURI();
-        log.debug("uri:{}", uri);
+        log.info("uri:{}", uri);
         // 注册和登录接口不拦截，其他接口都要拦截校验 token
         for (String whiteUrl : whiteList)
         {
