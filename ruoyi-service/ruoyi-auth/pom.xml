@@ -56,6 +56,12 @@
 			<artifactId>ruoyi-common-redis</artifactId>
 			<version>${ruoyi.version}</version>
 		</dependency>
+		<!-- log模块 -->
+		<dependency>
+			<groupId>com.ruoyi</groupId>
+			<artifactId>ruoyi-common-log</artifactId>
+			<version>${ruoyi.version}</version>
+		</dependency>
 
 
 		<dependency>

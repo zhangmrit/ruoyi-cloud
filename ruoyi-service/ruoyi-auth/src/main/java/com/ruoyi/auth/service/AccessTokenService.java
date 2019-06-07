@@ -53,7 +53,7 @@ public class AccessTokenService
         map.put("userId", userId);
         map.put("token", token);
         map.put("expire", expireTime.getTime() - System.currentTimeMillis());
-        expireToken(userId);
+//        expireToken(userId);
         ops.set(ACCESS_TOKEN + token, userId + "", EXPIRE, TimeUnit.SECONDS);
         ops.set(ACCESS_USERID + userId, token, EXPIRE, TimeUnit.SECONDS);
         return map;

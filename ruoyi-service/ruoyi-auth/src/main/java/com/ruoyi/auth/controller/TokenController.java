@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.auth.form.LoginForm;
 import com.ruoyi.auth.service.AccessTokenService;
-import com.ruoyi.auth.service.SysPasswordService;
+import com.ruoyi.auth.service.SysLoginService;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.exception.RuoyiException;
 import com.ruoyi.system.domain.SysUser;
-import com.ruoyi.system.feign.ISysUserClient;
 
 @RestController
 public class TokenController
@@ -20,21 +18,13 @@ public class TokenController
     private AccessTokenService tokenService;
 
     @Autowired
-    private ISysUserClient     userClient;
-
-    @Autowired
-    private SysPasswordService passwordService;
+    private SysLoginService    sysLoginService;
 
     @PostMapping("login")
     public R login(@RequestBody LoginForm form)
     {
         // 用户登录
-        SysUser user = userClient.selectSysUserByUsername(form.getUsername());
-        // 密码错误
-        if (null == user || !passwordService.matches(user, form.getPassword()))
-        {
-            throw new RuoyiException("手机号或密码错误");
-        }
+        SysUser user = sysLoginService.login(form.getUsername(), form.getPassword());
         // 获取登录token
         return R.ok(tokenService.createToken(user.getUserId(), user.getLoginName(), user.getPassword()));
     }

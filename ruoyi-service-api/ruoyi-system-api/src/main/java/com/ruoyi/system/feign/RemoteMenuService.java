@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ruoyi.common.constant.ServiceNameConstants;
-import com.ruoyi.system.feign.factory.SysMenuClientFallbackFactory;
+import com.ruoyi.system.feign.factory.RemoteMenuFallbackFactory;
 
 /**
  * 菜单 Feign服务层
@@ -15,8 +15,8 @@ import com.ruoyi.system.feign.factory.SysMenuClientFallbackFactory;
  * @author zmr
  * @date 2019-05-20
  */
-@FeignClient(name = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = SysMenuClientFallbackFactory.class)
-public interface ISysMenuClient
+@FeignClient(name = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = RemoteMenuFallbackFactory.class)
+public interface RemoteMenuService
 {
     @GetMapping("menu/perms/{userId}")
     public Set<String> selectPermsByUserId(@PathVariable("userId") Long userId);

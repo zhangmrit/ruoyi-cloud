@@ -4,20 +4,20 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import com.ruoyi.system.feign.ISysMenuClient;
+import com.ruoyi.system.feign.RemoteMenuService;
 
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class SysMenuClientFallbackFactory implements FallbackFactory<ISysMenuClient>
+public class RemoteMenuFallbackFactory implements FallbackFactory<RemoteMenuService>
 {
     @Override
-    public ISysMenuClient create(Throwable throwable)
+    public RemoteMenuService create(Throwable throwable)
     {
         log.error(throwable.getMessage());
-        return new ISysMenuClient()
+        return new RemoteMenuService()
         {
 
             @Override

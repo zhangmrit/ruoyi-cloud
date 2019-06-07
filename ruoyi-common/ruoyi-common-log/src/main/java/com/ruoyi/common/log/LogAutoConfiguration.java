@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.ruoyi.common.log.aspect.OperLogAspect;
-import com.ruoyi.common.log.event.SysOperLogListener;
-import com.ruoyi.system.feign.ISysOperLogClient;
+import com.ruoyi.common.log.listen.LogListener;
+import com.ruoyi.system.feign.RemoteLogService;
 
 import lombok.AllArgsConstructor;
 
@@ -17,12 +17,12 @@ import lombok.AllArgsConstructor;
 @ConditionalOnWebApplication
 public class LogAutoConfiguration
 {
-    private final ISysOperLogClient sysOperLogClient;
+    private final RemoteLogService logService;
 
     @Bean
-    public SysOperLogListener sysOperLogListener()
+    public LogListener sysOperLogListener()
     {
-        return new SysOperLogListener(sysOperLogClient);
+        return new LogListener(logService);
     }
 
     @Bean

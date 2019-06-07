@@ -16,7 +16,7 @@ import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.utils.ServletUtils;
-import com.ruoyi.system.feign.ISysMenuClient;
+import com.ruoyi.system.feign.RemoteMenuService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PreAuthorizeAspect
 {
     @Autowired
-    private ISysMenuClient sysMenuClient;
+    private RemoteMenuService sysMenuClient;
 
     @Around("@annotation(com.ruoyi.common.auth.annotation.HasPermissions)")
     public Object around(ProceedingJoinPoint point) throws Throwable

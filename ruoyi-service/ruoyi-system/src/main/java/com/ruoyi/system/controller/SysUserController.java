@@ -82,6 +82,18 @@ public class SysUserController extends BaseController
     }
 
     /**
+     * 修改用户信息
+     * @param sysUser
+     * @return
+     * @author zmr
+     */
+    @PostMapping("update/info")
+    public R updateInfo(@RequestBody SysUser sysUser)
+    {
+        return toAjax(sysUserService.updateUserInfo(sysUser));
+    }
+
+    /**
      * 修改状态
      * @param sysUser
      * @return
