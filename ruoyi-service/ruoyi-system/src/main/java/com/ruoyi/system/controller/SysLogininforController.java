@@ -1,7 +1,5 @@
 package com.ruoyi.system.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.log.annotation.OperLog;
+import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.system.domain.SysLogininfor;
 import com.ruoyi.system.service.ISysLogininforService;
 
@@ -30,10 +32,10 @@ public class SysLogininforController extends BaseController
      * 查询系统访问记录列表
      */
     @GetMapping("list")
-    public List<SysLogininfor> list(SysLogininfor sysLogininfor)
+    public R list(SysLogininfor sysLogininfor)
     {
         startPage();
-        return sysLogininforService.selectLogininforList(sysLogininfor);
+        return result(sysLogininforService.selectLogininforList(sysLogininfor));
     }
 
     /**
@@ -45,12 +47,25 @@ public class SysLogininforController extends BaseController
         sysLogininforService.insertLogininfor(sysLogininfor);
     }
 
+    
     /**
      * 删除系统访问记录
      */
+    @OperLog(title = "访问日志", businessType = BusinessType.DELETE)
+    @HasPermissions("monitor:loginlog:remove")
     @PostMapping("remove")
-    public int remove(String ids)
+    public R remove(String ids)
     {
-        return sysLogininforService.deleteLogininforByIds(ids);
+        return toAjax(sysLogininforService.deleteLogininforByIds(ids));
     }
+
+    @OperLog(title = "访问日志", businessType = BusinessType.CLEAN)
+    @HasPermissions("monitor:loginlog:remove")
+    @PostMapping("/clean")
+    public R clean()
+    {
+        sysLogininforService.cleanLogininfor();
+        return R.ok();
+    }
+    
 }
