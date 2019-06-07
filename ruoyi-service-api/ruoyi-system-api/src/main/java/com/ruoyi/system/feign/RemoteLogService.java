@@ -21,6 +21,6 @@ public interface RemoteLogService
     @PostMapping("operLog/save")
     public void insertOperlog(@RequestBody SysOperLog operLog);
 
-    @PostMapping("operLog/save")
+    @PostMapping("logininfor/save")
     public void insertLoginlog(@RequestBody SysLogininfor logininfor);
 }
