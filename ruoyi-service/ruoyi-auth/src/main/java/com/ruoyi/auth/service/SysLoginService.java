@@ -1,5 +1,7 @@
 package com.ruoyi.auth.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,7 @@ import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
 import com.ruoyi.common.log.publish.PublishFactory;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.IpUtils;
+import com.ruoyi.common.utils.JwtUtil;
 import com.ruoyi.common.utils.MessageUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.system.domain.SysUser;
@@ -125,5 +128,12 @@ public class SysLoginService
         user.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         user.setLoginDate(DateUtils.getNowDate());
         userService.updateUserInfo(user);
+    }
+
+    public void logout(HttpServletRequest request)
+    {
+        String token = request.getHeader("token");
+        String loginName = JwtUtil.getUsername(token);
+        PublishFactory.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success"));
     }
 }

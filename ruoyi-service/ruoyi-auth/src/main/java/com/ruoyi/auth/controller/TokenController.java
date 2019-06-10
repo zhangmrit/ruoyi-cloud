@@ -12,7 +12,6 @@ import com.ruoyi.auth.service.AccessTokenService;
 import com.ruoyi.auth.service.SysLoginService;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.system.domain.SysUser;
 
 @RestController
@@ -36,9 +35,10 @@ public class TokenController
     @PostMapping("logout")
     public R logout(HttpServletRequest request)
     {
-        Long userId = Long.valueOf(ServletUtils.getRequest().getHeader(Constants.USER_KEY));
+        Long userId = Long.valueOf(request.getHeader(Constants.USER_KEY));
         if (null != userId)
         {
+            sysLoginService.logout(request);
             tokenService.expireToken(userId);
         }
         return R.ok();
