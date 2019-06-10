@@ -72,8 +72,7 @@ monitor使用springadmin完成,目前只是最简单的用法,[详戳](https://g
 
 ##  请作者喝杯咖啡或者建设演示服务器
 
-###### 微信
+###### 微信 or 支付宝
 <img src="https://gitee.com/zhangmrit/img/raw/master/contribute/wechat.png"/>
-###### 支付宝
 <img src="https://gitee.com/zhangmrit/img/raw/master/contribute/alipay.png"/>
 
