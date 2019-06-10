@@ -1,5 +1,5 @@
 spring:
   profiles:
-    active: 7001      
+    active: dev      
 
  
