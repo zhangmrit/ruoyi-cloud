@@ -6,10 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.log.annotation.OperLog;
+import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.system.domain.SysDictData;
 import com.ruoyi.system.service.ISysDictDataService;
 
@@ -41,10 +46,11 @@ public class SysDictDataClient extends BaseController
 	 * 查询字典数据列表
 	 */
 	@GetMapping("list")
-	public List<SysDictData> list(SysDictData sysDictData)
+	@HasPermissions("system:dict:list")
+	public R list(SysDictData sysDictData)
 	{
 		startPage();
-        return sysDictDataService.selectDictDataList(sysDictData);
+        return result(sysDictDataService.selectDictDataList(sysDictData));
 	}
 	
 	/**
@@ -76,28 +82,34 @@ public class SysDictDataClient extends BaseController
 	/**
 	 * 新增保存字典数据
 	 */
+	@OperLog(title = "字典数据", businessType = BusinessType.INSERT)
+    @HasPermissions("system:dict:add")
 	@PostMapping("save")
-	public int addSave(SysDictData sysDictData)
+	public R addSave(@RequestBody SysDictData sysDictData)
 	{		
-		return sysDictDataService.insertDictData(sysDictData);
+		return toAjax(sysDictDataService.insertDictData(sysDictData));
 	}
 
 	/**
 	 * 修改保存字典数据
 	 */
+	@OperLog(title = "字典数据", businessType = BusinessType.UPDATE)
+    @HasPermissions("system:dict:edit")
 	@PostMapping("update")
-	public int editSave(SysDictData sysDictData)
+	public R editSave(@RequestBody SysDictData sysDictData)
 	{		
-		return sysDictDataService.updateDictData(sysDictData);
+		return toAjax(sysDictDataService.updateDictData(sysDictData));
 	}
 	
 	/**
 	 * 删除字典数据
 	 */
+	@OperLog(title = "字典数据", businessType = BusinessType.DELETE)
+    @HasPermissions("system:dict:remove")
 	@PostMapping("remove")
-	public int remove(String ids)
+	public R remove(String ids)
 	{		
-		return sysDictDataService.deleteDictDataByIds(ids);
+		return toAjax(sysDictDataService.deleteDictDataByIds(ids));
 	}
 	
 }
