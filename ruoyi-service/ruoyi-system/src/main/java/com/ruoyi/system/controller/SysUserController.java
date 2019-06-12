@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysUserService;
 
 /**
@@ -27,6 +28,9 @@ public class SysUserController extends BaseController
 {
     @Autowired
     private ISysUserService sysUserService;
+    
+    @Autowired
+    private ISysMenuService sysMenuService;
 
     /**
      * 查询用户
@@ -41,7 +45,9 @@ public class SysUserController extends BaseController
     public SysUser info(HttpServletRequest request)
     {
         long userId = getCurrentUserId();
-        return sysUserService.selectUserById(userId);
+        SysUser sysUser=sysUserService.selectUserById(userId);
+        sysUser.setButtons(sysMenuService.selectPermsByUserId(userId));
+        return sysUser;
     }
 
     /**

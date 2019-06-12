@@ -2,6 +2,7 @@ package com.ruoyi.system.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -85,6 +86,8 @@ public class SysUser extends BaseEntity
 
     /** 岗位组 */
     private Long[]            postIds;
+
+    private Set<String>       buttons;
 
     public Long getUserId()
     {
@@ -278,6 +281,16 @@ public class SysUser extends BaseEntity
     public void setPostIds(Long[] postIds)
     {
         this.postIds = postIds;
+    }
+
+    public Set<String> getButtons()
+    {
+        return buttons;
+    }
+
+    public void setButtons(Set<String> buttons)
+    {
+        this.buttons = buttons;
     }
 
     @Override
