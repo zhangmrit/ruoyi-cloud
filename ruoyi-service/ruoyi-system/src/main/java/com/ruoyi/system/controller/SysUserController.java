@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.log.annotation.OperLog;
+import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysUserService;
@@ -73,6 +75,7 @@ public class SysUserController extends BaseController
      * 新增保存用户
      */
     @PostMapping("save")
+    @OperLog(title = "用户管理", businessType = BusinessType.INSERT)
     public R addSave(@RequestBody SysUser sysUser)
     {
         return toAjax(sysUserService.insertUser(sysUser));
@@ -81,6 +84,7 @@ public class SysUserController extends BaseController
     /**
      * 修改保存用户
      */
+    @OperLog(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("update")
     public R editSave(@RequestBody SysUser sysUser)
     {
@@ -94,6 +98,7 @@ public class SysUserController extends BaseController
      * @author zmr
      */
     @PostMapping("update/info")
+    @OperLog(title = "用户管理", businessType = BusinessType.UPDATE)
     public R updateInfo(@RequestBody SysUser sysUser)
     {
         return toAjax(sysUserService.updateUserInfo(sysUser));
@@ -106,6 +111,7 @@ public class SysUserController extends BaseController
      * @author zmr
      */
     @PostMapping("status")
+    @OperLog(title = "用户管理", businessType = BusinessType.UPDATE)
     public R status(@RequestBody SysUser sysUser)
     {
         return toAjax(sysUserService.changeStatus(sysUser));
@@ -115,6 +121,7 @@ public class SysUserController extends BaseController
      * 删除用户
      * @throws Exception 
      */
+    @OperLog(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("remove")
     public R remove(String ids) throws Exception
     {

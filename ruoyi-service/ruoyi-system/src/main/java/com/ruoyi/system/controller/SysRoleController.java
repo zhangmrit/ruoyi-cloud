@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.log.annotation.OperLog;
+import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.system.domain.SysRole;
 import com.ruoyi.system.service.ISysRoleService;
 
@@ -55,6 +57,7 @@ public class SysRoleController extends BaseController
      * 新增保存角色
      */
     @PostMapping("save")
+    @OperLog(title = "角色管理", businessType = BusinessType.INSERT)
     public R addSave(@RequestBody SysRole sysRole)
     {
         return toAjax(sysRoleService.insertRole(sysRole));
@@ -63,6 +66,7 @@ public class SysRoleController extends BaseController
     /**
      * 修改保存角色
      */
+    @OperLog(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("update")
     public R editSave(@RequestBody SysRole sysRole)
     {
@@ -72,6 +76,7 @@ public class SysRoleController extends BaseController
     /**
      * 修改保存角色
      */
+    @OperLog(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("status")
     public R status(@RequestBody SysRole sysRole)
     {
@@ -82,6 +87,7 @@ public class SysRoleController extends BaseController
      * 删除角色
      * @throws Exception 
      */
+    @OperLog(title = "角色管理", businessType = BusinessType.DELETE)
     @PostMapping("remove")
     public R remove(String ids) throws Exception
     {

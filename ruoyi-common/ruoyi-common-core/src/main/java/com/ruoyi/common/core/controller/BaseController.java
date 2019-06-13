@@ -25,6 +25,7 @@ import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.JwtUtil;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.sql.SqlUtil;
@@ -102,6 +103,12 @@ public class BaseController
             id = 0l;
         }
         return id;
+    }
+
+    public String getLoginName()
+    {
+        String token = getRequest().getHeader(Constants.TOKEN);
+        return JwtUtil.getUsername(token);
     }
 
     /**

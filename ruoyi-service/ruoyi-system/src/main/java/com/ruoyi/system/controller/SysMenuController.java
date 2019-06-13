@@ -85,6 +85,7 @@ public class SysMenuController extends BaseController
      * 新增保存菜单权限
      */
     @PostMapping("save")
+    @OperLog(title = "菜单管理", businessType = BusinessType.INSERT)
     public R addSave(@RequestBody SysMenu sysMenu)
     {
         return toAjax(sysMenuService.insertMenu(sysMenu));
@@ -103,6 +104,7 @@ public class SysMenuController extends BaseController
     /**
      * 删除菜单权限
      */
+    @OperLog(title = "菜单管理", businessType = BusinessType.DELETE)
     @PostMapping("remove/{menuId}")
     public R remove(@PathVariable("menuId") Long menuId)
     {

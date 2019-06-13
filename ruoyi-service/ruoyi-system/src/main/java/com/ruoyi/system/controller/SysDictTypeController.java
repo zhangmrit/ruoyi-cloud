@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysDictTypeService;
  */
 @RestController
 @RequestMapping("dict/type")
-public class SysDictTypeClient extends BaseController
+public class SysDictTypeController extends BaseController
 {
 	
 	@Autowired

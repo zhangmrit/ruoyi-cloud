@@ -63,4 +63,6 @@ public class Constants
     public static final String IS_ASC          = "sortOrder";
 
     public static final String USER_KEY        = "currentUserId";
+
+    public static final String TOKEN           = "token";
 }
