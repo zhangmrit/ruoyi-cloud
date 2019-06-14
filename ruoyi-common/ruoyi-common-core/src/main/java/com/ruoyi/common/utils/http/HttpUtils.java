@@ -116,7 +116,6 @@ public class HttpUtils
             conn.setDoOutput(true);
             conn.setDoInput(true);
             out = new PrintWriter(conn.getOutputStream());
-            out.print(param);
             out.flush();
             in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
             String line;
@@ -171,7 +170,7 @@ public class HttpUtils
         {
             log.info("sendSSLPost - {}", urlNameString);
             SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, new TrustManager[] { new TrustAnyTrustManager() }, new java.security.SecureRandom());
+            sc.init(null, new TrustManager[]{new TrustAnyTrustManager()}, new java.security.SecureRandom());
             URL console = new URL(urlNameString);
             HttpsURLConnection conn = (HttpsURLConnection) console.openConnection();
             conn.setRequestProperty("accept", "*/*");
@@ -181,7 +180,6 @@ public class HttpUtils
             conn.setRequestProperty("contentType", "utf-8");
             conn.setDoOutput(true);
             conn.setDoInput(true);
-
             conn.setSSLSocketFactory(sc.getSocketFactory());
             conn.setHostnameVerifier(new TrustAnyHostnameVerifier());
             conn.connect();
@@ -233,7 +231,7 @@ public class HttpUtils
         @Override
         public X509Certificate[] getAcceptedIssuers()
         {
-            return new X509Certificate[] {};
+            return new X509Certificate[]{};
         }
     }
 

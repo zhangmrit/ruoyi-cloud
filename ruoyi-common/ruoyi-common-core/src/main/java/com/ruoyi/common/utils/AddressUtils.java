@@ -2,7 +2,7 @@ package com.ruoyi.common.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.ruoyi.common.config.Global;
+
 import com.ruoyi.common.json.JSON;
 import com.ruoyi.common.json.JSONObject;
 import com.ruoyi.common.utils.http.HttpUtils;
@@ -26,25 +26,22 @@ public class AddressUtils
         {
             return "内网IP";
         }
-        if (Global.isAddressEnabled())
+        String rspStr = HttpUtils.sendPost(IP_URL, "ip=" + ip);
+        if (StringUtils.isEmpty(rspStr))
         {
-            String rspStr = HttpUtils.sendPost(IP_URL, "ip=" + ip);
-            if (StringUtils.isEmpty(rspStr))
-            {
-                log.error("获取地理位置异常 {}", ip);
-                return address;
-            }
-            JSONObject obj;
-            try
-            {
-                obj = JSON.unmarshal(rspStr, JSONObject.class);
-                JSONObject data = obj.getObj("data");
-                address = data.getStr("address");
-            }
-            catch (Exception e)
-            {
-                log.error("获取地理位置异常 {}", ip);
-            }
+            log.error("获取地理位置异常 {}", ip);
+            return address;
+        }
+        JSONObject obj;
+        try
+        {
+            obj = JSON.unmarshal(rspStr, JSONObject.class);
+            JSONObject data = obj.getObj("data");
+            address = data.getStr("address");
+        }
+        catch (Exception e)
+        {
+            log.error("获取地理位置异常 {}", ip);
         }
         return address;
     }
