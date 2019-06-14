@@ -14,14 +14,13 @@ import com.ruoyi.common.utils.http.HttpUtils;
  */
 public class AddressUtils
 {
-    private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
+    private static final Logger log    = LoggerFactory.getLogger(AddressUtils.class);
 
-    public static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";
+    public static final String  IP_URL = "http://region.zmrit.com";
 
     public static String getRealAddressByIP(String ip)
     {
         String address = "XX XX";
-
         // 内网不查询
         if (IpUtils.internalIp(ip))
         {
@@ -40,9 +39,7 @@ public class AddressUtils
             {
                 obj = JSON.unmarshal(rspStr, JSONObject.class);
                 JSONObject data = obj.getObj("data");
-                String region = data.getStr("region");
-                String city = data.getStr("city");
-                address = region + " " + city;
+                address = data.getStr("address");
             }
             catch (Exception e)
             {
