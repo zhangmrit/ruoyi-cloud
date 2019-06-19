@@ -3,12 +3,45 @@ server:
  
 spring: 
   application:
-    name: ruoyi-zuul-gateway
+    name: ruoyi-gateway
   devtools:
     restart:
       enabled: true
   profiles:
     active: dev
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        # 认证中心
+        - id: ruoyi-auth
+          uri: lb://ruoyi-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            # 验证码处理
+#            - ImgCodeFilter
+            - StripPrefix=1
+        #system 模块
+        - id: ruoyi-system
+          uri: lb://ruoyi-system
+          predicates:
+            - Path=/system/**
+          filters:
+            # 限流配置
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+              # 降级配置
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: 'forward:/fallback'
 
 eureka:
   client: #客户端注册进eureka服务列表内
@@ -18,16 +51,6 @@ eureka:
   instance:
     instance-id:  ${spring.application.name}:${server.port}
     prefer-ip-address: true     #访问路径可以显示IP地址      
-
-zuul:
-  ignored-services: "*"
-  routes:
-    system:
-      serviceId: ruoyi-system
-      path: /system/**
-    auth:
-      serviceId: ruoyi-auth
-      path: /auth/**
 
 
 

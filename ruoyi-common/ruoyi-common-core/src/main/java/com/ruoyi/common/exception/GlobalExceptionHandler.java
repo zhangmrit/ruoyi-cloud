@@ -66,4 +66,10 @@ public class GlobalExceptionHandler
     {
         return R.error(401, e.getMessage());
     }
+
+    @ExceptionHandler(ValidateCodeException.class)
+    public R handle401(ValidateCodeException e)
+    {
+        return R.error(e.getMessage());
+    }
 }

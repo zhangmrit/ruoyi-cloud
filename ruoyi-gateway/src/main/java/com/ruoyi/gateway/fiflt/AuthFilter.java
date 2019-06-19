@@ -1,119 +1,99 @@
 package com.ruoyi.gateway.fiflt;
 
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_DECORATION_FILTER_ORDER;
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
-
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
-import com.netflix.zuul.exception.ZuulException;
 import com.ruoyi.common.constant.Constants;
 
-import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2019-05-29 14:32</p>
- * <p>Company: </p>
- *
- * @version 1.0
- * @author: zmr
+ * 网关鉴权
  */
-@Slf4j
 @Component
-public class AuthFilter extends ZuulFilter
+public class AuthFilter implements GlobalFilter, Ordered
 {
-    
+    // 排除过滤的 uri 地址
+    private static final String[]           whiteList    = {"/auth/login", "/user/register"};
+
+    private final static String             ACCESS_TOKEN = "access_token_";
+
     @Resource(name = "stringRedisTemplate")
     private ValueOperations<String, String> ops;
 
-    // 排除过滤的 uri 地址
-    private static final String[] whiteList    = {"/auth/login", "/user/register"};
-
-    private static final String   TOKEN        = "token";
-
-    private final static String   ACCESS_TOKEN = "access_token_";
-
     @Override
-    public String filterType()
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
-        return PRE_TYPE;
-    }
-
-    @Override
-    public int filterOrder()
-    {
-        return PRE_DECORATION_FILTER_ORDER - 1;
-    }
-
-    @Override
-    public boolean shouldFilter()
-    {
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-        String uri = request.getRequestURI();
-        log.info("uri:{}", uri);
-        // 注册和登录接口不拦截，其他接口都要拦截校验 token
-        for (String whiteUrl : whiteList)
+        String url = exchange.getRequest().getURI().getPath();
+        String userId = null;
+        // 跳过不需要验证的路径
+        if (Arrays.asList(whiteList).contains(url))
         {
-            if (uri.equals(whiteUrl)
-                    || (whiteUrl.endsWith("/*") && uri.indexOf(whiteUrl.substring(0, whiteUrl.length() - 1)) != -1))
-            {
-                return false;
-            }
+            return chain.filter(exchange);
         }
-        return true;
-    }
-
-    @Override
-    public Object run() throws ZuulException
-    {
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-        // 从header中获取token
-        String token = request.getHeader(TOKEN);
+        String token = exchange.getRequest().getHeaders().getFirst(Constants.TOKEN);
         // token为空
         if (StringUtils.isBlank(token))
         {
-            setUnauthorizedResponse(requestContext, "token can't null or empty string");
+            setUnauthorizedResponse(exchange, "token can't null or empty string");
         }
         if (StringUtils.isNotBlank(token))
         {
-            String userId=ops.get(ACCESS_TOKEN+token);
+            userId = ops.get(ACCESS_TOKEN + token);
             // 查询token信息
             if (StringUtils.isBlank(userId))
             {
-                setUnauthorizedResponse(requestContext, "token verify error");
-            }
-            else
-            {
-                // 设置userId到request里，后续根据userId，获取用户信息
-                requestContext.addZuulRequestHeader(Constants.USER_KEY, userId);
+                setUnauthorizedResponse(exchange, "token verify error");
             }
         }
-        return null;
+        // 设置userId到request里，后续根据userId，获取用户信息
+        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(Constants.USER_KEY, userId).build();
+        ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
+        return chain.filter(mutableExchange);
     }
 
-    /** * 设置 401 无权限状态 */
-    private void setUnauthorizedResponse(RequestContext requestContext, String msg)
+    private Mono<Void> setUnauthorizedResponse(ServerWebExchange exchange, String msg)
     {
-        requestContext.setSendZuulResponse(false);
-        requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+        ServerHttpResponse originalResponse = exchange.getResponse();
+        originalResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+        originalResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         Map<Object, Object> map = new HashMap<>();
         map.put("code", 401);
         map.put("msg", msg);
-        requestContext.setResponseBody(JSON.toJSONString(map));
+        byte[] response = null;
+        try
+        {
+            response = JSON.toJSONString(map).getBytes(Constants.UTF8);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        DataBuffer buffer = originalResponse.bufferFactory().wrap(response);
+        return originalResponse.writeWith(Flux.just(buffer));
+    }
+
+    @Override
+    public int getOrder()
+    {
+        return -200;
     }
 }
