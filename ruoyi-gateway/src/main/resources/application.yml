@@ -6,7 +6,7 @@ spring:
     name: ruoyi-gateway
   devtools:
     restart:
-      enabled: false
+      enabled: true
   profiles:
     active: dev
   cloud:
