@@ -6,7 +6,7 @@ spring:
     name: ruoyi-gateway
   devtools:
     restart:
-      enabled: true
+      enabled: false
   profiles:
     active: dev
   cloud:
@@ -22,7 +22,8 @@ spring:
             - Path=/auth/**
           filters:
             # 验证码处理
-#            - ImgCodeFilter
+            - CacheRequest
+            - ImgCodeFilter
             - StripPrefix=1
         #system 模块
         - id: ruoyi-system

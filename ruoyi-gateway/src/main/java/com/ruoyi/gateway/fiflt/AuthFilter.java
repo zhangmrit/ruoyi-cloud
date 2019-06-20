@@ -22,12 +22,14 @@ import org.springframework.web.server.ServerWebExchange;
 import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.constant.Constants;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
  * 网关鉴权
  */
+@Slf4j
 @Component
 public class AuthFilter implements GlobalFilter, Ordered
 {
@@ -43,6 +45,7 @@ public class AuthFilter implements GlobalFilter, Ordered
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
         String url = exchange.getRequest().getURI().getPath();
+        log.info("url:{}",url);
         String userId = null;
         // 跳过不需要验证的路径
         if (Arrays.asList(whiteList).contains(url))
@@ -69,6 +72,7 @@ public class AuthFilter implements GlobalFilter, Ordered
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }
+    
 
     private Mono<Void> setUnauthorizedResponse(ServerWebExchange exchange, String msg)
     {
