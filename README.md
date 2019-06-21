@@ -8,9 +8,7 @@
 
 127.0.0.1 eureka7001.com
 
-127.0.0.1 gateway-9527.com
-
-127.0.0.1 myzuul.com
+127.0.0.1 gateway.com
 
 如果要使用eureka集群，请依次绑定eureka7002.com,eureka7003.com后修改各项目中的注释部分
 
@@ -31,7 +29,7 @@ ruoyi-cloud
 |
 ├──ruoyi-eureka --注册中心
 |
-├──ruoyi-gateway --zuul网关
+├──ruoyi-gateway --网关
 |
 ├──ruoyi-service-api --服务api模块
 |  |
