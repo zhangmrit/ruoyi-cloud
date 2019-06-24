@@ -1,5 +1,10 @@
 ## 平台简介
 
+#### 分支说明
+
+- **master** spring原生方式，使用eureka做注册中心和spring config做配置中心
+- **nacos** 集成spring-cloud-alibaba 使用nacos做注册中心和配置中心
+
 本项目FORK自  [若依/RuoYi](https://gitee.com/y_project/RuoYi)
 
 蓝本是[zhangmrit/Ruoyi](https://gitee.com/zhangmrit/RuoYi)
