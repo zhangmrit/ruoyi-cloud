@@ -31,6 +31,12 @@ public class TokenController
         // 获取登录token
         return R.ok(tokenService.createToken(user.getUserId(), user.getLoginName(), user.getPassword()));
     }
+    @PostMapping("test")
+    public R test()
+    {
+        // 获取登录token
+        return R.ok(tokenService.createToken(123, "admin", "123456"));
+    }
 
     @PostMapping("logout")
     public R logout(HttpServletRequest request)

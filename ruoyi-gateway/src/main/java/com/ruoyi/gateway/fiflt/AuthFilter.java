@@ -34,7 +34,7 @@ import reactor.core.publisher.Mono;
 public class AuthFilter implements GlobalFilter, Ordered
 {
     // 排除过滤的 uri 地址
-    private static final String[]           whiteList    = {"/auth/login", "/user/register"};
+    private static final String[]           whiteList    = {"/auth/login", "/auth/test"};
 
     private final static String             ACCESS_TOKEN = "access_token_";
 
@@ -64,7 +64,7 @@ public class AuthFilter implements GlobalFilter, Ordered
             // 查询token信息
             if (StringUtils.isBlank(userId))
             {
-                setUnauthorizedResponse(exchange, "token verify error");
+              return   setUnauthorizedResponse(exchange, "token verify error");
             }
         }
         // 设置userId到request里，后续根据userId，获取用户信息

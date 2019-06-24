@@ -1,0 +1,35 @@
+server:
+  port: 8005
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn 
+    com.alibaba.nacos.client.naming: error 
+spring:
+  application:
+    name: ruoyi-auth
+   # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+      discovery:
+        server-addr: 127.0.0.1:8848
+  profiles: 
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  
+feign: 
+  hystrix: 
+    enabled: true
+
+ 
