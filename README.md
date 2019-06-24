@@ -6,11 +6,10 @@
 
 依次绑定host：
 
-127.0.0.1 eureka7001.com
-
 127.0.0.1 gateway.com
 
-如果要使用eureka集群，请依次绑定eureka7002.com,eureka7003.com后修改各项目中的注释部分
+因项目使用spring-cloud-alibaba nacos作为注册中心，移除了eureka和config
+
 
 ```
 ruoyi-cloud
@@ -24,10 +23,6 @@ ruoyi-cloud
 |  ├──ruoyi-common-log --日志工具包
 |  |
 |  ├──ruoyi-common-auth --权限工具包
-|
-├──ruoyi-config --cloud统一配置中心
-|
-├──ruoyi-eureka --注册中心
 |
 ├──ruoyi-gateway --网关
 |
@@ -54,8 +49,7 @@ ruoyi-cloud
 
 
 启动顺序：
-- eureka
-- config
+- 搭建nacos serve并启动，如需帮助，请参考[nacos文档](https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html)
 - gateway
 - system
 - auth
