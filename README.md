@@ -54,6 +54,12 @@ ruoyi-cloud
 - system
 - auth
 
+
+问题汇总
+1 配置nacos.config必须在bootstrap.yml或者bootstrap.properties,原因见：[nacos wiki](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-config)
+2 gateway中配置增加了自动转大写
+3 jar启动时，nacos远程配置内容不能有注释，ide中启动没有问题
+
 菜单sql有增加字段，以上传到sql文件
 该分支是ant分支，前端使用ant-design-vue 项目地址 [ruoyi-ant](https://gitee.com/zhangmrit/ruoyi-ant)
 
