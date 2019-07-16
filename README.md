@@ -1,5 +1,7 @@
 ## 平台简介
 
+### 文档 http://doc.rycloud.zmrit.com
+
 #### 分支说明
 
 - **master** spring原生方式，使用eureka做注册中心和spring config做配置中心
