@@ -57,7 +57,7 @@ ruoyi-cloud
 
 
 启动顺序：
-- 搭建nacos serve并启动，如需帮助，请参考[nacos文档](https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html)
+- 搭建nacos serve，导入sql/nacos.sql并[配置持久化](https://nacos.io/zh-cn/docs/deployment.html)启动，如需帮助，请参考[nacos文档](https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html)
 - gateway
 - system
 - auth
@@ -67,6 +67,7 @@ ruoyi-cloud
 1. 配置nacos.config必须在bootstrap.yml或者bootstrap.properties,原因见：[nacos wiki](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-config)
 2. gateway中配置增加了自动转大写
 3. jar启动时，nacos远程配置内容不能有注释，ide中启动没有问题
+4. 本实例把nacos的配置都放在nacos.sql，如果你不需要持久化，也可以从master分支config中获取，配置内容是一样的
 
 菜单sql有增加字段，以上传到sql文件
 该分支是ant分支，前端使用ant-design-vue 项目地址 [ruoyi-ant](https://gitee.com/zhangmrit/ruoyi-ant)
