@@ -70,6 +70,9 @@ ruoyi-cloud
 
 monitor使用springadmin完成,目前只是最简单的用法,[详戳](https://gitee.com/zhangmrit/ruoyi-cloud/blob/ant/doc/spring-admin.md)
 
+## RuoYi Cloud交流群
+
+QQ群：  [![加入QQ群](https://img.shields.io/badge/755109875-blue.svg)](https://jq.qq.com/?_wv=1027&k=5JGXHPD)  点击按钮入群。
 
 欢迎pr或者加入，给个star是最好的鞭策
 
