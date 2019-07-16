@@ -1,7 +1,7 @@
 ## 平台简介
 若依spring-cloud实现
 
-### [文档](http://doc.rycloud.zmrit.com)
+### 文档 http://doc.rycloud.zmrit.com
 
 #### 分支说明
 
