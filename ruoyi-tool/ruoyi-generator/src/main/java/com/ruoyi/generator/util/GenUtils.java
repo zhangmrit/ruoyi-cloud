@@ -86,15 +86,15 @@ public class GenUtils
         templates.add("vm/java/Service.java.vm");
         templates.add("vm/java/ServiceImpl.java.vm");
         templates.add("vm/java/Controller.java.vm");
-        // templates.add("vm/java/Client.java.vm");
-        // templates.add("vm/java/ClientFallback.java.vm");
-        // templates.add("vm/java/ClientController.java.vm");
         templates.add("vm/xml/Mapper.xml.vm");
         if (gq.getPageSwitch())
         {
-            templates.add("vm/html/list.html.vm");
-            templates.add("vm/html/add.html.vm");
-            templates.add("vm/html/edit.html.vm");
+//            templates.add("vm/html/list.html.vm");
+//            templates.add("vm/html/add.html.vm");
+//            templates.add("vm/html/edit.html.vm");
+            templates.add("vm/vue/api.js.vm");
+            templates.add("vm/vue/list.vue.vm");
+            templates.add("vm/vue/modal.vue.vm");
         }
         if (gq.getSqlSwitch())
         {
@@ -136,6 +136,7 @@ public class GenUtils
         javaPath = javaPath.replace(".", "/");
         String mybatisPath = gq.getProjectpath() + "/" + gq.getMapperpath() + "/" + moduleName;
         String htmlPath = gq.getProjectpath() + "/" + gq.getTemplatepath() + "/" + moduleName + "/" + classname;
+        String vuePath = gq.getProjectpath() + "/vue";
         if (template.contains("domain.java.vm"))
         {
             return javaPath + "entity" + "/" + className + ".java";
@@ -152,19 +153,6 @@ public class GenUtils
         {
             return javaPath + "service" + "/" + "impl/" + className + "ServiceImpl.java";
         }
-        // if (template.contains("Client.java.vm"))
-        // {
-        // return javaPath + "feign" + "/" + "I" + className + "Client.java";
-        // }
-        // if (template.contains("ClientFallback.java.vm"))
-        // {
-        // return javaPath + "feign" + "/" + "factory/" + className +
-        // "ClientFallbackFactory.java";
-        // }
-        // if (template.contains("ClientController.java.vm"))
-        // {
-        // return javaPath + "client" + "/" + className + "Client.java";
-        // }
         if (template.contains("Controller.java.vm"))
         {
             return javaPath + "controller" + "/" + className + "Controller.java";
@@ -172,6 +160,18 @@ public class GenUtils
         if (template.contains("Mapper.xml.vm"))
         {
             return mybatisPath + "/" + className + "Mapper.xml";
+        }
+        if (template.contains("list.vue.vm"))
+        {
+            return vuePath + "/views/" +moduleName+"/"+ className + "List.vue";
+        }
+        if (template.contains("modal.vue.vm"))
+        {
+            return vuePath + "/views/" +moduleName+"/modules/"+ className + "Modal.vue";
+        }
+        if (template.contains("api.js.vm"))
+        {
+            return vuePath + "/api/" +moduleName+"/"+ classname + ".js";
         }
         if (template.contains("list.html.vm"))
         {
