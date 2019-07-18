@@ -10,6 +10,13 @@ spring:
   profiles:
     active: dev
   cloud:
+    config:
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: ruoyi-config
     gateway:
       discovery:
         locator:
