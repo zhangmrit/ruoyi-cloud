@@ -23,6 +23,6 @@ public interface RemoteUserService
     @GetMapping("user/find/{username}")
     public SysUser selectSysUserByUsername(@PathVariable("username") String username);
 
-    @PostMapping("user/update")
-    public R updateUserInfo(@RequestBody SysUser user);
+    @PostMapping("user/update/login")
+    public R updateUserLoginRecord(@RequestBody SysUser user);
 }
