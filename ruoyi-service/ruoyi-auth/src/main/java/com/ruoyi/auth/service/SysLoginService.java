@@ -127,7 +127,7 @@ public class SysLoginService
     {
         user.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         user.setLoginDate(DateUtils.getNowDate());
-        userService.updateUserInfo(user);
+        userService.updateUserLoginRecord(user);
     }
 
     public void logout(HttpServletRequest request)

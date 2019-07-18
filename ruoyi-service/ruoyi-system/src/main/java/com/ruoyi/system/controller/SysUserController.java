@@ -103,6 +103,18 @@ public class SysUserController extends BaseController
     {
         return toAjax(sysUserService.updateUserInfo(sysUser));
     }
+    
+    /**
+     * 记录登陆信息
+     * @param sysUser
+     * @return
+     * @author zmr
+     */
+    @PostMapping("update/login")
+    public R updateLoginRecord(@RequestBody SysUser sysUser)
+    {
+        return toAjax(sysUserService.updateUser(sysUser));
+    }
 
     /**
      * 修改状态
