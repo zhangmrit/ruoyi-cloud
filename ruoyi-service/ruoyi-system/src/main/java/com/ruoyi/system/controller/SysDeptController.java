@@ -1,5 +1,7 @@
 package com.ruoyi.system.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,5 +72,15 @@ public class SysDeptController extends BaseController
     public R remove(@PathVariable("deptId") Long deptId)
     {
         return toAjax(sysDeptService.deleteDeptById(deptId));
+    }
+    
+    /**
+     * 加载角色部门（数据权限）列表树
+     */
+    @GetMapping("/role/{roleId}")
+    public Set<String> deptTreeData(@PathVariable("roleId" )Long roleId)
+    {
+        if (null == roleId || roleId <= 0) return null;
+        return sysDeptService.roleDeptIds(roleId);
     }
 }

@@ -81,8 +81,10 @@ public class SysUser extends BaseEntity
     @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT)
     private SysDept           dept;
 
+    private List<SysRole>     roles;
+
     /** 角色组 */
-    private List<Long>        roleIds;
+    private List<Long>            roleIds;
 
     /** 岗位组 */
     private Long[]            postIds;
@@ -262,6 +264,18 @@ public class SysUser extends BaseEntity
     {
         this.dept = dept;
     }
+
+
+    public List<SysRole> getRoles()
+    {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles)
+    {
+        this.roles = roles;
+    }
+
 
     public List<Long> getRoleIds()
     {

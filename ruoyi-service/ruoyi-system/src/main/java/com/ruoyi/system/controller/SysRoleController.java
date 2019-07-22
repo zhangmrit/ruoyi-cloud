@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.log.annotation.OperLog;
@@ -81,6 +82,22 @@ public class SysRoleController extends BaseController
     public R status(@RequestBody SysRole sysRole)
     {
         return toAjax(sysRoleService.changeStatus(sysRole));
+    }
+    
+    /**
+     * 保存角色分配数据权限
+     */
+    @HasPermissions("system:role:edit")
+    @OperLog(title = "角色管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/authDataScope")
+    public R authDataScopeSave(@RequestBody SysRole role)
+    {
+        role.setUpdateBy(getLoginName());
+        if (sysRoleService.authDataScope(role) > 0)
+        {
+            return R.ok();
+        }
+        return R.error();
     }
 
     /**

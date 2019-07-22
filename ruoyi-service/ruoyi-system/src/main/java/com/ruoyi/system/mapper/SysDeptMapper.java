@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+import java.util.Set;
+
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.system.domain.SysDept;
 
@@ -105,4 +107,12 @@ public interface SysDeptMapper
      * @return
      */
     public List<SysDept> selectChildrenDeptById(Long id);
+
+    /**
+     * 根据角色编号查询所有部门ID
+     * @param roleId
+     * @return
+     * @author zmr
+     */
+    public Set<String> selectRoleDeptIds(Long roleId);
 }

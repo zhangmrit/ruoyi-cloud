@@ -153,5 +153,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </set>
  	    where dept_id in (${ancestors})
 	</update>
+	
+	<select id="selectRoleDeptIds" parameterType="Long" resultType="String">
+		select d.dept_id
+		from sys_dept d
+			left join sys_role_dept rd on d.dept_id = rd.dept_id
+		where d.del_flag = '0' and rd.role_id = #{roleId}
+		order by d.parent_id, d.order_num
+	</select>
 
 </mapper> 
