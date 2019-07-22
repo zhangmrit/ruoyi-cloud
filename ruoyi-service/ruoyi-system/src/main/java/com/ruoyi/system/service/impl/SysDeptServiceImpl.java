@@ -2,6 +2,8 @@ package com.ruoyi.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +35,7 @@ public class SysDeptServiceImpl implements ISysDeptService
      * @return 部门信息集合
      */
     @Override
-    @DataScope(tableAlias = "d")
+    @DataScope(deptAlias = "d")
     public List<SysDept> selectDeptList(SysDept dept)
     {
         return deptMapper.selectDeptList(dept);
@@ -46,7 +48,7 @@ public class SysDeptServiceImpl implements ISysDeptService
      * @return 所有部门信息
      */
     @Override
-    @DataScope(tableAlias = "d")
+    @DataScope(deptAlias = "d")
     public List<Ztree> selectDeptTree(SysDept dept)
     {
         List<SysDept> deptList = deptMapper.selectDeptList(dept);
@@ -269,5 +271,11 @@ public class SysDeptServiceImpl implements ISysDeptService
             return UserConstants.DEPT_NAME_NOT_UNIQUE;
         }
         return UserConstants.DEPT_NAME_UNIQUE;
+    }
+
+    @Override
+    public Set<String> roleDeptIds(Long roleId)
+    {
+        return deptMapper.selectRoleDeptIds(roleId);
     }
 }

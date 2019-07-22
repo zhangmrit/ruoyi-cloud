@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+import java.util.Set;
+
 import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysRole;
@@ -91,4 +93,12 @@ public interface ISysDeptService
      * @return 结果
      */
     public String checkDeptNameUnique(SysDept dept);
+
+    /**
+     * 根据角色ID查询部门编号
+     *
+     * @param roleId 角色编号
+     * @return 部门编号
+     */
+    public Set<String> roleDeptIds(Long roleId);
 }
