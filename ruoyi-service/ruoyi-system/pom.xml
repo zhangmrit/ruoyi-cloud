@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.ruoyi</groupId>
+		<groupId>com.ruoyi.cloud</groupId>
 		<artifactId>ruoyi-service</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
@@ -67,25 +67,25 @@
 
 		<!-- 系统模块 -->
 		<dependency>
-			<groupId>com.ruoyi</groupId>
+			<groupId>com.ruoyi.cloud</groupId>
 			<artifactId>ruoyi-system-api</artifactId>
 			<version>${ruoyi.version}</version>
 		</dependency>
 		<!-- 日志模块 -->
 		<dependency>
-			<groupId>com.ruoyi</groupId>
+			<groupId>com.ruoyi.cloud</groupId>
 			<artifactId>ruoyi-common-log</artifactId>
 			<version>${ruoyi.version}</version>
 		</dependency>
 		<!-- 权限模块 -->
 		<dependency>
-			<groupId>com.ruoyi</groupId>
+			<groupId>com.ruoyi.cloud</groupId>
 			<artifactId>ruoyi-common-auth</artifactId>
 			<version>${ruoyi.version}</version>
 		</dependency>
 		<!-- redis模块 -->
 		<dependency>
-			<groupId>com.ruoyi</groupId>
+			<groupId>com.ruoyi.cloud</groupId>
 			<artifactId>ruoyi-common-redis</artifactId>
 			<version>${ruoyi.version}</version>
 		</dependency>
