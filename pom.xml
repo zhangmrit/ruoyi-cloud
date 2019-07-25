@@ -4,16 +4,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.ruoyi</groupId>
+	<groupId>com.ruoyi.cloud</groupId>
 	<artifactId>ruoyi</artifactId>
-	<version>3.3</version>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<name>ruoyi-cloud</name>
 	<url>http://www.ruoyi.vip</url>
 	<description>若依管理系统</description>
 
 	<properties>
-		<ruoyi.version>3.3</ruoyi.version>
+		<ruoyi.version>1.0.0-SNAPSHOT</ruoyi.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
@@ -156,7 +156,7 @@
 
 			<!-- 代码生成 -->
 			<dependency>
-				<groupId>com.ruoyi</groupId>
+				<groupId>com.ruoyi.cloud</groupId>
 				<artifactId>ruoyi-generator</artifactId>
 				<version>${ruoyi.version}</version>
 			</dependency>
