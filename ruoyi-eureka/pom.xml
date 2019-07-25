@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.ruoyi</groupId>
 		<artifactId>ruoyi</artifactId>
-		<version>3.3</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>ruoyi-eureka</artifactId>
 	<dependencies>

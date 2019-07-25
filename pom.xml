@@ -6,7 +6,7 @@
 
 	<groupId>com.ruoyi</groupId>
 	<artifactId>ruoyi</artifactId>
-	<version>3.3</version>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<name>ruoyi-cloud</name>
 	<url>http://www.ruoyi.vip</url>
