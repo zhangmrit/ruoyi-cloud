@@ -21,12 +21,11 @@ import com.ruoyi.common.utils.MessageUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.feign.RemoteUserService;
+import com.ruoyi.system.util.PasswordUtil;
 
 @Component
 public class SysLoginService
 {
-    @Autowired
-    private SysPasswordService passwordService;
 
     @Autowired
     private RemoteUserService  userService;
@@ -94,7 +93,7 @@ public class SysLoginService
                     MessageUtils.message("user.blocked", user.getRemark()));
             throw new UserBlockedException();
         }
-        if (!passwordService.matches(user, password))
+        if (!PasswordUtil.matches(user, password))
         {
             throw new UserPasswordNotMatchException();
         }
