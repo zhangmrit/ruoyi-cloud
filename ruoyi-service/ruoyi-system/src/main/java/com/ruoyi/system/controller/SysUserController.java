@@ -2,7 +2,6 @@ package com.ruoyi.system.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.auth.annotation.HasPermissions;
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.log.annotation.OperLog;
 import com.ruoyi.common.log.enums.BusinessType;
+import com.ruoyi.common.utils.RandomUtil;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysUserService;
@@ -82,7 +83,19 @@ public class SysUserController extends BaseController
     @OperLog(title = "用户管理", businessType = BusinessType.INSERT)
     public R addSave(@RequestBody SysUser sysUser)
     {
-        sysUser.setSalt(RandomStringUtils.random(6));
+        if (UserConstants.USER_NAME_NOT_UNIQUE.equals(sysUserService.checkLoginNameUnique(sysUser.getLoginName())))
+        {
+            return R.error("新增用户'" + sysUser.getLoginName() + "'失败，登录账号已存在");
+        }
+        else if (UserConstants.USER_PHONE_NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(sysUser)))
+        {
+            return R.error("新增用户'" + sysUser.getLoginName() + "'失败，手机号码已存在");
+        }
+        else if (UserConstants.USER_EMAIL_NOT_UNIQUE.equals(sysUserService.checkEmailUnique(sysUser)))
+        {
+            return R.error("新增用户'" + sysUser.getLoginName() + "'失败，邮箱账号已存在");
+        }
+        sysUser.setSalt(RandomUtil.randomStr(6));
         sysUser.setPassword(
                 PasswordUtil.encryptPassword(sysUser.getLoginName(), sysUser.getPassword(), sysUser.getSalt()));
         sysUser.setCreateBy(getLoginName());
@@ -97,6 +110,18 @@ public class SysUserController extends BaseController
     @PostMapping("update")
     public R editSave(@RequestBody SysUser sysUser)
     {
+        if (null != sysUser.getUserId() && SysUser.isAdmin(sysUser.getUserId()))
+        {
+            return R.error("不允许修改超级管理员用户");
+        }
+        else if (UserConstants.USER_PHONE_NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(sysUser)))
+        {
+            return R.error("修改用户'" + sysUser.getLoginName() + "'失败，手机号码已存在");
+        }
+        else if (UserConstants.USER_EMAIL_NOT_UNIQUE.equals(sysUserService.checkEmailUnique(sysUser)))
+        {
+            return R.error("修改用户'" + sysUser.getLoginName() + "'失败，邮箱账号已存在");
+        }
         return toAjax(sysUserService.updateUser(sysUser));
     }
 
@@ -129,9 +154,9 @@ public class SysUserController extends BaseController
     @HasPermissions("system:user:resetPwd")
     @OperLog(title = "重置密码", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
-    public R resetPwdSave(SysUser user)
+    public R resetPwdSave(@RequestBody SysUser user)
     {
-        user.setSalt(RandomStringUtils.random(6));
+        user.setSalt(RandomUtil.randomStr(6));
         user.setPassword(PasswordUtil.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         return toAjax(sysUserService.resetUserPwd(user));
     }
