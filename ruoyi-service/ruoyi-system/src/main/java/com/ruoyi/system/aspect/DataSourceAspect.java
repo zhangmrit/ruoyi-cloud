@@ -6,11 +6,13 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.ruoyi.common.datasource.DynamicDataSourceContextHolder;
 import com.ruoyi.common.enums.DataSourceType;
+import com.ruoyi.system.config.DruidProperties;
 
 /**
  * 多数据源处理
@@ -20,11 +22,18 @@ import com.ruoyi.common.enums.DataSourceType;
 @Component
 public class DataSourceAspect
 {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger        logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private DruidProperties druidProperties;
 
     @Around("execution(* com.ruoyi..*ServiceImpl.*(..))")
     public Object around(ProceedingJoinPoint point) throws Throwable
     {
+        if (!druidProperties.slaveEnable)
+        {
+            return point.proceed();
+        }
         // 获取到当前执行的方法名
         String methodName = point.getSignature().getName();
         if (isSlave(methodName))

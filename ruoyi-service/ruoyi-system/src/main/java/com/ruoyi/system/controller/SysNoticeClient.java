@@ -21,7 +21,7 @@ import com.ruoyi.system.service.ISysNoticeService;
  * @date 2019-05-20
  */
 @RestController
-@RequestMapping("/sys/sysNotice")
+@RequestMapping("notice")
 public class SysNoticeClient extends BaseController
 {
 	
