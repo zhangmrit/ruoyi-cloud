@@ -98,6 +98,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="SysMenuResult">
 		<include refid="selectMenuVo" />
 		<where>
+			<if test="menuKey != null and menuKey != ''">
+				AND menu_key=#{menuKey}
+			</if>
 			<if test="menuName != null and menuName != ''">
 				AND menu_name like concat('%', #{menuName}, '%')
 			</if>
