@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.AjaxResult.Type;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -155,30 +153,6 @@ public class BaseController
     protected R toAjax(boolean result)
     {
         return result ? R.ok() : R.error();
-    }
-
-    /**
-     * 返回失败消息
-     */
-    public AjaxResult error()
-    {
-        return AjaxResult.error();
-    }
-
-    /**
-     * 返回失败消息
-     */
-    public AjaxResult error(String message)
-    {
-        return AjaxResult.error(message);
-    }
-
-    /**
-     * 返回错误码消息
-     */
-    public AjaxResult error(Type type, String message)
-    {
-        return new AjaxResult(type, message);
     }
 
     /**
