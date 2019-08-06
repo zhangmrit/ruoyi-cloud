@@ -3,8 +3,10 @@ package com.ruoyi.common.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ruoyi.common.core.domain.R;
@@ -21,6 +23,7 @@ public class GlobalExceptionHandler
      * 请求方式不支持
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+    @ResponseStatus(code=HttpStatus.METHOD_NOT_ALLOWED)
     public R handleException(HttpRequestMethodNotSupportedException e)
     {
         logger.error(e.getMessage(), e);
@@ -62,13 +65,15 @@ public class GlobalExceptionHandler
 
     // 捕捉UnauthorizedException
     @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(code=HttpStatus.UNAUTHORIZED)
     public R handle401(UnauthorizedException e)
     {
         return R.error(401, e.getMessage());
     }
 
+    // 验证码错误
     @ExceptionHandler(ValidateCodeException.class)
-    public R handle401(ValidateCodeException e)
+    public R handleCaptcha(ValidateCodeException e)
     {
         return R.error(e.getMessage());
     }
