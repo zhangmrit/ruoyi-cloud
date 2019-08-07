@@ -45,7 +45,7 @@ public class AuthFilter implements GlobalFilter, Ordered
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
         String url = exchange.getRequest().getURI().getPath();
-        log.info("url:{}",url);
+        log.info("url:{}", url);
         String userId = null;
         // 跳过不需要验证的路径
         if (Arrays.asList(whiteList).contains(url))
@@ -56,7 +56,7 @@ public class AuthFilter implements GlobalFilter, Ordered
         // token为空
         if (StringUtils.isBlank(token))
         {
-            setUnauthorizedResponse(exchange, "token can't null or empty string");
+            return setUnauthorizedResponse(exchange, "token can't null or empty string");
         }
         if (StringUtils.isNotBlank(token))
         {
@@ -64,7 +64,7 @@ public class AuthFilter implements GlobalFilter, Ordered
             // 查询token信息
             if (StringUtils.isBlank(userId))
             {
-              return   setUnauthorizedResponse(exchange, "token verify error");
+                return setUnauthorizedResponse(exchange, "token verify error");
             }
         }
         // 设置userId到request里，后续根据userId，获取用户信息
@@ -72,7 +72,6 @@ public class AuthFilter implements GlobalFilter, Ordered
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }
-    
 
     private Mono<Void> setUnauthorizedResponse(ServerWebExchange exchange, String msg)
     {
