@@ -14,21 +14,25 @@ import javax.servlet.http.HttpServletRequest;
  * @author lucas
  */
 @RestController
-public class GlobalErrorController extends AbstractErrorController {
-	private static final String ERROR_PATH = "/error";
+public class GlobalErrorController extends AbstractErrorController
+{
+    private static final String ERROR_PATH = "/error";
 
-	public GlobalErrorController(ErrorAttributes errorAttributes) {
-		super(errorAttributes);
-	}
+    public GlobalErrorController(ErrorAttributes errorAttributes)
+    {
+        super(errorAttributes);
+    }
 
-	@RequestMapping(value = ERROR_PATH)
-	public R error(HttpServletRequest request) {
-		HttpStatus status = getStatus(request);
-		return R.error(status.value(), status.getReasonPhrase());
-	}
+    @RequestMapping(value = ERROR_PATH)
+    public R error(HttpServletRequest request)
+    {
+        HttpStatus status = getStatus(request);
+        return R.error(status.value(), status.getReasonPhrase());
+    }
 
-	@Override
-	public String getErrorPath() {
-		return ERROR_PATH;
-	}
+    @Override
+    public String getErrorPath()
+    {
+        return ERROR_PATH;
+    }
 }

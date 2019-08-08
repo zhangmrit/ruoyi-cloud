@@ -2,8 +2,6 @@ package com.ruoyi.gateway.fiflt;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -21,6 +19,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.core.domain.R;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -78,13 +77,10 @@ public class AuthFilter implements GlobalFilter, Ordered
         ServerHttpResponse originalResponse = exchange.getResponse();
         originalResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
         originalResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-        Map<Object, Object> map = new HashMap<>();
-        map.put("code", 401);
-        map.put("msg", msg);
         byte[] response = null;
         try
         {
-            response = JSON.toJSONString(map).getBytes(Constants.UTF8);
+            response = JSON.toJSONString(R.error(401, msg)).getBytes(Constants.UTF8);
         }
         catch (UnsupportedEncodingException e)
         {

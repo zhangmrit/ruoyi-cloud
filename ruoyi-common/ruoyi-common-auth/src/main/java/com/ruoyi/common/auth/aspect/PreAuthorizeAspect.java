@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.exception.UnauthorizedException;
+import com.ruoyi.common.exception.ForbiddenException;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.system.feign.RemoteMenuService;
 
@@ -47,7 +47,7 @@ public class PreAuthorizeAspect
         }
         else
         {
-            throw new UnauthorizedException();
+            throw new ForbiddenException();
         }
     }
 
