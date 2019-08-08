@@ -1,18 +1,23 @@
 package com.ruoyi.common.exception;
-public class UnauthorizedException extends RuntimeException
-{
-    private static final String DEFAULT_MSG      = "unauthorized";
 
-    //
-    private static final long   serialVersionUID = 3885400551304383736L;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public UnauthorizedException(String msg)
-    {
-        super(msg);
-    }
+/**
+ * @author zmr
+ * @author lucas
+ */
+@ResponseStatus(code = HttpStatus.UNAUTHORIZED, reason = "Unauthorized")
+public class UnauthorizedException extends RuntimeException {
+	private static final String DEFAULT_MSG = "unauthorized";
 
-    public UnauthorizedException()
-    {
-        super(DEFAULT_MSG);
-    }
+	private static final long serialVersionUID = 3885400551304383736L;
+
+	public UnauthorizedException(String msg) {
+		super(msg);
+	}
+
+	public UnauthorizedException() {
+		super(DEFAULT_MSG);
+	}
 }
