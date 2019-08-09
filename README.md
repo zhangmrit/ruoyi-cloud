@@ -2,6 +2,10 @@
 
 ### 文档 http://doc.rycloud.zmrit.com
 
+### 源码
+- [Github](https://github.com/zhangmrit/ruoyi-cloud)
+- [Gitee](https://gitee.com/zhangmrit/ruoyi-cloud)
+
 #### 分支说明
 
 - **master** spring原生方式，使用eureka做注册中心和spring config做配置中心
@@ -70,7 +74,7 @@ ruoyi-cloud
 菜单sql有增加字段，以上传到sql文件
 该分支是ant分支，前端使用ant-design-vue 项目地址 [ruoyi-ant](https://gitee.com/zhangmrit/ruoyi-ant)
 
-monitor使用springadmin完成,目前只是最简单的用法,[详戳](http://doc.rycloud.zmrit.com/#/extra?id=%E7%9B%91%E6%8E%A7)
+monitor使用springadmin完成,目前只是最简单的用法,[详戳](http://doc.rycloud.zmrit.com/#/extra?id=%e7%9b%91%e6%8e%a7)
 
 ## RuoYi Cloud交流群
 
