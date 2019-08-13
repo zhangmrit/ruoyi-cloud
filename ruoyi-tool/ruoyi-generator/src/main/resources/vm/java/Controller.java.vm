@@ -1,7 +1,5 @@
 package ${package}.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.PageDomain;
 import ${package}.domain.${className};
 import ${package}.service.I${className}Service;
 
@@ -22,7 +20,7 @@ import ${package}.service.I${className}Service;
  */
 @RestController
 @RequestMapping("/${moduleName}/${classname}")
-public class ${className}Client extends BaseController
+public class ${className}Controller extends BaseController
 {
 	
 	@Autowired
@@ -41,11 +39,11 @@ public class ${className}Client extends BaseController
 	/**
 	 * 查询${tableComment}列表
 	 */
-	@PostMapping("list")
-	public List<${className}> list(${className} ${classname}, PageDomain page)
+	@GetMapping("list")
+	public R list(${className} ${classname})
 	{
-		startPage(page);
-        return ${classname}Service.select${className}List(${classname});
+		startPage();
+        return result(${classname}Service.select${className}List(${classname}));
 	}
 	
 	
@@ -71,9 +69,9 @@ public class ${className}Client extends BaseController
 	 * 删除${tableComment}
 	 */
 	@PostMapping("remove")
-	public int remove(String ids)
+	public R remove(String ids)
 	{		
-		return ${classname}Service.delete${className}ByIds(ids);
+		return toAjax(${classname}Service.delete${className}ByIds(ids));
 	}
 	
 }

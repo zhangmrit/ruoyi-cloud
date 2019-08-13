@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.page.PageDomain;
 import ${package}.domain.${className};
 import ${package}.service.I${className}Service;
 
@@ -22,7 +21,7 @@ import ${package}.service.I${className}Service;
  */
 @RestController
 @RequestMapping("/${moduleName}/${classname}")
-public class ${className}Client extends BaseController
+public class ${className}Controller extends BaseController
 {
 	
 	@Autowired
@@ -42,9 +41,9 @@ public class ${className}Client extends BaseController
 	 * 查询${tableComment}列表
 	 */
 	@PostMapping("list")
-	public List<${className}> list(${className} ${classname}, PageDomain page)
+	public List<${className}> list(${className} ${classname})
 	{
-		startPage(page);
+		startPage();
         return ${classname}Service.select${className}List(${classname});
 	}
 	
