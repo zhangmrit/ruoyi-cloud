@@ -29,7 +29,15 @@ public class GenUtils
 
     /**
      * 设置列信息
-     */
+    */
+
+    public static String toUpperCaseFirstOne(String s){
+        if(Character.isUpperCase(s.charAt(0)))
+          return s;
+        else
+          return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
+    }
+      
     public static List<ColumnInfo> transColums(List<ColumnInfo> columns)
     {
         // 列信息
@@ -38,7 +46,7 @@ public class GenUtils
         {
             // 列名转换成Java属性名
             String attrName = StrUtil.toCamelCase(column.getColumnName());
-            column.setAttrName(attrName);
+            column.setAttrName(toUpperCaseFirstOne(attrName));
             column.setAttrname(StringUtils.uncapitalize(attrName));
             // 列的数据类型，转换成Java类型
             String attrType = javaTypeMap.get(column.getDataType());
@@ -139,7 +147,7 @@ public class GenUtils
         String vuePath = gq.getProjectpath() + "/vue";
         if (template.contains("domain.java.vm"))
         {
-            return javaPath + "entity" + "/" + className + ".java";
+            return javaPath + "domain" + "/" + className + ".java";
         }
         if (template.contains("Mapper.java.vm"))
         {

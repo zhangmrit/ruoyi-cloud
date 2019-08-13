@@ -28,7 +28,7 @@
   </a-modal>
 </template>
 <script>
-import { save${className} } from '@/api/${moduleName}/${classname}'
+import { save${className}, get${className}List } from '@/api/${moduleName}/${classname}'
 import pick from 'lodash.pick'
 export default {
   name: '${className}Modal',
@@ -54,7 +54,12 @@ export default {
   },
   beforeCreate () {
   },
-  created () {
+  created() {
+    get${className}List(Object.assign({ deep: 0 })).then(res => {
+      this.options = res.rows.map(d => {
+        return { value: d.id, label: d.name, isLeaf: false }
+      })
+    })
   },
   methods: {
     add () {
