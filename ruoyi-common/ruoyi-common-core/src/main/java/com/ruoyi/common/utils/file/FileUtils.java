@@ -3,10 +3,12 @@ package com.ruoyi.common.utils.file;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -138,5 +140,39 @@ public class FileUtils
             filename = URLEncoder.encode(filename, "utf-8");
         }
         return filename;
+    }
+    
+    /**
+     * 获取系统临时目录
+     * @return
+     */
+    public static String getTemp()
+    {
+        return System.getProperty("java.io.tmpdir");
+    }
+
+    /**
+     * 创建临时文件
+     * @param filePath
+     * @param data
+     * @return
+     */
+    public static File createTempFile(String filePath, byte[] data) throws IOException
+    {
+        String temp = getTemp() + filePath;
+        File file = new File(temp);
+        if (!file.getParentFile().exists())
+        {
+            file.getParentFile().mkdirs();
+        }
+        if (!file.exists())
+        {
+            file.createNewFile();
+        }
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(data, 0, data.length);
+        fos.flush();
+        fos.close();
+        return file;
     }
 }
