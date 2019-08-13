@@ -1,6 +1,7 @@
 package com.ruoyi.common.auth.aspect;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.exception.ForbiddenException;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.system.feign.RemoteMenuService;
 
@@ -46,7 +47,7 @@ public class PreAuthorizeAspect
         }
         else
         {
-            return R.error(401, "权限不足");
+            throw new ForbiddenException();
         }
     }
 
@@ -54,15 +55,16 @@ public class PreAuthorizeAspect
     {
         // 用超管帐号方便测试，拥有所有权限
         HttpServletRequest request = ServletUtils.getRequest();
-        Long userid = Long.valueOf(request.getHeader(Constants.USER_KEY));
-        log.debug("userid:{}", userid);
-        if (null != userid)
+        String tmpUserKey = request.getHeader(Constants.USER_KEY);
+        if (Optional.ofNullable(tmpUserKey).isPresent())
         {
-            if (userid == 1l)
+            Long userId = Long.valueOf(tmpUserKey);
+            log.debug("userid:{}", userId);
+            if (userId == 1L)
             {
                 return true;
             }
-            return sysMenuClient.selectPermsByUserId(userid).stream().anyMatch(a -> authority.equals(a));
+            return sysMenuClient.selectPermsByUserId(userId).stream().anyMatch(authority::equals);
         }
         return false;
     }

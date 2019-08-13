@@ -1,5 +1,10 @@
 package com.ruoyi.common.exception;
 
+/**
+ * ruoyi异常类
+ * @author zmr
+ * @author lucas
+ */
 public class RuoyiException extends RuntimeException
 {
     //

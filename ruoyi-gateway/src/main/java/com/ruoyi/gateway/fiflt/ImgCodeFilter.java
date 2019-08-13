@@ -54,12 +54,12 @@ public class ImgCodeFilter extends AbstractGatewayFilterFactory<ImgCodeFilter.Co
             {
                 return chain.filter(exchange);
             }
-            String bodyStr = resolveBodyFromRequest(request);
-            JSONObject bodyJson=JSONObject.parseObject(bodyStr);
-            String code = bodyJson.get("captcha").toString();
-            String randomStr = bodyJson.get("randomStr").toString();
             try
             {
+                String bodyStr = resolveBodyFromRequest(request);
+                JSONObject bodyJson=JSONObject.parseObject(bodyStr);
+                String code = (String) bodyJson.get("captcha");
+                String randomStr = (String) bodyJson.get("randomStr");
                 // 校验验证码
                 checkCode(code, randomStr);
             }

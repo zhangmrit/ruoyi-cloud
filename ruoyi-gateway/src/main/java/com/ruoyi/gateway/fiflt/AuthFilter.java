@@ -2,8 +2,6 @@ package com.ruoyi.gateway.fiflt;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -21,6 +19,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.core.domain.R;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -45,7 +44,7 @@ public class AuthFilter implements GlobalFilter, Ordered
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
         String url = exchange.getRequest().getURI().getPath();
-        log.info("url:{}",url);
+        log.info("url:{}", url);
         String userId = null;
         // 跳过不需要验证的路径
         if (Arrays.asList(whiteList).contains(url))
@@ -56,7 +55,7 @@ public class AuthFilter implements GlobalFilter, Ordered
         // token为空
         if (StringUtils.isBlank(token))
         {
-            setUnauthorizedResponse(exchange, "token can't null or empty string");
+            return setUnauthorizedResponse(exchange, "token can't null or empty string");
         }
         if (StringUtils.isNotBlank(token))
         {
@@ -64,7 +63,7 @@ public class AuthFilter implements GlobalFilter, Ordered
             // 查询token信息
             if (StringUtils.isBlank(userId))
             {
-                setUnauthorizedResponse(exchange, "token verify error");
+                return setUnauthorizedResponse(exchange, "token verify error");
             }
         }
         // 设置userId到request里，后续根据userId，获取用户信息
@@ -72,20 +71,16 @@ public class AuthFilter implements GlobalFilter, Ordered
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }
-    
 
     private Mono<Void> setUnauthorizedResponse(ServerWebExchange exchange, String msg)
     {
         ServerHttpResponse originalResponse = exchange.getResponse();
         originalResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
         originalResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-        Map<Object, Object> map = new HashMap<>();
-        map.put("code", 401);
-        map.put("msg", msg);
         byte[] response = null;
         try
         {
-            response = JSON.toJSONString(map).getBytes(Constants.UTF8);
+            response = JSON.toJSONString(R.error(401, msg)).getBytes(Constants.UTF8);
         }
         catch (UnsupportedEncodingException e)
         {
