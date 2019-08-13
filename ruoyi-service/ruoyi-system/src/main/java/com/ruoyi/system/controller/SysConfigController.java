@@ -1,15 +1,15 @@
 package com.ruoyi.system.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.system.domain.SysConfig;
 import com.ruoyi.system.service.ISysConfigService;
 
@@ -40,11 +40,11 @@ public class SysConfigController extends BaseController
 	/**
 	 * 查询参数配置列表
 	 */
-	@PostMapping("list")
-	public List<SysConfig> list(SysConfig sysConfig)
+	@GetMapping("list")
+	public R list(SysConfig sysConfig)
 	{
 		startPage();
-        return sysConfigService.selectConfigList(sysConfig);
+        return result(sysConfigService.selectConfigList(sysConfig));
 	}
 	
 	
@@ -52,27 +52,27 @@ public class SysConfigController extends BaseController
 	 * 新增保存参数配置
 	 */
 	@PostMapping("save")
-	public int addSave(SysConfig sysConfig)
+	public R addSave(@RequestBody SysConfig sysConfig)
 	{		
-		return sysConfigService.insertConfig(sysConfig);
+		return toAjax(sysConfigService.insertConfig(sysConfig));
 	}
 
 	/**
 	 * 修改保存参数配置
 	 */
 	@PostMapping("update")
-	public int editSave(SysConfig sysConfig)
+	public R editSave(@RequestBody SysConfig sysConfig)
 	{		
-		return sysConfigService.updateConfig(sysConfig);
+		return toAjax(sysConfigService.updateConfig(sysConfig));
 	}
 	
 	/**
 	 * 删除参数配置
 	 */
 	@PostMapping("remove")
-	public int remove(String ids)
+	public R remove(String ids)
 	{		
-		return sysConfigService.deleteConfigByIds(ids);
+		return toAjax(sysConfigService.deleteConfigByIds(ids));
 	}
 	
 }
