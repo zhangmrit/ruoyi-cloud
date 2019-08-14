@@ -14,12 +14,8 @@
 #foreach($column in $columns)
 #if($column.columnName != $primaryKey.columnName)
 #if(!${column.configInfo})
-      <a-form-item
-        :labelCol="labelCol"
-        :wrapperCol="wrapperCol"
-        label="${column.columnComment}"
-      >
-        <a-input placeholder="${column.columnComment}" v-decorator="['${column.attrname}', {rules: [{ required: true, message: '请输入${column.columnComment}' }]}]" />
+      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="${column.columnComment}">
+        <a-input placeholder="${column.columnComment}" v-decorator="['${column.attrname}', {rules: [{#if(${column.isNullable}=="NO")required: true,#end message: '请输入${column.columnComment}'}]}]"/>
       </a-form-item>
 #end
 #end

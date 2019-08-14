@@ -37,6 +37,8 @@ public class ColumnInfo
     /** 执行计划（包含了与索引相关的一些细节信息） */
     private String extra;
 
+    private String isNullable;
+
     public String getColumnName()
     {
         return columnName;
@@ -124,5 +126,13 @@ public class ColumnInfo
     public void setConfigInfo(ColumnConfigInfo configInfo)
     {
         this.configInfo = configInfo;
+    }
+
+    public String getIsNullable() {
+        return isNullable;
+    }
+
+    public void setIsNullable(String isNullable) {
+        this.isNullable = isNullable;
     }
 }
