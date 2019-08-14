@@ -50,7 +50,7 @@ export default {
   },
   beforeCreate () {
   },
-  created() {
+  created () {
     get${className}List(Object.assign({ deep: 0 })).then(res => {
       this.options = res.rows.map(d => {
         return { value: d.id, label: d.name, isLeaf: false }
