@@ -44,7 +44,7 @@
         <a v-if="removeEnable" @click="delByIds([record.${primaryKey.attrname}])">删除</a>
       </span>
     </s-table>
-    <dist-modal ref="modal" @ok="handleOk"/>
+    <${className}-modal ref="modal" @ok="handleOk"/>
   </a-card>
 </template>
 
