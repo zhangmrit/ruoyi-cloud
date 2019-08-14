@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="select${className}Vo"/>
         <where>  
 #foreach($column in $columns)
-            <if test="$column.attrname != null #if($column.attrType == 'String' ) and $column.attrname.trim() != '' #end"> and $column.columnName = #{$column.attrname}</if>
+            <if test="$column.attrname != null #if($column.attrType == 'String' ) and $column.attrname.trim() != '' #end"> and $column.columnName  like concat('%', #{{$column.attrname}}, '%')</if>
  #end
         </where>
     </select>

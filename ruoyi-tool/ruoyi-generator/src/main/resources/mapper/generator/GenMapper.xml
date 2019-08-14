@@ -15,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<id     property="columnName"     column="column_name"      />
 		<result property="dataType"       column="data_type"        />
 		<result property="columnComment"  column="column_comment"   />
+		<result property="isNullable"  column="is_nullable"   />		
 	</resultMap>
 	
 	<sql id="selectGenVo">
@@ -45,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectTableColumnsByName" parameterType="String" resultMap="ColumnInfoResult">
-		select column_name, data_type, column_comment from information_schema.columns
+		select column_name, data_type, column_comment, is_nullable from information_schema.columns
         where table_name = #{tableName} and table_schema = (select database()) order by ordinal_position
 	</select>
 
