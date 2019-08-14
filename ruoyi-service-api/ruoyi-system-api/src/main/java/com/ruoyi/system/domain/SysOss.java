@@ -5,12 +5,16 @@ import java.util.Date;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Data;
 
 /**
  * 文件上传
  */
+@Data
 @Table(name = "sys_oss")
 public class SysOss implements Serializable
 {
@@ -38,76 +42,11 @@ public class SysOss implements Serializable
 
     /** 服务商 */
     private Integer           service;
+    
+    /** 用于表格行内编辑*/
+    @Transient 
+    private Boolean editable;
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public String getFileName()
-    {
-        return fileName;
-    }
-
-    public void setFileName(String fileName)
-    {
-        this.fileName = fileName;
-    }
-
-    public String getFileSuffix()
-    {
-        return fileSuffix;
-    }
-
-    public void setFileSuffix(String fileSuffix)
-    {
-        this.fileSuffix = fileSuffix;
-    }
-
-    public String getUrl()
-    {
-        return url;
-    }
-
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-
-    public Date getCreateTime()
-    {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime)
-    {
-        this.createTime = createTime;
-    }
-
-    public String getCreateBy()
-    {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy)
-    {
-        this.createBy = createBy;
-    }
-
-    public Integer getService()
-    {
-        return service;
-    }
-
-    public void setService(Integer service)
-    {
-        this.service = service;
-    }
     
     
 }
