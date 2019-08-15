@@ -33,6 +33,10 @@ public final class OSSFactory
         {
             return new QcloudCloudStorageService(config);
         }
+        else if (config.getType() == CloudService.LOCAL.getValue())
+        {
+            return new LocalStorageService(config);
+        }
         return null;
     }
 }

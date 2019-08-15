@@ -11,7 +11,7 @@ public class CloudConstant
        * 云服务商
        */
     public enum CloudService
-    {
+    {        
         /**
          * 七牛云
          */
@@ -23,7 +23,14 @@ public class CloudConstant
         /**
          * 腾讯云
          */
-        QCLOUD(3);
+        QCLOUD(3),
+
+        /**
+         * 服务器本地
+         */
+        LOCAL(4);
+
+
         private int value;
 
         CloudService(int value)

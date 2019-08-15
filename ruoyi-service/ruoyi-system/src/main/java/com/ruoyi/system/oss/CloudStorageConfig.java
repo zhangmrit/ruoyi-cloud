@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.URL;
 import com.ruoyi.system.oss.valdator.AliyunGroup;
 import com.ruoyi.system.oss.valdator.QcloudGroup;
 import com.ruoyi.system.oss.valdator.QiniuGroup;
-
+import com.ruoyi.system.oss.valdator.LocalGroup;
 import lombok.Data;
 
 /**
@@ -26,6 +26,10 @@ public class CloudStorageConfig implements Serializable
     // 类型 1：七牛 2：阿里云 3：腾讯云
     @Range(min = 1, max = 3, message = "类型错误")
     private Integer           type;
+
+    // 本地存储路径
+    @NotBlank(message = "本地路径不能为空", groups = LocalGroup.class)
+    private String            localUploadDir;
 
     // 七牛绑定的域名
     @NotBlank(message = "七牛绑定的域名不能为空", groups = QiniuGroup.class)
