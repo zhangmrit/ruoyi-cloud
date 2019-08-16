@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.auth.form.LoginForm;
 import com.ruoyi.auth.service.AccessTokenService;
 import com.ruoyi.auth.service.SysLoginService;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.system.domain.SysUser;
 
@@ -29,17 +28,18 @@ public class TokenController
         // 用户登录
         SysUser user = sysLoginService.login(form.getUsername(), form.getPassword());
         // 获取登录token
-        return R.ok(tokenService.createToken(user.getUserId(), user.getLoginName(), user.getPassword()));
+        return R.ok(tokenService.createToken(user));
     }
 
     @PostMapping("logout")
     public R logout(HttpServletRequest request)
     {
-        Long userId = Long.valueOf(request.getHeader(Constants.USER_KEY));
-        if (null != userId)
+        String token=request.getHeader("token");
+        SysUser user=tokenService.queryByToken(token);
+        if (null != user)
         {
-            sysLoginService.logout(request);
-            tokenService.expireToken(userId);
+            sysLoginService.logout(user.getLoginName());
+            tokenService.expireToken(user.getUserId());
         }
         return R.ok();
     }

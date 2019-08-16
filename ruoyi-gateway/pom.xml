@@ -34,13 +34,14 @@
 			<artifactId>ruoyi-common-core</artifactId>
 			<version>${ruoyi.version}</version>
 		</dependency>
-		<!-- redis模块 -->
 		<dependency>
-			<groupId>com.ruoyi.cloud</groupId>
-			<artifactId>ruoyi-common-redis</artifactId>
-			<version>${ruoyi.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>
 		<!-- spring-boot-devtools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
