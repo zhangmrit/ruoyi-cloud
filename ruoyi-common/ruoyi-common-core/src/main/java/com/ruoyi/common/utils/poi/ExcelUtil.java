@@ -1,14 +1,12 @@
 package com.ruoyi.common.utils.poi;
 
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.annotation.Excel.Type;
-import com.ruoyi.common.config.Global;
-import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.common.exception.BusinessException;
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.reflect.ReflectUtils;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.*;
+
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
@@ -18,12 +16,16 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.*;
+
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.annotation.Excel.Type;
+import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.ToolUtil;
+import com.ruoyi.common.utils.reflect.ReflectUtils;
 
 /**
  * Excel相关处理
@@ -32,47 +34,47 @@ import java.util.*;
  */
 public class ExcelUtil<T>
 {
-    private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
+    private static final Logger log       = LoggerFactory.getLogger(ExcelUtil.class);
 
     /**
      * Excel sheet最大行数，默认65536
      */
-    public static final int sheetSize = 65536;
+    public static final int     sheetSize = 65536;
 
     /**
      * 工作表名称
      */
-    private String sheetName;
+    private String              sheetName;
 
     /**
      * 导出类型（EXPORT:导出数据；IMPORT：导入模板）
      */
-    private Type type;
+    private Type                type;
 
     /**
      * 工作薄对象
      */
-    private Workbook wb;
+    private Workbook            wb;
 
     /**
      * 工作表对象
      */
-    private Sheet sheet;
+    private Sheet               sheet;
 
     /**
      * 导入导出数据列表
      */
-    private List<T> list;
+    private List<T>             list;
 
     /**
      * 注解列表
      */
-    private List<Field> fields;
+    private List<Field>         fields;
 
     /**
      * 实体对象
      */
-    public Class<T> clazz;
+    public Class<T>             clazz;
 
     public ExcelUtil(Class<T> clazz)
     {
@@ -126,14 +128,11 @@ public class ExcelUtil<T>
             // 如果传入的sheet名不存在则默认指向第1个sheet.
             sheet = wb.getSheetAt(0);
         }
-
         if (sheet == null)
         {
             throw new IOException("文件sheet不存在");
         }
-
         int rows = sheet.getPhysicalNumberOfRows();
-
         if (rows > 0)
         {
             // 默认序号
@@ -162,7 +161,6 @@ public class ExcelUtil<T>
                 for (int column = 0; column < cellNum; column++)
                 {
                     Object val = this.getCellValue(row, column);
-
                     // 如果不存在实例则新建.
                     entity = (entity == null ? clazz.newInstance() : entity);
                     // 从map中得到对应列的field.
@@ -274,7 +272,6 @@ public class ExcelUtil<T>
             {
                 createSheet(sheetNo, index);
                 Cell cell = null; // 产生单元格
-
                 // 产生一行
                 Row row = sheet.createRow(0);
                 // 写入各个字段的列头名称
@@ -312,10 +309,8 @@ public class ExcelUtil<T>
                     cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
                     cellStyle.setWrapText(true);
                     cell.setCellStyle(cellStyle);
-
                     // 写入列名
                     cell.setCellValue(attr.name());
-
                     // 如果设置了提示信息则鼠标放上去提示.
                     if (StringUtils.isNotEmpty(attr.prompt()))
                     {
@@ -414,7 +409,6 @@ public class ExcelUtil<T>
                             cell.setCellValue("");
                             continue;
                         }
-
                         // 用于读取对象中的属性
                         Object value = getTargetValue(vo, field, attr);
                         String dateFormat = attr.dateFormat();
@@ -496,7 +490,6 @@ public class ExcelUtil<T>
         {
             dataValidation.setSuppressDropDownArrow(false);
         }
-
         sheet.addValidationData(dataValidation);
     }
 
@@ -574,7 +567,7 @@ public class ExcelUtil<T>
      */
     public String getAbsoluteFile(String filename)
     {
-        String downloadPath = Global.getDownloadPath() + filename;
+        String downloadPath = ToolUtil.getDownloadPath() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists())
         {
@@ -722,7 +715,8 @@ public class ExcelUtil<T>
                     val = cell.getNumericCellValue();
                     if (HSSFDateUtil.isCellDateFormatted(cell))
                     {
-                        val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换
+                        val = DateUtil.getJavaDate((Double) val); // POI Excel
+                                                                  // 日期格式转换
                     }
                     else
                     {
@@ -748,7 +742,6 @@ public class ExcelUtil<T>
                 {
                     val = cell.getErrorCellValue();
                 }
-
             }
         }
         catch (Exception e)
