@@ -5,12 +5,8 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -22,28 +18,16 @@ import com.alibaba.fastjson.JSON;
 public class RedisUtils
 {
     @Autowired
-    private RedisTemplate<String, Object>          redisTemplate;
+    private RedisTemplate<String, Object>   redisTemplate;
 
-    @Resource(name = "redisTemplate")
-    private ValueOperations<String, String>        valueOperations;
-
-    @Resource(name = "redisTemplate")
-    private HashOperations<String, String, Object> hashOperations;
-
-    @Resource(name = "redisTemplate")
-    private ListOperations<String, Object>         listOperations;
-
-    @Resource(name = "redisTemplate")
-    private SetOperations<String, Object>          setOperations;
-
-    @Resource(name = "redisTemplate")
-    private ZSetOperations<String, Object>         zSetOperations;
+    @Resource(name = "stringRedisTemplate")
+    private ValueOperations<String, String> valueOperations;
 
     /**  默认过期时长，单位：秒 */
-    public final static long                       DEFAULT_EXPIRE = 60 * 60 * 24;
+    public final static long                DEFAULT_EXPIRE = 60 * 60 * 24;
 
     /**  不设置过期时长 */
-    public final static long                       NOT_EXPIRE     = -1;
+    public final static long                NOT_EXPIRE     = -1;
 
     /**
      * 插入缓存默认时间
