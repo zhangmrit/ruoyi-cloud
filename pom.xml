@@ -1,248 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.ruoyi.cloud</groupId>
-	<artifactId>ruoyi</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+    <groupId>com.ruoyi.cloud</groupId>
+    <artifactId>ruoyi-cloud</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
-	<name>ruoyi-cloud</name>
-	<url>http://www.ruoyi.vip</url>
-	<description>若依管理系统</description>
+    <name>ruoyi-cloud</name>
+    <url>http://www.ruoyi.vip</url>
+    <description>若依管理系统</description>
 
-	<properties>
-		<ruoyi.version>1.0.0-SNAPSHOT</ruoyi.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<spring-boot.version>2.1.6.RELEASE</spring-boot.version>
-		<spring-cloud.version>Greenwich.SR2</spring-cloud.version>
-		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
-		<druid.version>1.1.14</druid.version>
-		<bitwalker.version>1.19</bitwalker.version>
-		<kaptcha.version>2.3.2</kaptcha.version>
-		<swagger.version>2.7.0</swagger.version>
-		<pagehelper.boot.version>1.2.12</pagehelper.boot.version>
-		<mapper.starter.version>2.1.5</mapper.starter.version>
-		<oshi.version>3.9.1</oshi.version>
-		<commons.io.version>2.5</commons.io.version>
-		<commons.fileupload.version>1.3.3</commons.fileupload.version>
-		<jsoup.version>1.11.3</jsoup.version>
-		<poi.version>3.17</poi.version>
-		<velocity.version>1.7</velocity.version>
-		<qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
-		<aliyun.oss.version>3.5.0</aliyun.oss.version>
-		<qcloud.cos.version>5.6.3</qcloud.cos.version>
-		<fastjson.version>1.2.49</fastjson.version>
-		<lombok.version>1.18.4</lombok.version>
-		<hutool.version>4.1.19</hutool.version>
-		<common-pool.version>2.6.2</common-pool.version>
-		<jwt.version>3.4.0</jwt.version>
-	</properties>
+    <properties>
+        <ruoyi.version>1.0.0-SNAPSHOT</ruoyi.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
+        <druid.version>1.1.14</druid.version>
+        <bitwalker.version>1.19</bitwalker.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <swagger.version>2.7.0</swagger.version>
+        <pagehelper.boot.version>1.2.12</pagehelper.boot.version>
+        <mapper.starter.version>2.1.5</mapper.starter.version>
+        <oshi.version>3.9.1</oshi.version>
+        <commons.io.version>2.5</commons.io.version>
+        <commons.fileupload.version>1.3.3</commons.fileupload.version>
+        <jsoup.version>1.11.3</jsoup.version>
+        <poi.version>3.17</poi.version>
+        <velocity.version>1.7</velocity.version>
+        <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
+        <aliyun.oss.version>3.5.0</aliyun.oss.version>
+        <qcloud.cos.version>5.6.3</qcloud.cos.version>
+        <fastjson.version>1.2.49</fastjson.version>
+        <lombok.version>1.18.4</lombok.version>
+        <hutool.version>4.1.19</hutool.version>
+        <common-pool.version>2.6.2</common-pool.version>
+        <jwt.version>3.4.0</jwt.version>
+    </properties>
 
-	<!-- 依赖声明 -->
-	<dependencyManagement>
-		<dependencies>
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
 
-			<!--cloud -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+            <!--cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-dependencies</artifactId>
-				<version>${spring-boot-admin.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-
-
-			<!-- SpringBoot的依赖配置 -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring-boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-			<!--阿里数据库连接池 -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid-spring-boot-starter</artifactId>
-				<version>${druid.version}</version>
-			</dependency>
-
-			<!--验证码 -->
-			<dependency>
-				<groupId>com.github.penggle</groupId>
-				<artifactId>kaptcha</artifactId>
-				<version>${kaptcha.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
 
-			<!-- 解析客户端操作系统、浏览器等 -->
-			<dependency>
-				<groupId>eu.bitwalker</groupId>
-				<artifactId>UserAgentUtils</artifactId>
-				<version>${bitwalker.version}</version>
-			</dependency>
+            <!-- SpringBoot的依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
-			<!-- pagehelper 分页插件 -->
-			<dependency>
-				<groupId>com.github.pagehelper</groupId>
-				<artifactId>pagehelper-spring-boot-starter</artifactId>
-				<version>${pagehelper.boot.version}</version>
-			</dependency>
+            <!--阿里数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
 
-			<!-- 获取系统信息 -->
-			<dependency>
-				<groupId>com.github.oshi</groupId>
-				<artifactId>oshi-core</artifactId>
-				<version>${oshi.version}</version>
-			</dependency>
-
-
-			<!--io常用工具类 -->
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>${commons.io.version}</version>
-			</dependency>
-
-			<!--文件上传工具类 -->
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-				<version>${commons.fileupload.version}</version>
-			</dependency>
-
-			<!-- HTML解析器 -->
-			<dependency>
-				<groupId>org.jsoup</groupId>
-				<artifactId>jsoup</artifactId>
-				<version>${jsoup.version}</version>
-			</dependency>
-
-			<!-- excel工具 -->
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-ooxml</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-
-			<!--velocity代码生成使用模板 -->
-			<dependency>
-				<groupId>org.apache.velocity</groupId>
-				<artifactId>velocity</artifactId>
-				<version>${velocity.version}</version>
-			</dependency>
-
-			<!-- 代码生成 -->
-			<dependency>
-				<groupId>com.ruoyi.cloud</groupId>
-				<artifactId>ruoyi-generator</artifactId>
-				<version>${ruoyi.version}</version>
-			</dependency>
+            <!--验证码 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
 
 
-			<dependency>
-				<groupId>tk.mybatis</groupId>
-				<artifactId>mapper-spring-boot-starter</artifactId>
-				<version>${mapper.starter.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.hutool</groupId>
-				<artifactId>hutool-all</artifactId>
-				<version>${hutool.version}</version>
-			</dependency>
+            <!-- 解析客户端操作系统、浏览器等 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${bitwalker.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>${fastjson.version}</version>
-			</dependency>
+            <!-- pagehelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-pool2</artifactId>
-				<version>${common-pool.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.auth0</groupId>
-				<artifactId>java-jwt</artifactId>
-				<version>${jwt.version}</version>
-			</dependency>
+            <!-- 获取系统信息 -->
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core</artifactId>
+                <version>${oshi.version}</version>
+            </dependency>
 
 
-			<!-- oss -->
-			<dependency>
-				<groupId>com.qiniu</groupId>
-				<artifactId>qiniu-java-sdk</artifactId>
-				<version>${qiniu.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.aliyun.oss</groupId>
-				<artifactId>aliyun-sdk-oss</artifactId>
-				<version>${aliyun.oss.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.qcloud</groupId>
-				<artifactId>cos_api</artifactId>
-				<version>${qcloud.cos.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-log4j12</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
+            <!--io常用工具类 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
 
-		</dependencies>
-	</dependencyManagement>
+            <!--文件上传工具类 -->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons.fileupload.version}</version>
+            </dependency>
 
-	<modules>
+            <!-- HTML解析器 -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
 
-		<module>ruoyi-common</module>
-		<module>ruoyi-config</module>
-		<module>ruoyi-eureka</module>
-		<module>ruoyi-gateway</module>
-		<module>ruoyi-service-api</module>
-		<module>ruoyi-service</module>
-		<module>ruoyi-tool</module>
-	</modules>
-	<packaging>pom</packaging>
+            <!-- excel工具 -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <!--velocity代码生成使用模板 -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+
+            <!-- 代码生成 -->
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-generator</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
 
 
-	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${mapper.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${common-pool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+
+            <!-- oss -->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${qcloud.cos.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+
+        <module>ruoyi-common</module>
+        <module>ruoyi-config</module>
+        <module>ruoyi-eureka</module>
+        <module>ruoyi-gateway</module>
+        <module>ruoyi-service-api</module>
+        <module>ruoyi-service</module>
+        <module>ruoyi-tool</module>
+    </modules>
+    <packaging>pom</packaging>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>
