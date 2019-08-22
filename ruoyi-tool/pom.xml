@@ -12,6 +12,5 @@
     <packaging>pom</packaging>
     <modules>
         <module>ruoyi-monitor</module>
-        <module>ruoyi-generator</module>
     </modules>
 </project>
