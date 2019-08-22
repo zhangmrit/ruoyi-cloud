@@ -1,7 +1,12 @@
 package com.ruoyi.common.log.aspect;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
@@ -57,7 +62,7 @@ public class OperLogAspect
      * 拦截异常操作
      * 
      * @param joinPoint 切点
-     * @param e 异常
+     * @param e         异常
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e)
@@ -113,7 +118,7 @@ public class OperLogAspect
     /**
      * 获取注解中对方法的描述信息 用于Controller层注解
      * 
-     * @param log 日志
+     * @param log     日志
      * @param operLog 操作日志
      * @throws Exception
      */
@@ -134,14 +139,17 @@ public class OperLogAspect
     }
 
     /**
-     * 获取请求的参数，放到log中
+     *  获取请求的参数，放到log中
      * 
      * @param operLog 操作日志
      * @throws Exception 异常
      */
     private void setRequestValue(SysOperLog operLog, Object[] args) throws Exception
     {
-        String params = JSON.toJSONString(args,true);
+        List<?> param = new ArrayList<>(Arrays.asList(args)).stream().filter(p -> !(p instanceof ServletResponse))
+                .collect(Collectors.toList());
+        log.debug("args:{}", param);
+        String params = JSON.toJSONString(param, true);
         operLog.setOperParam(StringUtils.substring(params, 0, 2000));
     }
 
