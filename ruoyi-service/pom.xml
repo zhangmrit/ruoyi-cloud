@@ -13,5 +13,6 @@
     <modules>
         <module>ruoyi-system</module>
         <module>ruoyi-auth</module>
+        <module>ruoyi-gen</module>
     </modules>
 </project>
