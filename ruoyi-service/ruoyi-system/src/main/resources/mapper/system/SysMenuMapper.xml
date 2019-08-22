@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMenusByUserId" parameterType="Long"
 		resultMap="SysMenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.url,
-		m.perms, m.menu_type,m.menu_key,m.menu_lay,m.target, m.icon, m.order_num,
+		m.perms, m.menu_type,m.menu_key,m.menu_lay,m.target, m.icon, m.order_num,m.visible,
 		m.create_time
 		from sys_menu m
 		left join sys_role_menu rm on m.menu_id = rm.menu_id
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectMenuNormalAll" resultMap="SysMenuResult">
 		select distinct
-		m.menu_id, m.parent_id, m.menu_name, m.menu_key,m.menu_lay,m.url,m.target,
+		m.menu_id, m.parent_id, m.menu_name, m.menu_key,m.menu_lay,m.url,m.target,m.visible,
 		m.perms, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu
 		m
