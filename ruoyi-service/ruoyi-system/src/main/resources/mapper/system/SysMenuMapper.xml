@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		left join sys_user_role ur on rm.role_id = ur.role_id
 		LEFT JOIN sys_role ro on ur.role_id = ro.role_id
 		where ur.user_id =
-		#{userId} and m.menu_type in ('M', 'C') and m.visible = 0 AND
+		#{userId} and m.menu_type in ('M', 'C') and 
 		ro.status = 0 and length(m.menu_key)>0
 		order by m.order_num
 	</select>
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		m.perms, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu
 		m
-		where m.menu_type in ('M', 'C') and m.visible = 0 and
+		where m.menu_type in ('M', 'C') and
 		length(m.menu_key)>0
 		order by m.order_num
 	</select>
