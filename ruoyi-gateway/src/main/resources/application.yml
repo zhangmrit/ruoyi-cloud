@@ -32,6 +32,13 @@ spring:
             - CacheRequest
             - ImgCodeFilter
             - StripPrefix=1
+        # 代码生成
+        - id: ruoyi-gen
+          uri: lb://ruoyi-gen
+          predicates:
+            - Path=/gen/**
+          filters:
+            - StripPrefix=1
         #system 模块
         - id: ruoyi-system
           uri: lb://ruoyi-system

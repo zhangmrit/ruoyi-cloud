@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.common.config.ServerConfig;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ToolUtil;
 import com.ruoyi.common.utils.file.FileUploadUtils;
@@ -47,12 +48,13 @@ public class CommonController
             {
                 throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
             }
-            String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+            String realFileName = DateUtils.dateTimeNow() + fileName.substring(fileName.indexOf("_") + 1);
             String filePath = ToolUtil.getDownloadPath() + fileName;
             response.setCharacterEncoding("utf-8");
-            response.setContentType("multipart/form-data");
+            //下载使用"application/octet-stream"更标准
+            response.setContentType("application/octet-stream");
             response.setHeader("Content-Disposition",
-                    "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
+                    "attachment;filename=" + FileUtils.setFileDownloadHeader(request, realFileName));
             FileUtils.writeBytes(filePath, response.getOutputStream());
             if (delete)
             {
