@@ -8,6 +8,14 @@ logging:
 spring:
   application:
     name: ruoyi-gen
+  cloud:
+    config:
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: ruoyi-config  
   profiles: 
     active: dev
   devtools:
