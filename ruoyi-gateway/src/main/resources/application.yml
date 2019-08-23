@@ -67,5 +67,13 @@ eureka:
     instance-id:  ${spring.application.name}:${server.port}
     prefer-ip-address: true     #访问路径可以显示IP地址      
 
-
+hystrix:
+    command:
+      default:  #default全局有效，service id指定应用有效
+        execution:
+          timeout:
+            enabled: true
+          isolation:
+            thread:
+              timeoutInMilliseconds: 5000 #断路器超时时间，默认1000ms
 
