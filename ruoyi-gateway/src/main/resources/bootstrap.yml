@@ -63,6 +63,13 @@ spring:
                 name: fallbackcmd
                 fallbackUri: 'forward:/fallback'
 
-
-
+hystrix:
+  command:
+    default:  #default全局有效，service id指定应用有效
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000 #断路器超时时间，默认1000ms
 

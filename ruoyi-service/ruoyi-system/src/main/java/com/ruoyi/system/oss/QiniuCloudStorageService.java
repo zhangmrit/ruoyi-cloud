@@ -5,9 +5,9 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
+import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.ruoyi.common.exception.file.OssException;
@@ -30,7 +30,7 @@ public class QiniuCloudStorageService extends CloudStorageService
 
     private void init()
     {
-        uploadManager = new UploadManager(new Configuration(Zone.autoZone()));
+        uploadManager = new UploadManager(new Configuration(Region.autoRegion()));
         token = Auth.create(config.getQiniuAccessKey(), config.getQiniuSecretKey())
                 .uploadToken(config.getQiniuBucketName());
     }
