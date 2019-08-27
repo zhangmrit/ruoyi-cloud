@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,9 +24,7 @@ import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.JwtUtil;
 import com.ruoyi.common.utils.ServletUtils;
-import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.sql.SqlUtil;
 
 /**
@@ -62,7 +61,7 @@ public class BaseController
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
-        if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize))
+        if (null != pageNum && null != pageSize)
         {
             String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
             PageHelper.startPage(pageNum, pageSize, orderBy);
@@ -95,18 +94,17 @@ public class BaseController
 
     public long getCurrentUserId()
     {
-        Long id = Long.valueOf(getRequest().getHeader(Constants.USER_KEY));
-        if (null == id)
+        String currentId = getRequest().getHeader(Constants.CURRENT_ID);
+        if (StringUtils.isNotBlank(currentId))
         {
-            id = 0l;
+            return Long.valueOf(currentId);
         }
-        return id;
+        return 0l;
     }
 
     public String getLoginName()
     {
-        String token = getRequest().getHeader(Constants.TOKEN);
-        return JwtUtil.getUsername(token);
+        return getRequest().getHeader(Constants.CURRENT_USERNAME);
     }
 
     /**
@@ -153,13 +151,5 @@ public class BaseController
     protected R toAjax(boolean result)
     {
         return result ? R.ok() : R.error();
-    }
-
-    /**
-     * 页面跳转
-     */
-    public String redirect(String url)
-    {
-        return StringUtils.format("redirect:{}", url);
     }
 }

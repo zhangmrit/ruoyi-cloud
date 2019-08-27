@@ -1,7 +1,5 @@
 package com.ruoyi.system.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ruoyi.common.annotation.LoginUser;
 import com.ruoyi.common.auth.annotation.HasPermissions;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
@@ -48,11 +47,9 @@ public class SysUserController extends BaseController
     }
 
     @GetMapping("info")
-    public SysUser info(HttpServletRequest request)
+    public SysUser info(@LoginUser SysUser sysUser)
     {
-        long userId = getCurrentUserId();
-        SysUser sysUser = sysUserService.selectUserById(userId);
-        sysUser.setButtons(sysMenuService.selectPermsByUserId(userId));
+        sysUser.setButtons(sysMenuService.selectPermsByUserId(sysUser.getUserId()));
         return sysUser;
     }
 

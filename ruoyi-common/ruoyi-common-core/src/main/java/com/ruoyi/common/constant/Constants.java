@@ -62,13 +62,15 @@ public class Constants
      */
     public static final String IS_ASC           = "sortOrder";
 
-    public static final String USER_KEY         = "currentUserId";
+    public static final String CURRENT_ID       = "current_id";
+
+    public static final String CURRENT_USERNAME = "current_username";
 
     public static final String TOKEN            = "token";
 
     public static final String DEFAULT_CODE_KEY = "random_code_";
 
-    public final static String ACCESS_TOKEN  = "access_token_";
+    public final static String ACCESS_TOKEN     = "access_token_";
 
-    public final static String ACCESS_USERID = "access_userid_";
+    public final static String ACCESS_USERID    = "access_userid_";
 }

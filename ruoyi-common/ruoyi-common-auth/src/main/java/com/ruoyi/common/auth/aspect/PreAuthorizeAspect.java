@@ -55,7 +55,7 @@ public class PreAuthorizeAspect
     {
         // 用超管帐号方便测试，拥有所有权限
         HttpServletRequest request = ServletUtils.getRequest();
-        String tmpUserKey = request.getHeader(Constants.USER_KEY);
+        String tmpUserKey = request.getHeader(Constants.CURRENT_ID);
         if (Optional.ofNullable(tmpUserKey).isPresent())
         {
             Long userId = Long.valueOf(tmpUserKey);
