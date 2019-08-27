@@ -18,7 +18,6 @@ import com.ruoyi.system.service.ISysUserService;
 /**
  * 有@LoginUser注解的方法参数，注入当前登录用户
  */
-
 @Configuration
 public class LoginUserHandlerResolver implements HandlerMethodArgumentResolver
 {
@@ -33,12 +32,12 @@ public class LoginUserHandlerResolver implements HandlerMethodArgumentResolver
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container, NativeWebRequest nativeWebRequest,
-            WebDataBinderFactory factory) throws Exception
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container,
+            NativeWebRequest nativeWebRequest, WebDataBinderFactory factory) throws Exception
     {
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         // 获取用户ID
-        Long userid = Long.valueOf(request.getHeader(Constants.USER_KEY));
+        Long userid = Long.valueOf(request.getHeader(Constants.CURRENT_ID));
         if (userid == null)
         {
             return null;

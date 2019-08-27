@@ -100,7 +100,10 @@ public class DataScopeAspect
                         controllerDataScope.userAlias());
             }
         }
-        log.warn("数据权限拦截失败,执行对象 currentUser is null");
+        else
+        {
+            log.warn("数据权限拦截失败,执行对象 currentUser is null");
+        }
     }
 
     /**

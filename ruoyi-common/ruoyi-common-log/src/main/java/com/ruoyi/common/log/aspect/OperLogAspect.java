@@ -19,12 +19,12 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.log.annotation.OperLog;
 import com.ruoyi.common.log.enums.BusinessStatus;
 import com.ruoyi.common.log.event.SysOperLogEvent;
 import com.ruoyi.common.utils.AddressUtils;
 import com.ruoyi.common.utils.IpUtils;
-import com.ruoyi.common.utils.JwtUtil;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.spring.SpringContextHolder;
@@ -89,8 +89,8 @@ public class OperLogAspect
             operLog.setOperIp(ip);
             operLog.setOperUrl(request.getRequestURI());
             operLog.setOperLocation(AddressUtils.getRealAddressByIP(ip));
-            String token = request.getHeader("token");
-            operLog.setOperName(JwtUtil.getUsername(token));
+            String username = request.getHeader(Constants.CURRENT_USERNAME);
+            operLog.setOperName(username);
             if (e != null)
             {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());

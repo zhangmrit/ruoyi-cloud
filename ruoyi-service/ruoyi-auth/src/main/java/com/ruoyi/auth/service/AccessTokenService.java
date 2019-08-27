@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.redis.annotation.RedisEvict;
 import com.ruoyi.common.redis.util.RedisUtils;
-import com.ruoyi.common.utils.JwtUtil;
 import com.ruoyi.system.domain.SysUser;
+
+import cn.hutool.core.util.IdUtil;
 
 @Service("accessTokenService")
 public class AccessTokenService
@@ -37,7 +38,7 @@ public class AccessTokenService
     public Map<String, Object> createToken(SysUser sysUser)
     {
         // 生成token
-        String token = JwtUtil.sign(sysUser.getLoginName(), sysUser.getPassword(), EXPIRE * 1000);
+        String token = IdUtil.fastSimpleUUID();
         // 保存或更新用户token
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("userId", sysUser.getUserId());
