@@ -39,7 +39,6 @@
         <lombok.version>1.18.4</lombok.version>
         <hutool.version>4.1.19</hutool.version>
         <common-pool.version>2.6.2</common-pool.version>
-        <jwt.version>3.4.0</jwt.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -174,11 +173,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${common-pool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>java-jwt</artifactId>
-                <version>${jwt.version}</version>
             </dependency>
 
 
