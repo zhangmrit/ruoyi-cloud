@@ -39,6 +39,9 @@
 		<lombok.version>1.18.4</lombok.version>
 		<hutool.version>4.1.19</hutool.version>
 		<common-pool.version>2.6.2</common-pool.version>
+		<swagger.version>2.9.2</swagger.version>
+		<swagger-ui.version>1.9.5</swagger-ui.version>
+		<guava.version>26.0-jre</guava.version>
 	</properties>
 
 	<!-- 依赖声明 -->
@@ -206,7 +209,30 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+			<!-- swagger-bootstrap-ui -->
+			<dependency>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>swagger-bootstrap-ui</artifactId>
+				<version>${swagger-ui.version}</version>
+			</dependency>
 
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-bean-validators</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

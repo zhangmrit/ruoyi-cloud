@@ -14,5 +14,6 @@
         <module>ruoyi-common-redis</module>
         <module>ruoyi-common-log</module>
         <module>ruoyi-common-auth</module>
+        <module>ruoyi-common-swagger</module>
     </modules>
 </project>
