@@ -4,24 +4,25 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.ruoyi.cloud</groupId>
-		<artifactId>ruoyi-service-api</artifactId>
+		<artifactId>ruoyi-common</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>ruoyi-system-api</artifactId>
-
+	<artifactId>ruoyi-common-swagger</artifactId>
 	<dependencies>
-
-		<!-- 通用工具 -->
+		<!-- swagger-bootstrap-ui -->
 		<dependency>
-			<groupId>com.ruoyi.cloud</groupId>
-			<artifactId>ruoyi-common-core</artifactId>
-			<version>${ruoyi.version}</version>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
 		</dependency>
-		<!-- swagger模块 -->
+
 		<dependency>
-			<groupId>com.ruoyi.cloud</groupId>
-			<artifactId>ruoyi-common-swagger</artifactId>
-			<version>${ruoyi.version}</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-bean-validators</artifactId>
 		</dependency>
 	</dependencies>
 </project>
