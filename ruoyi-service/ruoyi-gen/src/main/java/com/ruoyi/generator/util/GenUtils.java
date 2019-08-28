@@ -20,7 +20,7 @@ public class GenUtils
      */
     public static void initTable(GenTable genTable, String operName)
     {
-        genTable.setClassName(StringUtils.convertToCamelCase(genTable.getTableName()));
+        genTable.setClassName(convertClassName(genTable.getTableName()));
         genTable.setPackageName(GenConfig.getPackageName());
         genTable.setModuleName(getModuleName(GenConfig.getPackageName()));
         genTable.setBusinessName(getBusinessName(genTable.getTableName()));
@@ -40,7 +40,6 @@ public class GenUtils
         column.setCreateBy(table.getCreateBy());
         // 设置java字段名
         column.setJavaField(StringUtils.toCamelCase(columnName));
-
         if (arraysContains(GenConstants.COLUMNTYPE_STR, dataType))
         {
             column.setJavaType(GenConstants.TYPE_STRING);
@@ -57,7 +56,6 @@ public class GenUtils
         else if (arraysContains(GenConstants.COLUMNTYPE_NUMBER, dataType))
         {
             column.setHtmlType(GenConstants.HTML_INPUT);
-
             // 如果是浮点型
             String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), ",");
             if (str != null && str.length == 2 && Integer.parseInt(str[1]) > 0)
@@ -75,10 +73,8 @@ public class GenUtils
                 column.setJavaType(GenConstants.TYPE_LONG);
             }
         }
-
         // 插入字段（默认所有字段都需要插入）
         column.setIsInsert(GenConstants.REQUIRE);
-
         // 编辑字段
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName) && !column.isPk())
         {
@@ -94,7 +90,6 @@ public class GenUtils
         {
             column.setIsQuery(GenConstants.REQUIRE);
         }
-
         // 查询字段类型
         if (StringUtils.endsWithIgnoreCase(columnName, "name"))
         {
@@ -151,6 +146,23 @@ public class GenUtils
         int nameLength = tableName.length();
         String businessName = StringUtils.substring(tableName, lastIndex + 1, nameLength);
         return businessName;
+    }
+
+    /**
+     * 表名转换成Java类名
+     * 
+     * @param tableName 表名称
+     * @return 类名
+     */
+    public static String convertClassName(String tableName)
+    {
+        boolean autoRemovePre = GenConfig.getAutoRemovePre();
+        String tablePrefix = GenConfig.getTablePrefix();
+        if (autoRemovePre && StringUtils.isNotEmpty(tablePrefix))
+        {
+            tableName = tableName.replaceFirst(tablePrefix, "");
+        }
+        return StringUtils.convertToCamelCase(tableName);
     }
 
     /**
