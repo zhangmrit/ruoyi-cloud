@@ -40,9 +40,4 @@ public class ToolUtil
     {
         return getTempPath() + File.separator + "download" + File.separator;
     }
-
-    public static String getUploadPath()
-    {
-        return getTempPath() + File.separator + "upload" + File.separator;
-    }
 }
