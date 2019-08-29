@@ -1,71 +1,64 @@
 package com.ruoyi.common.config;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.YamlUtil;
 
 /**
  * 全局配置类
  * 
  * @author ruoyi
  */
+@Configuration
 public class Global
 {
-    private static final Logger log = LoggerFactory.getLogger(Global.class);
+    private static String  name;
 
-    private static String NAME = "application.yml";
+    private static String  version;
 
-    /**
-     * 当前对象实例
-     */
-    private static Global global;
+    private static String  copyrightYear;
 
-    /**
-     * 保存全局属性值
-     */
-    private static Map<String, String> map = new HashMap<String, String>();
+    private static String  demoEnabled;
 
-    private Global()
+    private static Boolean addressEnabled;
+
+    private static String  profile;
+
+    @Value("${ruoyi.name}")
+    public void setName(String name)
     {
+        Global.name = name;
     }
 
-    /**
-     * 静态工厂方法
-     */
-    public static synchronized Global getInstance()
+    @Value("${ruoyi.version}")
+    public void setVersion(String version)
     {
-        if (global == null)
-        {
-            global = new Global();
-        }
-        return global;
+        Global.version = version;
     }
 
-    /**
-     * 获取配置
-     */
-    public static String getConfig(String key)
+    @Value("${ruoyi.name}")
+    public void setCopyrightYear(String copyrightYear)
     {
-        String value = map.get(key);
-        if (value == null)
-        {
-            Map<?, ?> yamlMap = null;
-            try
-            {
-                yamlMap = YamlUtil.loadYaml(NAME);
-                value = String.valueOf(YamlUtil.getProperty(yamlMap, key));
-                map.put(key, value != null ? value : StringUtils.EMPTY);
-            }
-            catch (FileNotFoundException e)
-            {
-                log.error("获取全局配置异常 {}", key);
-            }
-        }
-        return value;
+        Global.copyrightYear = copyrightYear;
+    }
+
+    @Value("${ruoyi.demoEnabled}")
+    public void setDemoEnabled(String demoEnabled)
+    {
+        Global.demoEnabled = demoEnabled;
+    }
+
+    @Value("${ruoyi.addressEnabled}")
+    public void setAddressEnabled(Boolean addressEnabled)
+    {
+        Global.addressEnabled = addressEnabled;
+    }
+
+    @Value("${ruoyi.profile}")
+    public void setProfile(String profile)
+    {
+        Global.profile = profile;
     }
 
     /**
@@ -73,7 +66,7 @@ public class Global
      */
     public static String getName()
     {
-        return StringUtils.nvl(getConfig("ruoyi.name"), "RuoYi");
+        return StringUtils.nvl(name, "RuoYi");
     }
 
     /**
@@ -81,7 +74,7 @@ public class Global
      */
     public static String getVersion()
     {
-        return StringUtils.nvl(getConfig("ruoyi.version"), "3.3.0");
+        return StringUtils.nvl(version, "4.0.0");
     }
 
     /**
@@ -89,7 +82,15 @@ public class Global
      */
     public static String getCopyrightYear()
     {
-        return StringUtils.nvl(getConfig("ruoyi.copyrightYear"), "2018");
+        return StringUtils.nvl(copyrightYear, "2019");
+    }
+
+    /**
+     * 实例演示开关
+     */
+    public static String isDemoEnabled()
+    {
+        return StringUtils.nvl(demoEnabled, "true");
     }
 
     /**
@@ -97,7 +98,7 @@ public class Global
      */
     public static Boolean isAddressEnabled()
     {
-        return Boolean.valueOf(getConfig("ruoyi.addressEnabled"));
+        return addressEnabled;
     }
 
     /**
@@ -105,7 +106,7 @@ public class Global
      */
     public static String getProfile()
     {
-        return getConfig("ruoyi.profile");
+        return profile;
     }
 
     /**
@@ -113,7 +114,7 @@ public class Global
      */
     public static String getAvatarPath()
     {
-        return getConfig("ruoyi.profile") + "avatar/";
+        return getProfile() + "/avatar";
     }
 
     /**
@@ -121,7 +122,7 @@ public class Global
      */
     public static String getDownloadPath()
     {
-        return getConfig("ruoyi.profile") + "download/";
+        return getProfile() + "/download/";
     }
 
     /**
@@ -129,6 +130,6 @@ public class Global
      */
     public static String getUploadPath()
     {
-        return getConfig("ruoyi.profile") + "upload/";
+        return getProfile() + "/upload";
     }
 }
