@@ -100,6 +100,8 @@ public class OperLogAspect
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
             operLog.setMethod(className + "." + methodName + "()");
+         // 设置请求方式
+            operLog.setRequestMethod(request.getMethod());
             // 处理设置注解上的参数
             Object[] args = joinPoint.getArgs();
             getControllerMethodDescription(controllerLog, operLog, args);
