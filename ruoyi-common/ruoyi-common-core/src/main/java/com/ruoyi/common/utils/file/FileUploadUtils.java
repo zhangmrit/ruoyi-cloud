@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.exception.file.FileNameLengthLimitExceededException;
 import com.ruoyi.common.exception.file.FileSizeLimitExceededException;
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.ToolUtil;
 import com.ruoyi.common.utils.security.Md5Utils;
 
 /**
@@ -21,53 +20,19 @@ public class FileUploadUtils
     /**
      * 默认大小 50M
      */
-    public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
+    public static final long   DEFAULT_MAX_SIZE         = 50 * 1024 * 1024;
 
     /**
      * 默认的文件名最大长度 100
      */
-    public static final int DEFAULT_FILE_NAME_LENGTH = 100;
-
-    /**
-     * 默认上传的地址
-     */
-    private static String defaultBaseDir = ToolUtil.getUploadPath();
+    public static final int    DEFAULT_FILE_NAME_LENGTH = 100;
 
     /**
      * 默认文件类型jpg
      */
-    public static final String IMAGE_JPG_EXTENSION = ".jpg";
+    public static final String IMAGE_JPG_EXTENSION      = ".jpg";
 
-    private static int counter = 0;
-
-    public static void setDefaultBaseDir(String defaultBaseDir)
-    {
-        FileUploadUtils.defaultBaseDir = defaultBaseDir;
-    }
-
-    public static String getDefaultBaseDir()
-    {
-        return defaultBaseDir;
-    }
-
-    /**
-     * 以默认配置进行文件上传
-     *
-     * @param file 上传的文件
-     * @return 文件名称
-     * @throws Exception
-     */
-    public static final String upload(MultipartFile file) throws IOException
-    {
-        try
-        {
-            return upload(getDefaultBaseDir(), file, FileUploadUtils.IMAGE_JPG_EXTENSION);
-        }
-        catch (Exception e)
-        {
-            throw new IOException(e.getMessage(), e);
-        }
-    }
+    private static int         counter                  = 0;
 
     /**
      * 根据文件路径上传
@@ -103,17 +68,13 @@ public class FileUploadUtils
     public static final String upload(String baseDir, MultipartFile file, String extension)
             throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException
     {
-
         int fileNamelength = file.getOriginalFilename().length();
         if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH)
         {
             throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
         }
-
         assertAllowed(file);
-
         String fileName = extractFilename(file, extension);
-
         File desc = getAbsoluteFile(baseDir, baseDir + fileName);
         file.transferTo(desc);
         return fileName;
@@ -129,7 +90,6 @@ public class FileUploadUtils
     private static final File getAbsoluteFile(String uploadDir, String filename) throws IOException
     {
         File desc = new File(File.separator + filename);
-
         if (!desc.getParentFile().exists())
         {
             desc.getParentFile().mkdirs();
