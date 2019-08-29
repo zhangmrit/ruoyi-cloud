@@ -43,12 +43,12 @@ import org.slf4j.LoggerFactory;
 
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.Type;
-import com.ruoyi.common.config.Global;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.ToolUtil;
 import com.ruoyi.common.utils.reflect.ReflectUtils;
 
 /**
@@ -591,7 +591,7 @@ public class ExcelUtil<T>
      */
     public String getAbsoluteFile(String filename)
     {
-        String downloadPath = Global.getDownloadPath() + filename;
+        String downloadPath = ToolUtil.getDownloadPath() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists())
         {

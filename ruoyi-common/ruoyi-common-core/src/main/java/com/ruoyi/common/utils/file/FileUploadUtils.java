@@ -2,11 +2,13 @@ package com.ruoyi.common.utils.file;
 
 import java.io.File;
 import java.io.IOException;
+
 import org.springframework.web.multipart.MultipartFile;
-import com.ruoyi.common.config.Global;
+
 import com.ruoyi.common.exception.file.FileNameLengthLimitExceededException;
 import com.ruoyi.common.exception.file.FileSizeLimitExceededException;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.ToolUtil;
 import com.ruoyi.common.utils.security.Md5Utils;
 
 /**
@@ -29,7 +31,7 @@ public class FileUploadUtils
     /**
      * 默认上传的地址
      */
-    private static String defaultBaseDir = Global.getProfile();
+    private static String defaultBaseDir = ToolUtil.getUploadPath();
 
     /**
      * 默认文件类型jpg
