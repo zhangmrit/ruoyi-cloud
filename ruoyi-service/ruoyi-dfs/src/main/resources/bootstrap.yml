@@ -1,0 +1,43 @@
+server:
+  port: 8006
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn  
+#    com.alibaba.nacos.client.naming: error
+spring:
+  application:
+    name: ruoyi-dfs
+  profiles: 
+    active: dev
+  devtools:
+    restart:
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      maxFileSize: 5MB  #单位必须大写MB或不写(即为B)
+      maxRequestSize: 10MB
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+      discovery:
+        server-addr: 127.0.0.1:8848
+  
+feign: 
+  hystrix: 
+    enabled: true
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' 
