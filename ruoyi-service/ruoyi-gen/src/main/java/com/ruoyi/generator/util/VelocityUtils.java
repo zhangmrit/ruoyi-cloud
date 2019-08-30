@@ -22,9 +22,6 @@ public class VelocityUtils
     /** mybatis空间路径 */
     private static final String MYBATIS_PATH = "main/resources/mapper";
 
-    /** html空间路径 */
-    private static final String TEMPLATES_PATH = "main/resources/templates";
-
     /**
      * 设置模板变量信息
      * 
@@ -37,7 +34,6 @@ public class VelocityUtils
         String packageName = genTable.getPackageName();
         String tplCategory = genTable.getTplCategory();
         String functionName = genTable.getFunctionName();
-
         VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("tplCategory", genTable.getTplCategory());
         velocityContext.put("tableName", genTable.getTableName());
@@ -69,7 +65,6 @@ public class VelocityUtils
         String treeCode = getTreecode(paramsObj);
         String treeParentCode = getTreeParentCode(paramsObj);
         String treeName = getTreeName(paramsObj);
-
         context.put("treeCode", treeCode);
         context.put("treeParentCode", treeParentCode);
         context.put("treeName", treeName);
@@ -98,17 +93,9 @@ public class VelocityUtils
         templates.add("vm/java/serviceImpl.java.vm");
         templates.add("vm/java/controller.java.vm");
         templates.add("vm/xml/mapper.xml.vm");
-        if (GenConstants.TPL_CRUD.equals(tplCategory))
-        {
-            templates.add("vm/html/list.html.vm");
-        }
-        else if (GenConstants.TPL_TREE.equals(tplCategory))
-        {
-            templates.add("vm/html/tree.html.vm");
-            templates.add("vm/html/list-tree.html.vm");
-        }
-        templates.add("vm/html/add.html.vm");
-        templates.add("vm/html/edit.html.vm");
+        templates.add("vm/vue/api.js.vm");
+        templates.add("vm/vue/list.vue.vm");
+        templates.add("vm/vue/modal.vue.vm");
         templates.add("vm/sql/sql.vm");
         return templates;
     }
@@ -128,11 +115,9 @@ public class VelocityUtils
         String className = genTable.getClassName();
         // 业务名称
         String businessName = genTable.getBusinessName();
-
         String javaPath = PROJECT_PATH + "/" + StringUtils.replace(packageName, ".", "/");
         String mybatisPath = MYBATIS_PATH + "/" + moduleName;
-        String htmlPath = TEMPLATES_PATH + "/" + moduleName + "/" + businessName;
-
+        String vuePath = "vue";
         if (template.contains("domain.java.vm"))
         {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
@@ -157,25 +142,17 @@ public class VelocityUtils
         {
             fileName = StringUtils.format("{}/{}Mapper.xml", mybatisPath, className);
         }
-        else if (template.contains("list.html.vm"))
+        else if (template.contains("list.vue.vm"))
         {
-            fileName = StringUtils.format("{}/{}.html", htmlPath, businessName);
+            fileName = StringUtils.format("{}/views/{}/{}List.vue", vuePath, moduleName, className);
         }
-        else if (template.contains("list-tree.html.vm"))
+        else if (template.contains("modal.vue.vm"))
         {
-            fileName = StringUtils.format("{}/{}.html", htmlPath, businessName);
+            fileName = StringUtils.format("{}/views/{}/modules/{}Modal.vue", vuePath, moduleName, className);
         }
-        else if (template.contains("tree.html.vm"))
+        else if (template.contains("api.js.vm"))
         {
-            fileName = StringUtils.format("{}/tree.html", htmlPath);
-        }
-        else if (template.contains("add.html.vm"))
-        {
-            fileName = StringUtils.format("{}/add.html", htmlPath);
-        }
-        else if (template.contains("edit.html.vm"))
-        {
-            fileName = StringUtils.format("{}/edit.html", htmlPath);
+            fileName = StringUtils.format("{}/api/{}.js", vuePath, businessName);
         }
         else if (template.contains("sql.vm"))
         {
@@ -245,7 +222,6 @@ public class VelocityUtils
     public static String getPermissionPrefix(String moduleName, String businessName)
     {
         return StringUtils.format("{}:{}", moduleName, businessName);
-
     }
 
     /**
