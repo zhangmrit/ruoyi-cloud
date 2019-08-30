@@ -73,4 +73,6 @@ public class Constants
     public final static String ACCESS_TOKEN     = "access_token_";
 
     public final static String ACCESS_USERID    = "access_userid_";
+
+    public static final String RESOURCE_PREFIX  = "/profile";
 }
