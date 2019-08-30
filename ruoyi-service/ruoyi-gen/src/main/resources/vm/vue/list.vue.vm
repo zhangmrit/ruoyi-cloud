@@ -95,6 +95,7 @@ export default {
 #else
 #set($comment=$column.columnComment)
 #end
+#if($column.list)
 #if($column.htmlType == "datetime")
         {
           title: '${comment}',
@@ -106,6 +107,7 @@ export default {
           title: '${comment}',
           dataIndex: '${javaField}'
         },
+#end
 #end
 #end
         {

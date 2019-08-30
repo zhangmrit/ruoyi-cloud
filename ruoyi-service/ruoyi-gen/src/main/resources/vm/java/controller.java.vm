@@ -20,7 +20,7 @@ import ${packageName}.service.I${className}Service;
  * @date ${datetime}
  */
 @RestController
-@RequestMapping("/${moduleName}/${businessName}")
+@RequestMapping("${businessName}")
 public class ${ClassName}Controller extends BaseController
 {
 	
