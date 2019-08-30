@@ -23,7 +23,7 @@
 #set($dictType=$column.dictType)
 #if($column.htmlType == "input")
       <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="${comment}">
-        <a-input placeholder="${comment}" v-decorator="['${field}'#if($column.isRequired), {rules: [{required: true, message: '请输入${comment}'}]}#end]"/>
+        <a-input placeholder="${comment}" v-decorator="['${field}'#if($column.required), {rules: [{required: true, message: '请输入${comment}'}]}#end]"/>
       </a-form-item>
 #end
 #end
