@@ -39,6 +39,13 @@ spring:
             - Path=/gen/**
           filters:
             - StripPrefix=1
+        # dfs
+        - id: ruoyi-dfs
+          uri: lb://ruoyi-dfs
+          predicates:
+            - Path=/dfs/**
+          filters:
+            - StripPrefix=1
         #system 模块
         - id: ruoyi-system
           uri: lb://ruoyi-system
