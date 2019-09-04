@@ -49,7 +49,7 @@
       <span slot="action" slot-scope="text, record">
         <a v-if="editEnabel" @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical" />
-        <a v-if="removeEnable" @click="delByIds([record.${primaryKey.attrname}])">删除</a>
+        <a v-if="removeEnable" @click="delByIds([record.${pkColumn.javaField}])">删除</a>
       </span>
     </s-table>
     <${className}-modal ref="modal" @ok="handleOk"/>
@@ -123,9 +123,9 @@ export default {
       },
       selectedRowKeys: [],
       selectedRows: [],
-      addEnable: checkPermission('${moduleName}:${classname}:add'),
-      editEnabel: checkPermission('${moduleName}:${classname}:edit'),
-      removeEnable: checkPermission('${moduleName}:${classname}:remove')
+      addEnable: checkPermission('${moduleName}:${className}:add'),
+      editEnabel: checkPermission('${moduleName}:${className}:edit'),
+      removeEnable: checkPermission('${moduleName}:${className}:remove')
     }
   },
   filters: {
