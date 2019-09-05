@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="menuType != null and menuType != ''">menu_type = #{menuType},</if>
 			<if test="target != null and target != ''">target = #{target},</if>
 			<if test="menuKey != null and menuKey != ''">menu_key = #{menuKey},</if>
-			<if test="menuLay != null and menuLay != ''">menu_lay = #{menuLay},</if>
+			<if test="menuLay != null">menu_lay = #{menuLay},</if>
 			<if test="visible != null">visible = #{visible},</if>
 			<if test="perms !=null">perms = #{perms},</if>
 			<if test="icon !=null and icon != ''">icon = #{icon},</if>
