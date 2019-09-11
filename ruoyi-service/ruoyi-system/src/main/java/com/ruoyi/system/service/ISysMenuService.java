@@ -53,7 +53,7 @@ public interface ISysMenuService
     * @param roleId 角色ID
     * @return 权限列表
     */
-   public Set<String> selectMenuIdsByRoleId(Long roleId);
+   public List<SysMenu> selectMenuIdsByRoleId(Long roleId);
 
     /**
      * 根据角色ID查询菜单

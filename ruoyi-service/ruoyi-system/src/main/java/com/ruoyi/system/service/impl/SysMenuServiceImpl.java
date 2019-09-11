@@ -1,7 +1,14 @@
 package com.ruoyi.system.service.impl;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,10 +35,10 @@ public class SysMenuServiceImpl implements ISysMenuService
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
     @Autowired
-    private SysMenuMapper menuMapper;
+    private SysMenuMapper      menuMapper;
 
     @Autowired
-    private SysRoleMenuMapper roleMenuMapper;
+    private SysRoleMenuMapper  roleMenuMapper;
 
     /**
      * 根据用户查询菜单
@@ -86,7 +93,7 @@ public class SysMenuServiceImpl implements ISysMenuService
      * @return 权限列表
      */
     @Override
-    @RedisCache(key = "user_perms",fieldKey="#userId")
+    @RedisCache(key = "user_perms", fieldKey = "#userId")
     public Set<String> selectPermsByUserId(Long userId)
     {
         List<String> perms = menuMapper.selectPermsByUserId(userId);
@@ -100,13 +107,11 @@ public class SysMenuServiceImpl implements ISysMenuService
         }
         return permsSet;
     }
-    
+
     @Override
-    public Set<String> selectMenuIdsByRoleId(Long roleId)
+    public List<SysMenu> selectMenuIdsByRoleId(Long roleId)
     {
-        List<String> menuIds = menuMapper.selectMenuIdsByRoleId(roleId);
-        Set<String> idsSet = new HashSet<>(menuIds);
-        return idsSet;
+        return menuMapper.selectMenuIdsByRoleId(roleId);
     }
 
     /**
