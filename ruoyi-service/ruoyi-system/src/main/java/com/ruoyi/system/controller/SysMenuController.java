@@ -65,7 +65,7 @@ public class SysMenuController extends BaseController
      * @author zmr
      */
     @GetMapping("role/{roleId}")
-    public Set<String> role(@PathVariable("roleId") Long roleId)
+    public List<SysMenu> role(@PathVariable("roleId") Long roleId)
     {
         if (null == roleId || roleId <= 0) return null;
         return sysMenuService.selectMenuIdsByRoleId(roleId);
