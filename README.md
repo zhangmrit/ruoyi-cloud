@@ -51,12 +51,14 @@ ruoyi-cloud
 |  ├──ruoyi-system --系统业务
 |  |
 |  ├──ruoyi-auth --授权中心
+|  |
+|  ├──ruoyi-gen --代码生成
+|  |
+|  ├──ruoyi-dfs --文件
 |
 ├──ruoyi-tool --工具
 |  |
 |  ├──ruoyi-monitor --监控中心
-|  |
-|  ├──ruoyi-generator --代码生成工具
 |
 ├──ruoyi-ant --前端 使用ant design框架
 
@@ -70,6 +72,8 @@ ruoyi-cloud
 - gateway
 - system
 - auth
+- gen 可选
+- dfs 可选
 
 菜单sql有增加字段，以上传到sql文件
 该分支是ant分支，前端使用ant-design-vue 项目地址 [ruoyi-ant](https://gitee.com/zhangmrit/ruoyi-ant)
@@ -84,7 +88,5 @@ QQ群：  [![加入QQ群](https://img.shields.io/badge/755109875-blue.svg)](http
 
 ##  请作者喝杯咖啡或者建设演示服务器
 
-###### 微信 or 支付宝
-<img src="https://gitee.com/zhangmrit/img/raw/master/contribute/wechat.png"/>
-<img src="https://gitee.com/zhangmrit/img/raw/master/contribute/alipay.png"/>
 
+![](https://gitee.com/zhangmrit/img/raw/master/contribute/donate.png)
