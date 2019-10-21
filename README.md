@@ -89,4 +89,4 @@ QQ群：  [![加入QQ群](https://img.shields.io/badge/755109875-blue.svg)](http
 ##  请作者喝杯咖啡或者建设演示服务器
 
 
-![](https://gitee.com/zhangmrit/img/raw/master/contribute/donate.png)
+![](http://upload.ouliu.net/i/20191021180958e1ek5.png)
