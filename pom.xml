@@ -154,14 +154,6 @@
 				<version>${velocity.version}</version>
 			</dependency>
 
-			<!-- 代码生成 -->
-			<dependency>
-				<groupId>com.ruoyi.cloud</groupId>
-				<artifactId>ruoyi-generator</artifactId>
-				<version>${ruoyi.version}</version>
-			</dependency>
-
-
 			<dependency>
 				<groupId>tk.mybatis</groupId>
 				<artifactId>mapper-spring-boot-starter</artifactId>
