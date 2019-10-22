@@ -9,4 +9,8 @@ public interface ServiceNameConstants
      * system模块
      */
     String SYSTEM_SERVICE = "ruoyi-system";
+    /**
+     * socket模块
+     */
+    String SOCKET_SERVICE = "ruoyi-socket";
 }
