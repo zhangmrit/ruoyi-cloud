@@ -42,6 +42,8 @@
         <swagger.version>2.9.2</swagger.version>
         <swagger-ui.version>1.9.5</swagger-ui.version>
         <guava.version>26.0-jre</guava.version>
+        <protobuf.version>3.4.0</protobuf.version>
+        <jackson.protobuf.version>0.9.11-jackson2.9</jackson.protobuf.version>
     </properties>
 
     <!-- 依赖声明 -->

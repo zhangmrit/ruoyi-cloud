@@ -1,0 +1,35 @@
+syntax = "proto3";
+// 生成的包名
+option java_package = "com.ruoyi.socket.protobuf";
+//生成的java名
+option java_outer_classname = "Msg";
+
+message MsgBody {
+
+    // UUID
+    string id = 1;
+
+    // IP
+    string ip = 2;
+
+    // 事件
+    Events event = 3;
+
+    // 数据
+    string data = 4;
+
+    // 传输时间
+    int32 time = 5;
+
+    // version
+    string version = 6;
+}
+
+enum Events {
+    POWER_ON = 0;
+    POWER_OFF = 1;
+    SET_PASSWORD = 2;
+    STATE = 3;
+    HOT_UPDATE = 4;
+}
+
