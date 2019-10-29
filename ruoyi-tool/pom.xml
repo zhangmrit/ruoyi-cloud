@@ -11,6 +11,5 @@
     <build/>
     <packaging>pom</packaging>
     <modules>
-        <module>ruoyi-monitor</module>
     </modules>
 </project>
