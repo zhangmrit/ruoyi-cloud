@@ -57,6 +57,10 @@ public class AuthFilter implements GlobalFilter, Ordered
             return setUnauthorizedResponse(exchange, "token can't null or empty string");
         }
         String userStr = ops.get(Constants.ACCESS_TOKEN + token);
+        if (StringUtils.isBlank(userStr))
+        {
+            return setUnauthorizedResponse(exchange, "token verify error");
+        }
         JSONObject jo = JSONObject.parseObject(userStr);
         String userId = jo.getString("userId");
         // 查询token信息
