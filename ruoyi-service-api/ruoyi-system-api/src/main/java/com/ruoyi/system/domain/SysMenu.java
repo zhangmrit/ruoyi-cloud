@@ -3,16 +3,18 @@ package com.ruoyi.system.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.ruoyi.common.core.domain.BaseEntity;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 菜单权限表 sys_menu
  * 
  * @author ruoyi
  */
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class SysMenu extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -35,17 +37,14 @@ public class SysMenu extends BaseEntity
     /** 显示顺序 */
     private String            orderNum;
 
-    /** 菜单URL */
-    private String            url;
-
     /** 类型:0目录,1菜单,2按钮 */
     private String            menuType;
 
     /** 菜单URL */
     private String            menuKey;
 
-    /** 菜单URL */
-    private String            menuLay;
+    /** 组件 */
+    private String            component;
 
     /** 菜单状态:0显示,1隐藏 */
     private String            visible;
@@ -59,154 +58,4 @@ public class SysMenu extends BaseEntity
     /** 子菜单 */
     private List<SysMenu>     children         = new ArrayList<SysMenu>();
 
-    public Long getMenuId()
-    {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId)
-    {
-        this.menuId = menuId;
-    }
-
-    public String getMenuName()
-    {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName)
-    {
-        this.menuName = menuName;
-    }
-
-    public String getParentName()
-    {
-        return parentName;
-    }
-
-    public void setParentName(String parentName)
-    {
-        this.parentName = parentName;
-    }
-
-    public Long getParentId()
-    {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId)
-    {
-        this.parentId = parentId;
-    }
-
-    public String getTarget()
-    {
-        return target;
-    }
-
-    public void setTarget(String target)
-    {
-        this.target = target;
-    }
-
-    public String getOrderNum()
-    {
-        return orderNum;
-    }
-
-    public void setOrderNum(String orderNum)
-    {
-        this.orderNum = orderNum;
-    }
-
-    public String getUrl()
-    {
-        return url;
-    }
-
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-
-    public String getMenuType()
-    {
-        return menuType;
-    }
-
-    public void setMenuType(String menuType)
-    {
-        this.menuType = menuType;
-    }
-
-    public String getMenuKey()
-    {
-        return menuKey;
-    }
-
-    public void setMenuKey(String menuKey)
-    {
-        this.menuKey = menuKey;
-    }
-
-    public String getMenuLay()
-    {
-        return menuLay;
-    }
-
-    public void setMenuLay(String menuLay)
-    {
-        this.menuLay = menuLay;
-    }
-
-    public String getVisible()
-    {
-        return visible;
-    }
-
-    public void setVisible(String visible)
-    {
-        this.visible = visible;
-    }
-
-    public String getPerms()
-    {
-        return perms;
-    }
-
-    public void setPerms(String perms)
-    {
-        this.perms = perms;
-    }
-
-    public String getIcon()
-    {
-        return icon;
-    }
-
-    public void setIcon(String icon)
-    {
-        this.icon = icon;
-    }
-
-    public List<SysMenu> getChildren()
-    {
-        return children;
-    }
-
-    public void setChildren(List<SysMenu> children)
-    {
-        this.children = children;
-    }
-
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("menuId", getMenuId())
-                .append("menuName", getMenuName()).append("parentId", getParentId()).append("orderNum", getOrderNum())
-                .append("url", getUrl()).append("menuType", getMenuType()).append("visible", getVisible())
-                .append("perms", getPerms()).append("icon", getIcon()).append("createBy", getCreateBy())
-                .append("createTime", getCreateTime()).append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime()).append("remark", getRemark()).toString();
-    }
 }

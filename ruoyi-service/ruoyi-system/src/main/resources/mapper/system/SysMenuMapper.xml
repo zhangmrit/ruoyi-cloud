@@ -10,11 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="parentName" column="parent_name" />
 		<result property="parentId" column="parent_id" />
 		<result property="orderNum" column="order_num" />
-		<result property="url" column="url" />
 		<result property="menuType" column="menu_type" />
 		<result property="target" column="target" />
 		<result property="menuKey" column="menu_key" />
-		<result property="menuLay" column="menu_lay" />
+		<result property="component" column="component" />
 		<result property="visible" column="visible" />
 		<result property="perms" column="perms" />
 		<result property="icon" column="icon" />
@@ -26,16 +25,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectMenuVo">
-		select menu_id, menu_name, parent_id,target, order_num, url, menu_type, menu_key,
-		menu_lay, visible, ifnull(perms,'') as perms, icon, create_by,
+		select menu_id, menu_name, parent_id,target, order_num, menu_type, menu_key,
+		component, visible, ifnull(perms,'') as perms, icon, create_by,
 		create_time
 		from sys_menu
 	</sql>
 
 	<select id="selectMenusByUserId" parameterType="Long"
 		resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.url,
-		m.perms, m.menu_type,m.menu_key,m.menu_lay,m.target, m.icon, m.order_num,m.visible,
+		select distinct m.menu_id, m.parent_id, m.menu_name,
+		m.perms, m.menu_type,m.menu_key,m.component,m.target, m.icon, m.order_num,m.visible,
 		m.create_time
 		from sys_menu m
 		left join sys_role_menu rm on m.menu_id = rm.menu_id
@@ -49,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectMenuNormalAll" resultMap="SysMenuResult">
 		select distinct
-		m.menu_id, m.parent_id, m.menu_name, m.menu_key,m.menu_lay,m.url,m.target,m.visible,
+		m.menu_id, m.parent_id, m.menu_name, m.menu_key,m.component,m.target,m.visible,
 		m.perms, m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu
 		m
@@ -118,7 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMenuById" parameterType="Long"
 		resultMap="SysMenuResult">
 		SELECT t.menu_id, t.parent_id, t.menu_name, t.order_num,t.target,
-		t.url, t.menu_type, t.visible, t.perms, t.icon, t.remark,
+		t.menu_type, t.visible, t.perms, t.icon, t.remark,
 		(SELECT menu_name FROM sys_menu WHERE menu_id = t.parent_id) parent_name
 		FROM
 		sys_menu t
@@ -141,11 +140,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="menuName != null and menuName != ''">menu_name = #{menuName},</if>
 			<if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
 			<if test="orderNum != null and orderNum != ''">order_num = #{orderNum},</if>
-			<if test="url != null and url != ''">url = #{url},</if>
 			<if test="menuType != null and menuType != ''">menu_type = #{menuType},</if>
 			<if test="target != null and target != ''">target = #{target},</if>
 			<if test="menuKey != null and menuKey != ''">menu_key = #{menuKey},</if>
-			<if test="menuLay != null">menu_lay = #{menuLay},</if>
+			<if test="component != null">component = #{component},</if>
 			<if test="visible != null">visible = #{visible},</if>
 			<if test="perms !=null">perms = #{perms},</if>
 			<if test="icon !=null and icon != ''">icon = #{icon},</if>
@@ -162,11 +160,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="parentId != null and parentId != 0">parent_id,</if>
 		<if test="menuName != null and menuName != ''">menu_name,</if>
 		<if test="orderNum != null and orderNum != ''">order_num,</if>
-		<if test="url != null and url != ''">url,</if>
 		<if test="menuType != null and menuType != ''">menu_type,</if>
 		<if test="target != null and target != ''">target,</if>
 		<if test="menuKey != null and menuKey != ''">menu_key,</if>
-		<if test="menuLay != null and menuLay != ''">menu_lay ,</if>
+		<if test="component != null and component != ''">component ,</if>
 		<if test="visible != null">visible,</if>
 		<if test="perms !=null and perms != ''">perms,</if>
 		<if test="icon != null and icon != ''">icon,</if>
@@ -178,11 +175,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="parentId != null and parentId != 0">#{parentId},</if>
 		<if test="menuName != null and menuName != ''">#{menuName},</if>
 		<if test="orderNum != null and orderNum != ''">#{orderNum},</if>
-		<if test="url != null and url != ''">#{url},</if>
 		<if test="menuType != null and menuType != ''">#{menuType},</if>
 		<if test="target != null and target != ''">#{target},</if>
 		<if test="menuKey != null and menuKey != ''">#{menuKey},</if>
-		<if test="menuLay != null and menuLay != ''">#{menuLay},</if>
+		<if test="component != null and component != ''">#{component},</if>
 		<if test="visible != null">#{visible},</if>
 		<if test="perms !=null and perms != ''">#{perms},</if>
 		<if test="icon != null and icon != ''">#{icon},</if>
