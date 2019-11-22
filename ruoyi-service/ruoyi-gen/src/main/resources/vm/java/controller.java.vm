@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.controller.BaseController;
-import ${packageName}.domain.${className};
-import ${packageName}.service.I${className}Service;
+import ${packageName}.domain.${ClassName};
+import ${packageName}.service.I${ClassName}Service;
 
 /**
  * ${functionName} 提供者
@@ -31,7 +31,7 @@ public class ${ClassName}Controller extends BaseController
 	 * 查询${tableComment}
 	 */
 	@GetMapping("get/{${pkColumn.javaField}}")
-	public ${className} get(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+	public ${ClassName} get(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
 	{
 		return ${className}Service.select${ClassName}ById(${pkColumn.javaField});
 		
@@ -72,7 +72,7 @@ public class ${ClassName}Controller extends BaseController
 	@PostMapping("remove")
 	public R remove(String ids)
 	{		
-		return toAjax(${className}Service.delete${className}ByIds(ids));
+		return toAjax(${className}Service.delete${ClassName}ByIds(ids));
 	}
 	
 }
