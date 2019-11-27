@@ -32,7 +32,7 @@
   </a-modal>
 </template>
 <script>
-import { save${ClassName} } from '@/api/${moduleName}/${className}'
+import { save${ClassName} } from '@/api/${moduleName}'
 import pick from 'lodash.pick'
 export default {
   name: '${ClassName}Modal',
