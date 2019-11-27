@@ -58,7 +58,7 @@
 
 <script>
 import { STable } from '@/components'
-import { get${ClassName}List, del${ClassName} } from '@/api/${moduleName}/${className}'
+import { get${ClassName}List, del${ClassName} } from '@/api/${moduleName}'
 import ${ClassName}Modal from './modules/${ClassName}Modal.vue'
 import { checkPermission } from '@/utils/permissions'
 
@@ -119,7 +119,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        return get${className}List(Object.assign(parameter, this.queryParam))
+        return get${ClassName}List(Object.assign(parameter, this.queryParam))
       },
       selectedRowKeys: [],
       selectedRows: [],
@@ -149,7 +149,7 @@ export default {
     },
 #set($foo="$")
     delByIds (ids) {
-      del${className}({ ids: ids.join(',') }).then(res => {
+      del${ClassName}({ ids: ids.join(',') }).then(res => {
         if (res.code === 0) {
           this.${foo}message.success('删除成功')
           this.handleOk()
