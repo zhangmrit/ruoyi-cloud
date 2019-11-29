@@ -58,7 +58,7 @@
 
 <script>
 import { STable } from '@/components'
-import { get${ClassName}List, del${ClassName} } from '@/api/${moduleName}'
+import { get${ClassName}List, del${ClassName} } from '@/api/${moduleName}/${className}'
 import ${ClassName}Modal from './modules/${ClassName}Modal.vue'
 import { checkPermission } from '@/utils/permissions'
 

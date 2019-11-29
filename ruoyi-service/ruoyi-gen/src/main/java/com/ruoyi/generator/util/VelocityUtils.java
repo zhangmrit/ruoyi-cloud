@@ -169,7 +169,7 @@ public class VelocityUtils
         }
         else if (template.contains("api.js.vm"))
         {
-            fileName = StringUtils.format("{}/api/{}.js", vuePath, businessName);
+            fileName = StringUtils.format("{}/api/{}/{}.js", vuePath, moduleName, businessName);
         }
         else if (template.contains("sql.vm"))
         {
