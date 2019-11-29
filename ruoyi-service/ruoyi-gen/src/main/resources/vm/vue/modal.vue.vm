@@ -32,7 +32,7 @@
   </a-modal>
 </template>
 <script>
-import { save${ClassName} } from '@/api/${moduleName}'
+import { save${ClassName} } from '@/api/${moduleName}/${className}'
 import pick from 'lodash.pick'
 export default {
   name: '${ClassName}Modal',
@@ -85,7 +85,7 @@ export default {
               this.$emit('ok')
               this.visible = false
             } else {
-              this.${foo}message.success(res.msg)
+              this.${foo}message.error(res.msg)
             }
           }).catch(() => {
             this.$message.error('系统错误，请稍后再试')
