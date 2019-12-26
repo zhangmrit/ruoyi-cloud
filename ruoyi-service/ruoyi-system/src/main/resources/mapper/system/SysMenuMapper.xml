@@ -17,6 +17,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="visible" column="visible" />
 		<result property="perms" column="perms" />
 		<result property="icon" column="icon" />
+        <result property="path"    column="path"    />
+        <result property="redirect"    column="redirect"    />
+        <result property="hiddenChildren"    column="hidden_children"    />
+        <result property="hiddenHeader"    column="hidden_header"    />
 		<result property="createBy" column="create_by" />
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
@@ -26,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<sql id="selectMenuVo">
 		select menu_id, menu_name, parent_id,target, order_num, menu_type, menu_key,
-		component, visible, ifnull(perms,'') as perms, icon, create_by,
+		component, visible, ifnull(perms,'') as perms, icon, path, redirect, hidden_children, hidden_header, create_by,
 		create_time
 		from sys_menu
 	</sql>
@@ -34,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMenusByUserId" parameterType="Long"
 		resultMap="SysMenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name,
-		m.perms, m.menu_type,m.menu_key,m.component,m.target, m.icon, m.order_num,m.visible,
+		m.perms, m.menu_type,m.menu_key,m.component,m.target, m.icon, m.path, m.redirect, m.hidden_children, m.hidden_header, m.order_num,m.visible,
 		m.create_time
 		from sys_menu m
 		left join sys_role_menu rm on m.menu_id = rm.menu_id
@@ -49,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMenuNormalAll" resultMap="SysMenuResult">
 		select distinct
 		m.menu_id, m.parent_id, m.menu_name, m.menu_key,m.component,m.target,m.visible,
-		m.perms, m.menu_type, m.icon, m.order_num, m.create_time
+		m.perms, m.menu_type, m.icon, m.path, m.redirect, m.hidden_children, m.hidden_header, m.order_num, m.create_time
 		from sys_menu
 		m
 		where m.menu_type in ('M', 'C') and
@@ -117,7 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMenuById" parameterType="Long"
 		resultMap="SysMenuResult">
 		SELECT t.menu_id, t.parent_id, t.menu_name, t.order_num,t.target,
-		t.menu_type, t.visible, t.perms, t.icon, t.remark,
+		t.menu_type, t.visible, t.perms, t.icon, t.path, t.redirect, t.hidden_children, t.hidden_header, t.remark,
 		(SELECT menu_name FROM sys_menu WHERE menu_id = t.parent_id) parent_name
 		FROM
 		sys_menu t
@@ -147,6 +151,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="visible != null">visible = #{visible},</if>
 			<if test="perms !=null">perms = #{perms},</if>
 			<if test="icon !=null and icon != ''">icon = #{icon},</if>
+			<if test="path !=null and path != ''">path = #{path},</if>
+			<if test="redirect !=null and redirect != ''">redirect = #{redirect},</if>
+			<if test="hiddenChildren !=null">hidden_children = #{hiddenChildren},</if>
+			<if test="hiddenHeader !=null">hidden_header = #{hiddenHeader},</if>
 			<if test="remark != null and remark != ''">remark = #{remark},</if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
@@ -167,6 +175,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="visible != null">visible,</if>
 		<if test="perms !=null and perms != ''">perms,</if>
 		<if test="icon != null and icon != ''">icon,</if>
+		<if test="path !=null and path != ''">path,</if>
+		<if test="redirect !=null and redirect != ''">redirect,</if>
+		<if test="hiddenChildren !=null">hidden_children,</if>
+		<if test="hiddenHeader !=null">hidden_header,</if>
 		<if test="remark != null and remark != ''">remark,</if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		create_time
@@ -182,6 +194,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="visible != null">#{visible},</if>
 		<if test="perms !=null and perms != ''">#{perms},</if>
 		<if test="icon != null and icon != ''">#{icon},</if>
+		<if test="path !=null and path != ''">#{path},</if>
+		<if test="redirect !=null and redirect != ''">#{redirect},</if>
+		<if test="hiddenChildren !=null">#{hiddenChildren},</if>
+		<if test="hiddenHeader !=null">#{hiddenHeader},</if>
 		<if test="remark != null and remark != ''">#{remark},</if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		sysdate()
