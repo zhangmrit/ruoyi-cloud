@@ -1,7 +1,6 @@
 package com.ruoyi.activiti.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.ruoyi.activiti.domain.ActReModel;
+import com.ruoyi.activiti.service.IActReModelService;
 import com.ruoyi.activiti.service.ProcessInfoService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.page.PageDomain;
 
 /**
  * 模型管理
@@ -43,6 +43,9 @@ public class ModelerController extends BaseController
 
     @Autowired
     private ProcessInfoService processInfoService;
+
+    @Autowired
+    private IActReModelService modelService;
 
     /**
      * 新建一个空模型
@@ -136,18 +139,13 @@ public class ModelerController extends BaseController
 
     @GetMapping("list")
     @ResponseBody
-    public R getList(PageDomain page)
+    public R getList(ActReModel actReModel)
     {
-        List<Model> list = repositoryService.createModelQuery().listPage(page.getPageSize() * (page.getPageNum() - 1), page.getPageSize());
-        long count = repositoryService.createModelQuery().count();
-        Map<String, Object> m = new HashMap<String, Object>();
-        m.put("rows", list);
-        m.put("pageNum", page.getPageNum());
-        m.put("total", count);
-        return R.ok(m);
+        startPage();
+        return result(modelService.selectActReModelList(actReModel));
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("remove/{id}")
     @ResponseBody
     public R deleteOne(@PathVariable("id") String id)
     {

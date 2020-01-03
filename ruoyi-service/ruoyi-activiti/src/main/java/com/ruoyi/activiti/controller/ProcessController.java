@@ -35,8 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 流程管理
  *
- * @Auther: Ace Lee
- * @Date: 2019/3/7 15:17
  */
 @Slf4j
 @RestController
@@ -55,8 +53,6 @@ public class ProcessController
     /**
      * 查看流程图
      *
-     * @auther: Ace Lee
-     * @date: 2019/3/5 15:24
      */
     @GetMapping("show")
     public void show(@RequestParam("did") String did, @RequestParam("ext") String ext,
