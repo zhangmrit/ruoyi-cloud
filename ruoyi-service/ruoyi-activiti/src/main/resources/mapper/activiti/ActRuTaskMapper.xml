@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activiti.mapper.ActRuTaskMapper">
+  <resultMap id="BaseResultMap" type="com.ruoyi.activiti.domain.ActRuTask">
+    <id column="ID_" jdbcType="VARCHAR" property="id" />
+    <result column="REV_" jdbcType="INTEGER" property="rev" />
+    <result column="EXECUTION_ID_" jdbcType="VARCHAR" property="executionId" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="procInstId" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="procDefId" />
+    <result column="NAME_" jdbcType="VARCHAR" property="name" />
+    <result column="PARENT_TASK_ID_" jdbcType="VARCHAR" property="parentTaskId" />
+    <result column="DESCRIPTION_" jdbcType="VARCHAR" property="description" />
+    <result column="TASK_DEF_KEY_" jdbcType="VARCHAR" property="taskDefKey" />
+    <result column="OWNER_" jdbcType="VARCHAR" property="owner" />
+    <result column="ASSIGNEE_" jdbcType="VARCHAR" property="assignee" />
+    <result column="DELEGATION_" jdbcType="VARCHAR" property="delegation" />
+    <result column="PRIORITY_" jdbcType="INTEGER" property="priority" />
+    <result column="CREATE_TIME_" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DUE_DATE_" jdbcType="TIMESTAMP" property="dueDate" />
+    <result column="CATEGORY_" jdbcType="VARCHAR" property="category" />
+    <result column="SUSPENSION_STATE_" jdbcType="INTEGER" property="suspensionState" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="tenantId" />
+    <result column="FORM_KEY_" jdbcType="VARCHAR" property="formKey" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, 
+    TASK_DEF_KEY_, OWNER_, ASSIGNEE_, DELEGATION_, PRIORITY_, CREATE_TIME_, DUE_DATE_, 
+    CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, FORM_KEY_
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from act_ru_task
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_ru_task
+    where ID_ = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_ru_task
+    where ID_ = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ruoyi.activiti.domain.ActRuTask">
+    insert into act_ru_task (ID_, REV_, EXECUTION_ID_, 
+      PROC_INST_ID_, PROC_DEF_ID_, NAME_, 
+      PARENT_TASK_ID_, DESCRIPTION_, TASK_DEF_KEY_, 
+      OWNER_, ASSIGNEE_, DELEGATION_, 
+      PRIORITY_, CREATE_TIME_, DUE_DATE_, 
+      CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, 
+      FORM_KEY_)
+    values (#{id,jdbcType=VARCHAR}, #{rev,jdbcType=INTEGER}, #{executionId,jdbcType=VARCHAR}, 
+      #{procInstId,jdbcType=VARCHAR}, #{procDefId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{parentTaskId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{taskDefKey,jdbcType=VARCHAR}, 
+      #{owner,jdbcType=VARCHAR}, #{assignee,jdbcType=VARCHAR}, #{delegation,jdbcType=VARCHAR}, 
+      #{priority,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{dueDate,jdbcType=TIMESTAMP}, 
+      #{category,jdbcType=VARCHAR}, #{suspensionState,jdbcType=INTEGER}, #{tenantId,jdbcType=VARCHAR}, 
+      #{formKey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ruoyi.activiti.domain.ActRuTask">
+    insert into act_ru_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID_,
+      </if>
+      <if test="rev != null">
+        REV_,
+      </if>
+      <if test="executionId != null">
+        EXECUTION_ID_,
+      </if>
+      <if test="procInstId != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="procDefId != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="name != null">
+        NAME_,
+      </if>
+      <if test="parentTaskId != null">
+        PARENT_TASK_ID_,
+      </if>
+      <if test="description != null">
+        DESCRIPTION_,
+      </if>
+      <if test="taskDefKey != null">
+        TASK_DEF_KEY_,
+      </if>
+      <if test="owner != null">
+        OWNER_,
+      </if>
+      <if test="assignee != null">
+        ASSIGNEE_,
+      </if>
+      <if test="delegation != null">
+        DELEGATION_,
+      </if>
+      <if test="priority != null">
+        PRIORITY_,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME_,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE_,
+      </if>
+      <if test="category != null">
+        CATEGORY_,
+      </if>
+      <if test="suspensionState != null">
+        SUSPENSION_STATE_,
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID_,
+      </if>
+      <if test="formKey != null">
+        FORM_KEY_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="rev != null">
+        #{rev,jdbcType=INTEGER},
+      </if>
+      <if test="executionId != null">
+        #{executionId,jdbcType=VARCHAR},
+      </if>
+      <if test="procInstId != null">
+        #{procInstId,jdbcType=VARCHAR},
+      </if>
+      <if test="procDefId != null">
+        #{procDefId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentTaskId != null">
+        #{parentTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="taskDefKey != null">
+        #{taskDefKey,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="assignee != null">
+        #{assignee,jdbcType=VARCHAR},
+      </if>
+      <if test="delegation != null">
+        #{delegation,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="suspensionState != null">
+        #{suspensionState,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="formKey != null">
+        #{formKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.activiti.domain.ActRuTask">
+    update act_ru_task
+    <set>
+      <if test="rev != null">
+        REV_ = #{rev,jdbcType=INTEGER},
+      </if>
+      <if test="executionId != null">
+        EXECUTION_ID_ = #{executionId,jdbcType=VARCHAR},
+      </if>
+      <if test="procInstId != null">
+        PROC_INST_ID_ = #{procInstId,jdbcType=VARCHAR},
+      </if>
+      <if test="procDefId != null">
+        PROC_DEF_ID_ = #{procDefId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME_ = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentTaskId != null">
+        PARENT_TASK_ID_ = #{parentTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION_ = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="taskDefKey != null">
+        TASK_DEF_KEY_ = #{taskDefKey,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        OWNER_ = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="assignee != null">
+        ASSIGNEE_ = #{assignee,jdbcType=VARCHAR},
+      </if>
+      <if test="delegation != null">
+        DELEGATION_ = #{delegation,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        PRIORITY_ = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME_ = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE_ = #{dueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="category != null">
+        CATEGORY_ = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="suspensionState != null">
+        SUSPENSION_STATE_ = #{suspensionState,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID_ = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="formKey != null">
+        FORM_KEY_ = #{formKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruoyi.activiti.domain.ActRuTask">
+    update act_ru_task
+    set REV_ = #{rev,jdbcType=INTEGER},
+      EXECUTION_ID_ = #{executionId,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{procInstId,jdbcType=VARCHAR},
+      PROC_DEF_ID_ = #{procDefId,jdbcType=VARCHAR},
+      NAME_ = #{name,jdbcType=VARCHAR},
+      PARENT_TASK_ID_ = #{parentTaskId,jdbcType=VARCHAR},
+      DESCRIPTION_ = #{description,jdbcType=VARCHAR},
+      TASK_DEF_KEY_ = #{taskDefKey,jdbcType=VARCHAR},
+      OWNER_ = #{owner,jdbcType=VARCHAR},
+      ASSIGNEE_ = #{assignee,jdbcType=VARCHAR},
+      DELEGATION_ = #{delegation,jdbcType=VARCHAR},
+      PRIORITY_ = #{priority,jdbcType=INTEGER},
+      CREATE_TIME_ = #{createTime,jdbcType=TIMESTAMP},
+      DUE_DATE_ = #{dueDate,jdbcType=TIMESTAMP},
+      CATEGORY_ = #{category,jdbcType=VARCHAR},
+      SUSPENSION_STATE_ = #{suspensionState,jdbcType=INTEGER},
+      TENANT_ID_ = #{tenantId,jdbcType=VARCHAR},
+      FORM_KEY_ = #{formKey,jdbcType=VARCHAR}
+    where ID_ = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
