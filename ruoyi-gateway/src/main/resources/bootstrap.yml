@@ -51,6 +51,13 @@ spring:
             - Path=/dfs/**
           filters:
             - StripPrefix=1
+        # act
+        - id: ruoyi-activiti
+          uri: lb://ruoyi-activiti
+          predicates:
+            - Path=/act/**
+          filters:
+            - StripPrefix=1
         #system 模块
         - id: ruoyi-system
           uri: lb://ruoyi-system
