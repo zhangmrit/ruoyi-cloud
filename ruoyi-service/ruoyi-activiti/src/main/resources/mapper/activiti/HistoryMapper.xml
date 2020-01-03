@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activiti.mapper.HistoryMapper">
+
+    <select id="selectMyTasksCompleted" resultType="java.util.Map">
+        select * from act_hi_taskinst where ID_ in
+        (select TASK_ID_ from act_hi_varinst where NAME_='dealUserId' and TEXT_= #{userId,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectMyProcessStarted" resultType="java.util.Map">
+        select * from act_hi_procinst where PROC_INST_ID_ in
+        (select PROC_INST_ID_ from act_hi_varinst where NAME_='startUserId' and TEXT_=#{userId,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectEndEventByTaskId" resultType="java.util.Map">
+        select * from act_hi_actinst where ACT_TYPE_='endEvent'
+        and PROC_INST_ID_ = (select PROC_INST_ID_ from act_hi_taskinst where ID_ =#{taskId,jdbcType=VARCHAR})
+        limit 0,1
+    </select>
+
+    <delete id="deleteHiEndEvent" parameterType="java.lang.String">
+        delete from act_hi_actinst where ACT_TYPE_='endEvent'
+        and PROC_INST_ID_ = (select PROC_INST_ID_ from act_hi_taskinst where ID_ =#{taskId,jdbcType=VARCHAR})
+    </delete>
+
+    <select id="selectHiTaskByTaskId" resultType="java.util.Map">
+        select * from act_hi_taskinst where ID_ = #{taskId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectHiTaskByTaskKey" resultType="java.util.Map">
+        select * from act_hi_taskinst where TASK_DEF_KEY_ = #{taskKey,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectHiVariablesByProInsId" resultType="java.util.Map">
+        select * from act_hi_varinst where PROC_INST_ID_ = #{proInsId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectIdentitylinkByTaskId" resultType="java.util.Map">
+        select * from act_hi_identitylink where TASK_ID_ = #{taskId,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
