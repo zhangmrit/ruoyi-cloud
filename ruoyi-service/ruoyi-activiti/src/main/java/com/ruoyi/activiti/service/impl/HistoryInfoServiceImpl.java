@@ -1,13 +1,13 @@
 package com.ruoyi.activiti.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ruoyi.activiti.mapper.HistoryMapper;
-import com.ruoyi.activiti.service.HistoryInfoService;
-
-import java.util.List;
-import java.util.Map;
+import com.ruoyi.activiti.service.IHistoryInfoService;
+import com.ruoyi.activiti.vo.HiProcInsVo;
 
 /**
  * 
@@ -16,17 +16,17 @@ import java.util.Map;
  * @Date: 2019/3/7 16:55
  */
 @Service
-public class HistoryInfoServiceImpl implements HistoryInfoService {
+public class HistoryInfoServiceImpl implements IHistoryInfoService
+{
     @Autowired
     private HistoryMapper historyMapper;
 
+    /* (non-Javadoc)
+     * @see com.ruoyi.activiti.service.IHistoryInfoService#getHiProcInsListDone(com.ruoyi.activiti.vo.HiProcInsVo)
+     */
     @Override
-    public List<Map<String, Object>> myTasksCompleted(String userId) {
-        return historyMapper.selectMyTasksCompleted(userId);
-    }
-
-    @Override
-    public List<Map<String, Object>> myProcessStarted(String userId) {
-        return historyMapper.selectMyProcessStarted(userId);
+    public List<HiProcInsVo> getHiProcInsListDone(HiProcInsVo hiProcInsVo)
+    {
+        return historyMapper.getHiProcInsListDone(hiProcInsVo);
     }
 }

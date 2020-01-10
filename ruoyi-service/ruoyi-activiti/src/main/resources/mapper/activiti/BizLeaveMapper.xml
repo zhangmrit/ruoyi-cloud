@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activiti.mapper.BizLeaveMapper">
+    
+    <resultMap type="BizLeave" id="BizLeaveResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="description"    column="description"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="duration"    column="duration"    />
+        <result property="type"    column="type"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectBizLeaveVo">
+        select id, title, description, start_date, end_date, duration, type, del_flag, update_time, update_by, create_time, create_by from biz_leave
+    </sql>
+
+    <select id="selectBizLeaveList" parameterType="BizLeave" resultMap="BizLeaveResult">
+        <include refid="selectBizLeaveVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectBizLeaveById" parameterType="String" resultMap="BizLeaveResult">
+        <include refid="selectBizLeaveVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBizLeave" parameterType="BizLeave" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_leave
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">title,</if>
+            <if test="description != null  and description != ''">description,</if>
+            <if test="startDate != null ">start_date,</if>
+            <if test="endDate != null ">end_date,</if>
+            <if test="duration != null ">duration,</if>
+            <if test="type != null ">type,</if>
+            <if test="delFlag != null ">del_flag,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="description != null  and description != ''">#{description},</if>
+            <if test="startDate != null ">#{startDate},</if>
+            <if test="endDate != null ">#{endDate},</if>
+            <if test="duration != null ">#{duration},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="delFlag != null ">#{delFlag},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizLeave" parameterType="BizLeave">
+        update biz_leave
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="description != null  and description != ''">description = #{description},</if>
+            <if test="startDate != null ">start_date = #{startDate},</if>
+            <if test="endDate != null ">end_date = #{endDate},</if>
+            <if test="duration != null ">duration = #{duration},</if>
+            <if test="type != null ">type = #{type},</if>
+            <if test="delFlag != null ">del_flag = #{delFlag},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizLeaveById" parameterType="Long">
+        delete from biz_leave where id = #{id}
+    </delete>
+
+    <delete id="deleteBizLeaveByIds" parameterType="Long">
+        delete from biz_leave where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,16 +1,14 @@
 package com.ruoyi.activiti.listener;
 
-import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.ExecutionListener;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  *
- * 流程实例监听类
- *
- * @auther: Ace Lee
- * @date: 2019/3/8 11:57
+ * process流程实例监听类
  */
 @Component
 @Slf4j
@@ -23,14 +21,16 @@ public class MyProcessExecutionListener implements ExecutionListener
     public void notify(DelegateExecution execution) throws Exception
     {
         String eventName = execution.getEventName();
+        String procInstId = execution.getProcessInstanceId();
+        // String businessKey = execution.getProcessBusinessKey();
         // start
         if ("start".equals(eventName))
         {
-            log.info("==================start==================");
+            log.info("流程实例[{}]启动", procInstId);
         }
         else if ("end".equals(eventName))
         {
-            log.info("==================end==================");
+            log.info("流程实例[{}]结束", procInstId);
         }
     }
 }

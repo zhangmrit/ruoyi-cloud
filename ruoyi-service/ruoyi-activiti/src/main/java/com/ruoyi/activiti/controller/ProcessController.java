@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ruoyi.activiti.service.ProcessInfoService;
 import com.ruoyi.common.core.domain.R;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,13 +42,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ProcessController
 {
     @Autowired
-    private RepositoryService  repositoryService;
+    private RepositoryService repositoryService;
 
     @Autowired
-    private RuntimeService     runtimeService;
-
-    @Autowired
-    private ProcessInfoService processInfoService;
+    private RuntimeService    runtimeService;
 
     /**
      * 查看流程图
@@ -121,17 +118,24 @@ public class ProcessController
     }
 
     /**
-     *
-     * 获取所有流程
-     *
-     * @auther: Ace Lee
-     * @date: 2019/3/7 16:27
+     * 挂起、激活流程实例
      */
-    @GetMapping("all")
-    public R list()
+    @RequestMapping(value = "update/{processId}/{state}")
+    public R updateState(@PathVariable("state") String state, @PathVariable("processId") String processId)
     {
-        List<Map<String, Object>> list = processInfoService.process();
-        return R.ok().put("rows", list);
+        if (state.equals("active"))
+        {
+            // 一并激活流程实例
+            repositoryService.activateProcessDefinitionById(processId, true, new Date());
+            log.info("已激活ID为:{}的流程", processId);
+        }
+        else if (state.equals("suspend"))
+        {
+            // 一并挂起流程实例
+            repositoryService.suspendProcessDefinitionById(processId, true, new Date());
+            log.info("已挂起ID为:{}的流程", processId);
+        }
+        return R.ok();
     }
 
     /**

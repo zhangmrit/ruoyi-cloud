@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activiti.mapper.BizAuditMapper">
+
+	<resultMap type="com.ruoyi.activiti.vo.HiTaskVo" id="HiTaskVoResult">
+        <result property="id"    column="id"    />
+        <result property="procDefId"    column="proc_def_id"    />
+        <result property="procInstId"    column="proc_inst_id"    />
+        <result property="taskDefKey"    column="task_def_key"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="assignee"    column="assignee"    />
+        <result property="deleteReason"    column="delete_reason"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="duration"    column="duration"    />
+        <result property="auditId"    column="audit_id"    />
+        <result property="result"    column="result"    />
+        <result property="comment"    column="comment"    />
+        <result property="procDefKey"    column="proc_def_key"    />
+        <result property="procName"    column="proc_name"    />
+        <result property="applyer"    column="applyer"    />
+        <result property="title"    column="title"    />
+        <result property="businessKey"    column="business_key"    />
+        <result property="startUserId"    column="start_user_id"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <select id="getHistoryTaskList" resultMap="HiTaskVoResult">
+	    SELECT
+		ht.ID_ AS id,
+		ht.PROC_DEF_ID_ AS proc_def_id,
+		ht.PROC_INST_ID_ AS proc_inst_id,
+		ht.TASK_DEF_KEY_ AS task_def_key,
+		ht.NAME_ AS task_name,
+		ht.ASSIGNEE_ assignee,
+		ht.START_TIME_ AS start_time,
+		ht.END_TIME_ AS end_time,
+		ht.DURATION_ AS duration,
+		ht.DELETE_REASON_ AS delete_reason,
+		ba.id as audit_id,
+		ba.result,
+		ba.`comment`,
+		ba.proc_def_key,
+		ba.proc_name,
+		ba.applyer,
+		ba.del_flag,
+		hp.BUSINESS_KEY_ AS business_key,
+		hp.NAME_ AS title,
+		hp.START_USER_ID_ AS start_user_id 
+	FROM
+		act_hi_taskinst ht
+		LEFT JOIN biz_audit ba ON ht.ID_ = ba.task_id
+		LEFT JOIN act_hi_procinst hp ON ht.PROC_INST_ID_ = hp.ID_
+		<where>
+			<if test="deleteReason !=null and deleteReason !=''"> and ht.DELETE_REASON_=#{deleteReason}</if>
+			<if test="assignee !=null"> and ht.ASSIGNEE_=#{assignee} </if>
+			<if test="taskName !=null and taskName !=''"> and ht.NAME_ like concat('%', #{taskName}, '%')</if>
+			<if test="delFlag !=null"> and ba.del_flag=#{delFlag}</if>
+		</where>
+		order by ht.START_TIME_ desc
+    </select>
+    
+    <update id="deleteLogic">
+    	update biz_audit set del_flag=true where id in
+    	<foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

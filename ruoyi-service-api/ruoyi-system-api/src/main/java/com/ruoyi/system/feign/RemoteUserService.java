@@ -20,6 +20,9 @@ import com.ruoyi.system.feign.factory.RemoteUserFallbackFactory;
 @FeignClient(name = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = RemoteUserFallbackFactory.class)
 public interface RemoteUserService
 {
+    @GetMapping("user/get/{userId}")
+    public SysUser selectSysUserByUserId(@PathVariable("userId") long userId);
+
     @GetMapping("user/find/{username}")
     public SysUser selectSysUserByUsername(@PathVariable("username") String username);
 

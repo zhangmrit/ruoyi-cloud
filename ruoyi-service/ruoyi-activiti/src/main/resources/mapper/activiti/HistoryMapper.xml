@@ -2,41 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.activiti.mapper.HistoryMapper">
 
-    <select id="selectMyTasksCompleted" resultType="java.util.Map">
-        select * from act_hi_taskinst where ID_ in
-        (select TASK_ID_ from act_hi_varinst where NAME_='dealUserId' and TEXT_= #{userId,jdbcType=VARCHAR})
+	<resultMap type="com.ruoyi.activiti.vo.HiProcInsVo" id="HiProcInsVoResult">
+        <result property="id"    column="id"    />
+        <result property="procDefId"    column="proc_def_id"    />
+        <result property="procInstId"    column="proc_inst_id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="duration"    column="duration"    />
+        <result property="businessKey"    column="business_key"    />
+        <result property="procName"    column="proc_name"    />
+        <result property="result"    column="result"    />
+        <result property="status"    column="status"    />
+        <result property="tableId"    column="table_id"    />
+        <result property="title"    column="title"    />
+        <result property="userId"    column="user_id"    />
+        <result property="procDefKey"    column="proc_def_key"    />
+        <result property="applyer"    column="applyer"    />
+    </resultMap>
+
+    <select id="getHiProcInsListDone" resultMap="HiProcInsVoResult">
+        SELECT
+			hp.ID_ as id,
+			hp.PROC_DEF_ID_ as proc_def_id,
+			hp.PROC_INST_ID_ as proc_inst_id,
+			hp.START_TIME_ as start_time,
+			hp.END_TIME_ as end_time, 
+			hp.DURATION_ as duration,
+			b.id AS business_key,
+			b.proc_name,
+			b.result,
+			b.`status`,
+			b.table_id,
+			b.title,
+			b.user_id,
+			b.proc_def_key as proc_def_key,
+			b.applyer 
+		FROM
+			act_hi_procinst hp
+			LEFT JOIN biz_business b ON hp.BUSINESS_KEY_ = b.id 
+		WHERE
+			hp.END_TIME_ IS NOT NULL 
+		<if test="procDefKey != null and procDefKey !=''"> and b.proc_def_key=#{procDefKey}</if>
+		ORDER BY hp.END_TIME_ DESC
     </select>
 
-    <select id="selectMyProcessStarted" resultType="java.util.Map">
-        select * from act_hi_procinst where PROC_INST_ID_ in
-        (select PROC_INST_ID_ from act_hi_varinst where NAME_='startUserId' and TEXT_=#{userId,jdbcType=VARCHAR})
-    </select>
-
-    <select id="selectEndEventByTaskId" resultType="java.util.Map">
-        select * from act_hi_actinst where ACT_TYPE_='endEvent'
-        and PROC_INST_ID_ = (select PROC_INST_ID_ from act_hi_taskinst where ID_ =#{taskId,jdbcType=VARCHAR})
-        limit 0,1
-    </select>
-
-    <delete id="deleteHiEndEvent" parameterType="java.lang.String">
-        delete from act_hi_actinst where ACT_TYPE_='endEvent'
-        and PROC_INST_ID_ = (select PROC_INST_ID_ from act_hi_taskinst where ID_ =#{taskId,jdbcType=VARCHAR})
-    </delete>
-
-    <select id="selectHiTaskByTaskId" resultType="java.util.Map">
-        select * from act_hi_taskinst where ID_ = #{taskId,jdbcType=VARCHAR}
-    </select>
-
-    <select id="selectHiTaskByTaskKey" resultType="java.util.Map">
-        select * from act_hi_taskinst where TASK_DEF_KEY_ = #{taskKey,jdbcType=VARCHAR}
-    </select>
-
-    <select id="selectHiVariablesByProInsId" resultType="java.util.Map">
-        select * from act_hi_varinst where PROC_INST_ID_ = #{proInsId,jdbcType=VARCHAR}
-    </select>
-
-    <select id="selectIdentitylinkByTaskId" resultType="java.util.Map">
-        select * from act_hi_identitylink where TASK_ID_ = #{taskId,jdbcType=VARCHAR}
-    </select>
 
 </mapper>

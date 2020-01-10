@@ -1,7 +1,5 @@
 package com.ruoyi.activiti.config;
 
-import javax.sql.DataSource;
-
 import org.activiti.engine.DynamicBpmnService;
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
@@ -15,10 +13,10 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
+import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * Created by liuruijie on 2017/2/20.
@@ -30,22 +28,22 @@ public class ActivitiConfig
     @Autowired
     private MyIdGenerator idGenerator;
 
-    // 流程配置，与spring整合采用SpringProcessEngineConfiguration这个实现
+    // 流程配置
     @Bean
-    public ProcessEngineConfiguration processEngineConfiguration(DataSource dataSource,
-            PlatformTransactionManager transactionManager)
+    public ProcessEngineConfigurationConfigurer processEngineConfigurationConfigurer()
     {
-        SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
-        processEngineConfiguration.setDataSource(dataSource);
-        processEngineConfiguration.setDatabaseSchemaUpdate("true");
-        processEngineConfiguration.setDatabaseType("mysql");
-        processEngineConfiguration.setIdGenerator(idGenerator);
-        processEngineConfiguration.setTransactionManager(transactionManager);
-        // 流程图字体
-        processEngineConfiguration.setActivityFontName("宋体");
-        processEngineConfiguration.setAnnotationFontName("宋体");
-        processEngineConfiguration.setLabelFontName("宋体");
-        return processEngineConfiguration;
+        ProcessEngineConfigurationConfigurer configurer = new ProcessEngineConfigurationConfigurer()
+        {
+            @Override
+            public void configure(SpringProcessEngineConfiguration processEngineConfiguration)
+            {
+                processEngineConfiguration.setIdGenerator(idGenerator);
+                processEngineConfiguration.setActivityFontName("宋体");
+                processEngineConfiguration.setAnnotationFontName("宋体");
+                processEngineConfiguration.setLabelFontName("宋体");
+            }
+        };
+        return configurer;
     }
 
     // 流程引擎，与spring整合使用factoryBean

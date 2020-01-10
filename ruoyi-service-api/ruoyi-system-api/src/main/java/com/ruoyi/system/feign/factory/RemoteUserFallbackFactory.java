@@ -30,6 +30,15 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
             {
                 return R.error();
             }
+
+            @Override
+            public SysUser selectSysUserByUserId(long userId)
+            {
+                SysUser user = new SysUser();
+                user.setUserId(0l);
+                user.setLoginName("no user");
+                return user;
+            }
         };
     }
 }

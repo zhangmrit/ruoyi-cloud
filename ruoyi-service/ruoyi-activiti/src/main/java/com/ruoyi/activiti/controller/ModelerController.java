@@ -1,8 +1,6 @@
 package com.ruoyi.activiti.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
 
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
@@ -22,9 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.pagehelper.PageHelper;
 import com.ruoyi.activiti.domain.ActReModel;
 import com.ruoyi.activiti.service.IActReModelService;
-import com.ruoyi.activiti.service.ProcessInfoService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 
@@ -41,8 +39,6 @@ public class ModelerController extends BaseController
     @Autowired
     ObjectMapper               objectMapper;
 
-    @Autowired
-    private ProcessInfoService processInfoService;
 
     @Autowired
     private IActReModelService modelService;
@@ -88,7 +84,7 @@ public class ModelerController extends BaseController
      * @return
      * @throws Exception
      */
-    @PostMapping("{id}/deployment")
+    @PostMapping("deploy/{id}")
     @ResponseBody
     public R deploy(@PathVariable("id") String id) throws Exception
     {
@@ -115,20 +111,6 @@ public class ModelerController extends BaseController
         return R.ok();
     }
 
-    /**
-     *
-     * 获取所有模型
-     *
-     * @auther: Ace Lee
-     * @date: 2019/3/7 16:27
-     */
-    @GetMapping("all")
-    @ResponseBody
-    public R list()
-    {
-        List<Map<String, Object>> list = processInfoService.models();
-        return R.ok().put("rows", list);
-    }
 
     @GetMapping("get/{id}")
     public R get(@PathVariable("id") String id)
@@ -142,14 +124,19 @@ public class ModelerController extends BaseController
     public R getList(ActReModel actReModel)
     {
         startPage();
+        PageHelper.orderBy("create_time_ desc");
         return result(modelService.selectActReModelList(actReModel));
     }
 
-    @PostMapping("remove/{id}")
+    @PostMapping("remove")
     @ResponseBody
-    public R deleteOne(@PathVariable("id") String id)
+    public R deleteOne(String ids)
     {
-        repositoryService.deleteModel(id);
+        String[] idsArr = ids.split(",");
+        for (String id : idsArr)
+        {
+            repositoryService.deleteModel(id);
+        }
         return R.ok();
     }
 }
