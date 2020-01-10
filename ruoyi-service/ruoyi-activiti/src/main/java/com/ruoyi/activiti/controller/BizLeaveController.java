@@ -3,11 +3,6 @@ package com.ruoyi.activiti.controller;
 import java.util.Date;
 import java.util.Map;
 
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,15 +37,6 @@ public class BizLeaveController extends BaseController
 
     @Autowired
     private IBizBusinessService bizBusinessService;
-
-    @Autowired
-    private RuntimeService      runtimeService;
-
-    @Autowired
-    private IdentityService     identityService;
-
-    @Autowired
-    private TaskService         taskService;
 
     @Autowired
     private RemoteUserService   remoteUserService;
@@ -97,7 +83,14 @@ public class BizLeaveController extends BaseController
         {
             BizBusiness business = initBusiness(leave);
             bizBusinessService.insertBizBusiness(business);
-            startProcess(business);
+            Map<String, Object> variables = Maps.newHashMap();
+            // 这里可以设置各个负责人，key跟模型的代理变量一致
+            variables.put("pm", 1l);
+            variables.put("sup", 1l);
+            variables.put("gm", 1l);
+            variables.put("hr", 1l);
+            variables.put("duration", leave.getDuration());
+            bizBusinessService.startProcess(business, variables);
         }
         return toAjax(index);
     }
@@ -135,29 +128,11 @@ public class BizLeaveController extends BaseController
     }
 
     /**
-     * 删除${tableComment}
+     * 删除
      */
     @PostMapping("remove")
     public R remove(String ids)
     {
         return toAjax(leaveService.deleteBizLeaveByIds(ids));
-    }
-
-    public void startProcess(BizBusiness business)
-    {
-        // 启动流程用户
-        identityService.setAuthenticatedUserId(business.getUserId().toString());
-        Map<String, Object> variables = Maps.newHashMap();
-        // 这里可以设置各个负责人，key跟模型的代理变量一致
-        variables.put("manger", 1l);
-        variables.put("hr", 1l);
-        // 启动流程 需传入业务表id变量
-        ProcessInstance pi = runtimeService.startProcessInstanceById(business.getProcDefId(),
-                business.getId().toString(), variables);
-        // 设置流程实例名称
-        runtimeService.setProcessInstanceName(pi.getId(), business.getTitle());
-        Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
-        bizBusinessService.updateBizBusiness(new BizBusiness().setId(business.getId()).setProcInstId(pi.getId())
-                .setCurrentTask(task.getName()).setProcDefKey(pi.getProcessDefinitionKey()));
     }
 }

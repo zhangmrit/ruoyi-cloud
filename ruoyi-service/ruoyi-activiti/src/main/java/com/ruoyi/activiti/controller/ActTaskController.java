@@ -129,14 +129,23 @@ public class ActTaskController extends BaseController
         hiTaskVo.setDeleteReason(ActivitiConstant.REASON_COMPLETED);
         return result(bizAuditService.getHistoryTaskList(hiTaskVo));
     }
+    /**
+     * task 流转历史
+     * 
+     * @param hiTaskVo
+     * @return
+     * @author zmr
+     */
+    @RequestMapping(value = "flow")
+    public R flow(HiTaskVo hiTaskVo)
+    {
+        startPage();
+        return result(bizAuditService.getHistoryTaskList(hiTaskVo));
+    }
 
     @PostMapping("audit")
     public R audit(@RequestBody BizAudit bizAudit)
     {
-        if (StrUtil.isNotBlank(bizAudit.getComment()))
-        {
-            taskService.addComment(bizAudit.getTaskId(), bizAudit.getProcInstId(), bizAudit.getComment());
-        }
         Map<String, Object> variables = Maps.newHashMap();
         variables.put("result", bizAudit.getResult());
         // 审批

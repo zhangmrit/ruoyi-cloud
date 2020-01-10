@@ -6,7 +6,13 @@
 package com.ruoyi.activiti.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +37,15 @@ public class BizBusinessServiceImpl implements IBizBusinessService
 {
     @Autowired
     private BizBusinessMapper businessMapper;
+    
+    @Autowired
+    private RuntimeService      runtimeService;
+
+    @Autowired
+    private IdentityService     identityService;
+
+    @Autowired
+    private TaskService         taskService;
 
     /**
      * 查询流程业务
@@ -109,8 +124,26 @@ public class BizBusinessServiceImpl implements IBizBusinessService
     @Override
     public int deleteBizBusinessLogic(String ids)
     {
-        Example example=new Example(BizBusiness.class);
+        Example example = new Example(BizBusiness.class);
         example.createCriteria().andIn("id", Lists.newArrayList(ids));
         return businessMapper.updateByExampleSelective(new BizBusiness().setDelFlag(true), example);
+    }
+
+    /* (non-Javadoc)
+     * @see com.ruoyi.activiti.service.IBizBusinessService#startProcess(com.ruoyi.activiti.domain.BizBusiness, java.util.Map)
+     */
+    @Override
+    public void startProcess(BizBusiness business, Map<String, Object> variables)
+    {
+        // 启动流程用户
+        identityService.setAuthenticatedUserId(business.getUserId().toString());
+        // 启动流程 需传入业务表id变量
+        ProcessInstance pi = runtimeService.startProcessInstanceById(business.getProcDefId(),
+                business.getId().toString(), variables);
+        // 设置流程实例名称
+        runtimeService.setProcessInstanceName(pi.getId(), business.getTitle());
+        Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
+        updateBizBusiness(new BizBusiness().setId(business.getId()).setProcInstId(pi.getId())
+                .setCurrentTask(task.getName()).setProcDefKey(pi.getProcessDefinitionKey()));
     }
 }
