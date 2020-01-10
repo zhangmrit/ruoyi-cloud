@@ -2,6 +2,7 @@ package com.ruoyi.activiti.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -15,7 +16,7 @@ import lombok.EqualsAndHashCode;
  * @date 2019-11-26
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 public class ActReModel extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -60,4 +61,8 @@ public class ActReModel extends BaseEntity
 
     /** 租户 */
     private String            tenantId;
+
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date              createTime;
 }
