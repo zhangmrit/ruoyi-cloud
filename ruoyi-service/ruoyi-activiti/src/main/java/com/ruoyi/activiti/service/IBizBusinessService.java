@@ -6,6 +6,7 @@
 package com.ruoyi.activiti.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.activiti.domain.BizBusiness;
 
@@ -76,4 +77,6 @@ public interface IBizBusinessService
      * @return 结果
      */
     public int deleteBizBusinessById(Long id);
+
+    void startProcess(BizBusiness business, Map<String, Object> variables);
 }

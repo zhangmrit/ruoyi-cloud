@@ -54,10 +54,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN biz_audit ba ON ht.ID_ = ba.task_id
 		LEFT JOIN act_hi_procinst hp ON ht.PROC_INST_ID_ = hp.ID_
 		<where>
-			<if test="deleteReason !=null and deleteReason !=''"> and ht.DELETE_REASON_=#{deleteReason}</if>
-			<if test="assignee !=null"> and ht.ASSIGNEE_=#{assignee} </if>
+			<if test="deleteReason !=null and deleteReason !=''"> and ht.DELETE_REASON_ =#{deleteReason}</if>
+			<if test="assignee !=null"> and ht.ASSIGNEE_ =#{assignee} </if>
 			<if test="taskName !=null and taskName !=''"> and ht.NAME_ like concat('%', #{taskName}, '%')</if>
-			<if test="delFlag !=null"> and ba.del_flag=#{delFlag}</if>
+			<if test="delFlag !=null"> and ba.del_flag =#{delFlag}</if>
+			<if test="procInstId !=null and procInstId !=''"> and ht.PROC_INST_ID_ =#{procInstId}</if>
 		</where>
 		order by ht.START_TIME_ desc
     </select>
