@@ -125,7 +125,7 @@ public class BizBusinessServiceImpl implements IBizBusinessService
     public int deleteBizBusinessLogic(String ids)
     {
         Example example = new Example(BizBusiness.class);
-        example.createCriteria().andIn("id", Lists.newArrayList(ids));
+        example.createCriteria().andIn("id", Lists.newArrayList(ids.split(",")));
         return businessMapper.updateByExampleSelective(new BizBusiness().setDelFlag(true), example);
     }
 
