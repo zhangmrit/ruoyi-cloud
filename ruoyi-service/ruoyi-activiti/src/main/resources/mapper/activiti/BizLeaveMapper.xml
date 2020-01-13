@@ -13,14 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="duration"    column="duration"    />
         <result property="type"    column="type"    />
         <result property="delFlag"    column="del_flag"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="updateBy"    column="update_by"    />
         <result property="createTime"    column="create_time"    />
-        <result property="createBy"    column="create_by"    />
     </resultMap>
 
     <sql id="selectBizLeaveVo">
-        select id, title, description, start_date, end_date, duration, type, del_flag, update_time, update_by, create_time, create_by from biz_leave
+        select id, title, description, start_date, end_date, duration, type, del_flag, create_time from biz_leave
     </sql>
 
     <select id="selectBizLeaveList" parameterType="BizLeave" resultMap="BizLeaveResult">
@@ -44,10 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="duration != null ">duration,</if>
             <if test="type != null ">type,</if>
             <if test="delFlag != null ">del_flag,</if>
-            <if test="updateTime != null ">update_time,</if>
-            <if test="updateBy != null  and updateBy != ''">update_by,</if>
             <if test="createTime != null ">create_time,</if>
-            <if test="createBy != null  and createBy != ''">create_by,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null  and title != ''">#{title},</if>
@@ -57,10 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="duration != null ">#{duration},</if>
             <if test="type != null ">#{type},</if>
             <if test="delFlag != null ">#{delFlag},</if>
-            <if test="updateTime != null ">#{updateTime},</if>
-            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
             <if test="createTime != null ">#{createTime},</if>
-            <if test="createBy != null  and createBy != ''">#{createBy},</if>
          </trim>
     </insert>
 
@@ -74,10 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="duration != null ">duration = #{duration},</if>
             <if test="type != null ">type = #{type},</if>
             <if test="delFlag != null ">del_flag = #{delFlag},</if>
-            <if test="updateTime != null ">update_time = #{updateTime},</if>
-            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
-            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
         </trim>
         where id = #{id}
     </update>
