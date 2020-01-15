@@ -85,10 +85,10 @@ public class BizLeaveController extends BaseController
             bizBusinessService.insertBizBusiness(business);
             Map<String, Object> variables = Maps.newHashMap();
             // 这里可以设置各个负责人，key跟模型的代理变量一致
-            variables.put("pm", 1l);
-            variables.put("sup", 1l);
-            variables.put("gm", 1l);
-            variables.put("hr", 1l);
+            // variables.put("pm", 1l);
+            // variables.put("sup", 1l);
+            // variables.put("gm", 1l);
+            // variables.put("hr", 1l);
             variables.put("duration", leave.getDuration());
             bizBusinessService.startProcess(business, variables);
         }

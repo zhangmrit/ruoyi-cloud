@@ -2,11 +2,14 @@ package com.ruoyi.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.text.Convert;
@@ -26,6 +29,8 @@ import com.ruoyi.system.mapper.SysUserRoleMapper;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
 
+import cn.hutool.core.util.ArrayUtil;
+
 /**
  * 用户 业务层处理
  * 
@@ -37,22 +42,22 @@ public class SysUserServiceImpl implements ISysUserService
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Autowired
-    private SysUserMapper userMapper;
+    private SysUserMapper       userMapper;
 
     @Autowired
-    private SysRoleMapper roleMapper;
+    private SysRoleMapper       roleMapper;
 
     @Autowired
-    private SysPostMapper postMapper;
+    private SysPostMapper       postMapper;
 
     @Autowired
-    private SysUserPostMapper userPostMapper;
+    private SysUserPostMapper   userPostMapper;
 
     @Autowired
-    private SysUserRoleMapper userRoleMapper;
+    private SysUserRoleMapper   userRoleMapper;
 
     @Autowired
-    private ISysConfigService configService;
+    private ISysConfigService   configService;
 
     /**
      * 根据条件分页查询用户列表
@@ -470,5 +475,23 @@ public class SysUserServiceImpl implements ISysUserService
             throw new BusinessException("不允许修改超级管理员用户");
         }
         return userMapper.updateUser(user);
+    }
+
+    /* (non-Javadoc)
+     * @see com.ruoyi.system.service.ISysUserService#selectUserHasRole(java.lang.Long)
+     */
+    @Override
+    public Set<Long> selectUserIdsHasRoles(Long[] roleIds)
+    {
+        return ArrayUtil.isNotEmpty(roleIds) ? userMapper.selectUserIdsHasRoles(roleIds) : null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.ruoyi.system.service.ISysUserService#selectUserInDept(java.lang.Long)
+     */
+    @Override
+    public Set<Long> selectUserIdsInDepts(Long[] deptIds)
+    {
+        return ArrayUtil.isNotEmpty(deptIds) ? userMapper.selectUserIdsInDepts(deptIds) : null;
     }
 }

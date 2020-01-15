@@ -154,6 +154,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where u.user_id = #{userId}
 	</select>
 	
+	<select id="selectUserIdsHasRoles" parameterType="Long" resultType="Long">
+		select distinct u.user_id
+		from sys_user u
+			 left join sys_user_role ur on u.user_id = ur.user_id
+		where ur.role_id in 
+		<foreach collection="array" item="roleId" open="(" separator="," close=")">
+ 			#{roleId}
+        </foreach> 
+	</select>
+	
+	<select id="selectUserIdsInDepts" parameterType="Long" resultType="Long">
+		select distinct u.user_id
+		from sys_user u
+			left join sys_dept d on u.dept_id = d.dept_id
+		where d.dept_id in 
+		<foreach collection="array" item="deptId" open="(" separator="," close=")">
+ 			#{deptId}
+        </foreach> 
+	</select>
+	
 	<delete id="deleteUserById" parameterType="Long">
  		delete from sys_user where user_id = #{userId}
  	</delete>

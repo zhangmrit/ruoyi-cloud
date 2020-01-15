@@ -34,7 +34,7 @@ public class HiTaskVo
     private String  taskDefKey;
 
     // 处理人
-    private String  assignee;
+    private Long    auditorId;
 
     // 开始时间
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -70,7 +70,10 @@ public class HiTaskVo
 
     private Boolean delFlag;
 
+    // 审批记录编号
     private Long    auditId;
+    
+    private String  auditor;
 
     // 删除原因 completed：任务执行 deleted：流程删除
     private String  deleteReason;

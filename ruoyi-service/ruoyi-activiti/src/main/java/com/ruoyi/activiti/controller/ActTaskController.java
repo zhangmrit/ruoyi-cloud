@@ -32,6 +32,7 @@ import com.ruoyi.activiti.vo.RuTask;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.PageDomain;
+import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.feign.RemoteUserService;
 
 import cn.hutool.core.util.StrUtil;
@@ -125,10 +126,11 @@ public class ActTaskController extends BaseController
     public R done(HiTaskVo hiTaskVo)
     {
         startPage();
-        hiTaskVo.setAssignee(getCurrentUserId() + "");
+        hiTaskVo.setAuditorId(getCurrentUserId());
         hiTaskVo.setDeleteReason(ActivitiConstant.REASON_COMPLETED);
         return result(bizAuditService.getHistoryTaskList(hiTaskVo));
     }
+
     /**
      * task 流转历史
      * 
@@ -143,6 +145,13 @@ public class ActTaskController extends BaseController
         return result(bizAuditService.getHistoryTaskList(hiTaskVo));
     }
 
+    /**
+     * 审批
+     * 
+     * @param bizAudit
+     * @return
+     * @author zmr
+     */
     @PostMapping("audit")
     public R audit(@RequestBody BizAudit bizAudit)
     {
@@ -150,28 +159,20 @@ public class ActTaskController extends BaseController
         variables.put("result", bizAudit.getResult());
         // 审批
         taskService.complete(bizAudit.getTaskId(), variables);
+        SysUser user = remoteUserService.selectSysUserByUserId(getCurrentUserId());
+        bizAudit.setAuditor(user.getUserName() + "-" + user.getLoginName());
+        bizAudit.setAuditorId(user.getUserId());
         bizAuditService.insertBizAudit(bizAudit);
-        List<Task> tasks = taskService.createTaskQuery().processInstanceId(bizAudit.getProcInstId()).list();
-        if (null != tasks && tasks.size() > 0)
-        {
-            BizBusiness business = new BizBusiness().setId(bizAudit.getBusinessKey())
-                    .setCurrentTask(tasks.get(0).getName());
-            businessService.updateBizBusiness(business);
-        }
-        // 任务结束
-        else
-        {
-            BizBusiness business = new BizBusiness().setId(bizAudit.getBusinessKey())
-                    .setCurrentTask(ActivitiConstant.END_TASK_NAME).setStatus(ActivitiConstant.STATUS_FINISH)
-                    .setResult(bizAudit.getResult());
-            businessService.updateBizBusiness(business);
-        }
+        BizBusiness bizBusiness = new BizBusiness().setId(bizAudit.getBusinessKey())
+                .setProcInstId(bizAudit.getProcInstId());
+        businessService.setAuditor(bizBusiness, bizAudit.getResult(), getCurrentUserId());
         return R.ok();
     }
 
     @PostMapping("audit/batch")
     public R auditBatch(@RequestBody BizAudit bizAudit)
     {
+        SysUser user = remoteUserService.selectSysUserByUserId(getCurrentUserId());
         for (String taskId : bizAudit.getTaskIds())
         {
             Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
@@ -187,23 +188,10 @@ public class ActTaskController extends BaseController
                 // 构建插入审批记录
                 BizAudit audit = new BizAudit().setTaskId(taskId).setResult(bizAudit.getResult())
                         .setProcName(bizBusiness.getProcName()).setProcDefKey(bizBusiness.getProcDefKey())
-                        .setApplyer(bizBusiness.getApplyer());
+                        .setApplyer(bizBusiness.getApplyer()).setAuditor(user.getUserName() + "-" + user.getLoginName())
+                        .setAuditorId(user.getUserId());
                 bizAuditService.insertBizAudit(audit);
-                List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-                if (null != tasks && tasks.size() > 0)
-                {
-                    BizBusiness business = new BizBusiness().setId(bizBusiness.getId())
-                            .setCurrentTask(tasks.get(0).getName());
-                    businessService.updateBizBusiness(business);
-                }
-                // 任务结束
-                else
-                {
-                    BizBusiness business = new BizBusiness().setId(bizBusiness.getId())
-                            .setCurrentTask(ActivitiConstant.END_TASK_NAME).setStatus(ActivitiConstant.STATUS_FINISH)
-                            .setResult(bizAudit.getResult());
-                    businessService.updateBizBusiness(business);
-                }
+                businessService.setAuditor(bizBusiness, audit.getResult(), getCurrentUserId());
             }
         }
         return R.ok();

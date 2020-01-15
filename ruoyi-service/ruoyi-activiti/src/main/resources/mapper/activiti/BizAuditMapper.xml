@@ -10,7 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="procInstId"    column="proc_inst_id"    />
         <result property="taskDefKey"    column="task_def_key"    />
         <result property="taskName"    column="task_name"    />
-        <result property="assignee"    column="assignee"    />
+        <result property="auditorId"    column="auditor_id"    />
+        <result property="auditor"    column="auditor"    />
         <result property="deleteReason"    column="delete_reason"    />
         <result property="startTime"    column="start_time"    />
         <result property="endTime"    column="end_time"    />
@@ -34,7 +35,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ht.PROC_INST_ID_ AS proc_inst_id,
 		ht.TASK_DEF_KEY_ AS task_def_key,
 		ht.NAME_ AS task_name,
-		ht.ASSIGNEE_ assignee,
 		ht.START_TIME_ AS start_time,
 		ht.END_TIME_ AS end_time,
 		ht.DURATION_ AS duration,
@@ -45,6 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ba.proc_def_key,
 		ba.proc_name,
 		ba.applyer,
+		ba.auditor,
+		ba.auditor_id,
 		ba.del_flag,
 		hp.BUSINESS_KEY_ AS business_key,
 		hp.NAME_ AS title,
@@ -55,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN act_hi_procinst hp ON ht.PROC_INST_ID_ = hp.ID_
 		<where>
 			<if test="deleteReason !=null and deleteReason !=''"> and ht.DELETE_REASON_ =#{deleteReason}</if>
-			<if test="assignee !=null"> and ht.ASSIGNEE_ =#{assignee} </if>
+			<if test="auditorId !=null"> and ba.auditor_id =#{auditorId} </if>
 			<if test="taskName !=null and taskName !=''"> and ht.NAME_ like concat('%', #{taskName}, '%')</if>
 			<if test="delFlag !=null"> and ba.del_flag =#{delFlag}</if>
 			<if test="procInstId !=null and procInstId !=''"> and ht.PROC_INST_ID_ =#{procInstId}</if>

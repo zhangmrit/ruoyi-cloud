@@ -24,7 +24,7 @@ import tk.mybatis.mapper.annotation.KeySql;
  * @version 1.0
  */
 @Data
-@Accessors(chain=true)
+@Accessors(chain = true)
 public class BizAudit
 {
     @Id
@@ -42,6 +42,10 @@ public class BizAudit
     private String   procName;
 
     private String   applyer;
+
+    private String   auditor;
+
+    private Long     auditorId;
 
     private Date     createTime;
 

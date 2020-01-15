@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+import java.util.Set;
+
 import com.ruoyi.system.domain.SysUser;
 
 /**
@@ -172,4 +174,20 @@ public interface ISysUserService
      * @return 结果
      */
     public int changeStatus(SysUser user);
+
+    /**
+     * 查询拥有当前角色的所有用户
+     * @param roleId
+     * @return
+     * @author zmr
+     */
+    public Set<Long> selectUserIdsHasRoles(Long[] roleIds);
+
+    /**
+     * 查询所有当前部门中的用户
+     * @param deptId
+     * @return
+     * @author zmr
+     */
+    public Set<Long> selectUserIdsInDepts(Long[] deptIds);
 }

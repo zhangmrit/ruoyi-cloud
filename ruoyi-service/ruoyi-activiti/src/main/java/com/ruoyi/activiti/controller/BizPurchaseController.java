@@ -82,9 +82,9 @@ public class BizPurchaseController extends BaseController
             bizBusinessService.insertBizBusiness(business);
             Map<String, Object> variables = Maps.newHashMap();
             // 这里可以设置各个负责人，key跟模型的代理变量一致
-            variables.put("fm", 1l);
-            variables.put("fc", 1l);
-            variables.put("gm", 1l);
+            // variables.put("fm", 1l);
+            // variables.put("fc", 1l);
+            // variables.put("gm", 1l);
             variables.put("money", purchase.getMoney());
             bizBusinessService.startProcess(business, variables);
         }

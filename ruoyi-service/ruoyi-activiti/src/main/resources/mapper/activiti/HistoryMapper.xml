@@ -9,6 +9,7 @@
         <result property="startTime"    column="start_time"    />
         <result property="endTime"    column="end_time"    />
         <result property="duration"    column="duration"    />
+        <result property="deleteReason"    column="delete_reason"    />
         <result property="businessKey"    column="business_key"    />
         <result property="procName"    column="proc_name"    />
         <result property="result"    column="result"    />
@@ -28,6 +29,7 @@
 			hp.START_TIME_ as start_time,
 			hp.END_TIME_ as end_time, 
 			hp.DURATION_ as duration,
+			hp.DELETE_REASON_ as delete_reason,
 			b.id AS business_key,
 			b.proc_name,
 			b.result,
