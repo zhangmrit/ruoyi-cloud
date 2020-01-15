@@ -18,15 +18,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.ruoyi.activiti.cover.ICustomProcessDiagramGenerator;
+
 /**
- * Created by liuruijie on 2017/2/20.
- * activiti工作流配置
+ * <p>File：ActivitiConfig.java</p>
+ * <p>Title: activit配置类</p>
+ * <p>Description:</p>
+ * <p>Copyright: Copyright (c) 2020 2020年1月15日 下午6:34:17</p>
+ * <p>Company: zmrit.com </p>
+ * @author zmr
+ * @version 1.0
  */
 @Configuration
 public class ActivitiConfig
 {
     @Autowired
     private MyIdGenerator idGenerator;
+    
+    @Autowired
+    private ICustomProcessDiagramGenerator customProcessDiagramGenerator;
 
     // 流程配置
     @Bean
@@ -41,6 +51,8 @@ public class ActivitiConfig
                 processEngineConfiguration.setActivityFontName("宋体");
                 processEngineConfiguration.setAnnotationFontName("宋体");
                 processEngineConfiguration.setLabelFontName("宋体");
+                //自定义流程图画笔
+                processEngineConfiguration.setProcessDiagramGenerator(customProcessDiagramGenerator);
             }
         };
         return configurer;
