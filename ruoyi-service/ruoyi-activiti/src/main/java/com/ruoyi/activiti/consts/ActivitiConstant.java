@@ -1,5 +1,7 @@
 package com.ruoyi.activiti.consts;
 
+import java.awt.Color;
+
 public interface ActivitiConstant
 {
     /**
@@ -112,4 +114,12 @@ public interface ActivitiConstant
      * 节点关联类型 操作人的部门负责人
      */
     Integer NODE_DEP_HEADER  = 4;
+
+    /** 定义生成流程图时的边距(像素) **/
+    Integer PROCESS_PADDING  = 5;
+
+    /** 动态流程图颜色定义 **/
+    Color   COLOR_NORMAL     = new Color(0, 205, 0);
+
+    Color   COLOR_CURRENT    = new Color(255, 0, 0);
 }
