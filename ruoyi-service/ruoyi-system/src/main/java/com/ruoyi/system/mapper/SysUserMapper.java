@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+import java.util.Set;
+
 import com.ruoyi.system.domain.SysUser;
 
 /**
@@ -121,4 +123,19 @@ public interface SysUserMapper
      * @return 结果
      */
     public SysUser checkEmailUnique(String email);
+
+    /**
+     * 查询拥有当前角色的所有用户编号
+     * @param roleIds 角色编号
+     * @return
+     * @author zmr
+     */
+    public Set<Long> selectUserIdsHasRoles(Long[] roleIds);
+    /**
+     * 查询拥有当前角色的所有用户编号
+     * @param deptIds 部门编号
+     * @return
+     * @author zmr
+     */
+    public Set<Long> selectUserIdsInDepts(Long[] deptIds);
 }

@@ -78,5 +78,24 @@ public interface IBizBusinessService
      */
     public int deleteBizBusinessById(Long id);
 
+    /**
+     * start 启动流程
+     * 
+     * @param business 业务对象，必须包含id,title,userId,procDefId属性
+     * @param variables 启动流程需要的变量
+     * @author zmr
+     */
     void startProcess(BizBusiness business, Map<String, Object> variables);
+
+    /**
+     * check 检查负责人
+     * 
+     * @param business 业务对象，必须包含id,procInstId属性
+     * @param result 审批结果
+     * @param currentUserId 当前操作用户 可能是发起人或者任务处理人
+     * @return
+     * @author zmr
+     */
+    public int setAuditor(BizBusiness business, int result, long currentUserId);
+
 }

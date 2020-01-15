@@ -24,6 +24,8 @@ public class HiProcInsVo
 
     private Long    duration;
 
+    private String  deleteReason;
+
     private String  procName;
 
     private String  businessKey;

@@ -1,5 +1,7 @@
 package com.ruoyi.system.feign.factory;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Component;
 
 import com.ruoyi.common.core.domain.R;
@@ -38,6 +40,18 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
                 user.setUserId(0l);
                 user.setLoginName("no user");
                 return user;
+            }
+
+            @Override
+            public Set<Long> selectUserIdsHasRoles(String roleId)
+            {
+                return null;
+            }
+
+            @Override
+            public Set<Long> selectUserIdsInDepts(String deptIds)
+            {
+                return null;
             }
         };
     }
