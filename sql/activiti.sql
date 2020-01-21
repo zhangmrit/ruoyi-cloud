@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : ruoyi-cloud
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50726
- Source Host           : 120.78.129.95:3306
+ Source Server Version : 50725
+ Source Host           : localhost:3306
  Source Schema         : activiti
 
  Target Server Type    : MySQL
- Target Server Version : 50726
+ Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 13/01/2020 17:14:37
+ Date: 21/01/2020 11:45:46
 */
 
 SET NAMES utf8mb4;
@@ -29,10 +29,12 @@ CREATE TABLE `biz_audit`  (
   `proc_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程名称',
   `proc_def_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '路由 流程定义key',
   `applyer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '申请人',
+  `auditor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '审批人',
+  `auditor_id` bigint(20) UNSIGNED NOT NULL COMMENT '审批人编号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `del_flag` bit(1) NOT NULL DEFAULT b'0' COMMENT '删除标记',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '业务审核记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 122 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '业务审核记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for biz_business
@@ -54,7 +56,7 @@ CREATE TABLE `biz_business`  (
   `apply_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '申请时间',
   `del_flag` bit(1) NULL DEFAULT b'0' COMMENT '删除标记',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 121 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for biz_leave
@@ -71,7 +73,20 @@ CREATE TABLE `biz_leave`  (
   `del_flag` bit(1) NULL DEFAULT b'0' COMMENT '删除标记',
   `create_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '请假' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '请假' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for biz_node
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_node`;
+CREATE TABLE `biz_node`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `node_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '节点ID',
+  `type` tinyint(3) UNSIGNED NOT NULL COMMENT '类型 1：角色 2：部门负责人 3：用户 4：所属部门负责人',
+  `auditor` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '类型对应负责人的值',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_node_id`(`node_id`) USING BTREE COMMENT '节点id索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for biz_purchase
@@ -85,6 +100,6 @@ CREATE TABLE `biz_purchase`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `del_flag` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除标记',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '报销' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '报销' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
