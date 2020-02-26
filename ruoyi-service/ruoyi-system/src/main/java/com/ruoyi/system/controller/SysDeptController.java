@@ -48,6 +48,16 @@ public class SysDeptController extends BaseController
     }
 
     /**
+     * 查询所有可用部门
+     */
+    @GetMapping("list/enable")
+    public R listEnable(SysDept sysDept)
+    {
+        sysDept.setStatus("0");
+        return result(sysDeptService.selectDeptList(sysDept));
+    }
+
+    /**
      * 新增保存部门
      */
     @PostMapping("save")
@@ -73,12 +83,12 @@ public class SysDeptController extends BaseController
     {
         return toAjax(sysDeptService.deleteDeptById(deptId));
     }
-    
+
     /**
      * 加载角色部门（数据权限）列表树
      */
     @GetMapping("/role/{roleId}")
-    public Set<String> deptTreeData(@PathVariable("roleId" )Long roleId)
+    public Set<String> deptTreeData(@PathVariable("roleId") Long roleId)
     {
         if (null == roleId || roleId <= 0) return null;
         return sysDeptService.roleDeptIds(roleId);
