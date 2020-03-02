@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +23,9 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.activiti.consts.ActivitiConstant;
 import com.ruoyi.activiti.cover.ICustomProcessDiagramGenerator;
@@ -58,6 +62,45 @@ public class ProcessController
 
     @Autowired
     private ProcessEngineConfiguration processEngineConfiguration;
+
+    @RequestMapping("deployByFile")
+    public R upload(MultipartFile file)
+    {
+        if (!file.isEmpty())
+        {
+            try
+            {
+                InputStream fileInputStream = file.getInputStream();
+                String fileName = file.getOriginalFilename();
+                Deployment deployment = null;
+                String extension = FilenameUtils.getExtension(fileName);
+                String baseName = FilenameUtils.getBaseName(fileName);
+                if (fileName.endsWith("bpmn20.xml"))
+                {
+                    deployment = repositoryService.createDeployment().name(baseName)
+                            .addInputStream(fileName, fileInputStream).deploy();
+                }
+                else if ("zip".equals(extension) || "bar".equals(extension))
+                {
+                    ZipInputStream zip = new ZipInputStream(fileInputStream);
+                    deployment = repositoryService.createDeployment().name(baseName).addZipInputStream(zip).deploy();
+                }
+                else
+                {
+                    return R.error("不支持的文件格式");
+                }
+                if (null != deployment)
+                {
+                    log.info("流程部署成功,id:{}", deployment.getId());
+                }
+            }
+            catch (Exception e)
+            {
+                return R.error("部署失败");
+            }
+        }
+        return R.ok();
+    }
 
     /**
      * 查看流程图
