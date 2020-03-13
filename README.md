@@ -1,6 +1,7 @@
 ## 平台简介
 
-### 文档 http://doc.rycloud.zmrit.com
+### 文档 http://doc.rycloud.zmrit.com 
+### 启动演示视频 https://www.bilibili.com/video/av95044508/
 
 ### 源码
 - [Github](https://github.com/zhangmrit/ruoyi-cloud)
