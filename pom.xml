@@ -17,9 +17,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring-boot.version>2.1.6.RELEASE</spring-boot.version>
-		<spring-cloud.version>Greenwich.SR2</spring-cloud.version>
-		<alibaba-cloud.version>2.1.0.RELEASE</alibaba-cloud.version>
+		<spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+		<alibaba-cloud.version>2.2.0.RELEASE</alibaba-cloud.version>
 		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 		<druid.version>1.1.14</druid.version>
 		<bitwalker.version>1.19</bitwalker.version>
