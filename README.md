@@ -2,6 +2,7 @@
 若依spring-cloud实现
 
 ### 文档 http://doc.rycloud.zmrit.com
+### 启动演示视频 https://www.bilibili.com/video/av95044508/
 
 #### 分支说明
 
