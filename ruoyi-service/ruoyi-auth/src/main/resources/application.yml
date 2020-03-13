@@ -41,3 +41,9 @@ eureka:
     instance-id: ${spring.application.name}:${server.port}
     prefer-ip-address: true     #访问路径可以显示IP地址     
  
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
