@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import com.alibaba.fastjson.parser.ParserConfig;
 
 @Configuration
 public class RedisConfig
@@ -38,6 +38,8 @@ public class RedisConfig
         redisTemplate.setHashValueSerializer(fastJsonRedisSerializer);
         redisTemplate.setValueSerializer(fastJsonRedisSerializer);
         redisTemplate.setConnectionFactory(factory);
+        // 设置白名单---非常重要********
+        ParserConfig.getGlobalInstance().addAccept("com.ruoyi");
         return redisTemplate;
     }
 
