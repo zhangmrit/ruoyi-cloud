@@ -1,4 +1,4 @@
-**描述 bug**
+**描述你遇到的问题**
 A clear and concise description of what the bug is.
 
 **重现步骤**
@@ -20,5 +20,6 @@ A clear and concise description of what the bug is.
  - Spring Cloud Version [e.g. Hoxton.SR3]
  - JDK version [e.g. 1.8]
  - ...
+ 
 **Additional context**
 附加信息
