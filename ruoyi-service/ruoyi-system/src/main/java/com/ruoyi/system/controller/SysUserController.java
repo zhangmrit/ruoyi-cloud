@@ -177,6 +177,10 @@ public class SysUserController extends BaseController
     @PostMapping("/resetPwd")
     public R resetPwdSave(@RequestBody SysUser user)
     {
+        if (null != user.getUserId() && SysUser.isAdmin(user.getUserId()))
+        {
+            return R.error("不允许修改超级管理员用户");
+        }
         user.setSalt(RandomUtil.randomStr(6));
         user.setPassword(PasswordUtil.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         return toAjax(sysUserService.resetUserPwd(user));
@@ -191,9 +195,13 @@ public class SysUserController extends BaseController
     @HasPermissions("system:user:edit")
     @PostMapping("status")
     @OperLog(title = "用户管理", businessType = BusinessType.UPDATE)
-    public R status(@RequestBody SysUser sysUser)
+    public R status(@RequestBody SysUser user)
     {
-        return toAjax(sysUserService.changeStatus(sysUser));
+        if (null != user.getUserId() && SysUser.isAdmin(user.getUserId()))
+        {
+            return R.error("不允许修改超级管理员用户");
+        }
+        return toAjax(sysUserService.changeStatus(user));
     }
 
     /**
