@@ -4,6 +4,7 @@
 ### 文档 http://doc.rycloud.zmrit.com
 ### 启动演示视频 https://www.bilibili.com/video/av95044508/
 
+#### 友情链接 若依/RuoYi-Cloud[https://gitee.com/y_project/RuoYi-Cloud] Element UI版本。
 #### 分支说明
 
 - **master** spring原生方式，使用eureka做注册中心和spring config做配置中心
