@@ -69,7 +69,7 @@ export default {
       this.mdl = Object.assign(record)
       this.visible = true
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.mdl, #foreach($column in $columns)#if($foreach.hasNext)'${column.javaField}',#else'${column.javaField}'#end#end))
+        this.form.setFieldsValue(pick(this.mdl, #foreach($column in $columns)#if($foreach.hasNext)'${column.javaField}', #else'${column.javaField}'#end#end))
       })
     },
 #set($foo="$")
