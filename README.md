@@ -86,6 +86,9 @@ monitor使用springadmin完成,目前只是最简单的用法,[详戳](http://do
 
 QQ群：  [![加入QQ群](https://img.shields.io/badge/755109875-blue.svg)](https://jq.qq.com/?_wv=1027&k=5JGXHPD)  点击按钮入群。
 
+### 鸣谢
+- [AJ-Captcha](https://gitee.com/anji-plus/captcha) 因为使用场景的不同导致得拉代码修改，如果官方适配，可以删除本地代码
+
 欢迎pr或者加入，给个star是最好的鞭策
 
 ##  请作者喝杯咖啡或者建设演示服务器
