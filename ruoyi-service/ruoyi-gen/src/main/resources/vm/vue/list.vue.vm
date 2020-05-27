@@ -32,7 +32,7 @@
         </a-row>
       </a-form>
     </div>
-     <div class="table-operator">
+    <div class="table-operator">
       <a-button v-if="addEnable" type="primary" icon="plus" @click="$refs.modal.add()">新建</a-button>
       <a-dropdown v-if="removeEnable&&selectedRowKeys.length > 0">
         <a-button type="danger" icon="delete" @click="delByIds(selectedRowKeys)">删除</a-button>

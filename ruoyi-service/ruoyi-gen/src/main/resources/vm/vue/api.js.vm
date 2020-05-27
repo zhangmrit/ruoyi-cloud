@@ -14,7 +14,7 @@ export function get${ClassName}List (parameter) {
 
 export function save${ClassName} (parameter) {
   return axios({
-    url: api.${className}+(parameter.${pkColumn.javaField} > 0 ? '/update' : '/save'),
+    url: api.${className} + (parameter.${pkColumn.javaField} > 0 ? '/update' : '/save'),
     method: 'post',
     data: parameter,
     headers: {
