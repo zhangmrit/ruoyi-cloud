@@ -57,6 +57,12 @@
 			<version>${ruoyi.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.ruoyi.cloud</groupId>
+			<artifactId>ruoyi-common-captcha</artifactId>
+			<version>${ruoyi.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -32,4 +32,5 @@ feign:
   hystrix: 
     enabled: true
 
+    
  
