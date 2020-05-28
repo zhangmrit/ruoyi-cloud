@@ -32,6 +32,15 @@ public class TokenController
     @PostMapping("login")
     public R login(@RequestBody LoginForm form)
     {
+        // 用户登录
+        SysUser user = sysLoginService.login(form.getUsername(), form.getPassword());
+        // 获取登录token
+        return R.ok(tokenService.createToken(user));
+    }
+
+    @PostMapping("login/slide")
+    public R loginSilde(@RequestBody LoginForm form)
+    {
         ResponseModel response = captchaService.verification(form.getVerify());
         if (response.isSuccess())
         {
