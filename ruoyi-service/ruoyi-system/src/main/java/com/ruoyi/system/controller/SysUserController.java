@@ -97,6 +97,15 @@ public class SysUserController extends BaseController
     }
 
     /**
+     * 查询用户列表不分页
+     */
+    @GetMapping("all")
+    public R all(SysUser sysUser)
+    {
+        return result(sysUserService.selectUserList(sysUser));
+    }
+
+    /**
      * 新增保存用户
      */
     @HasPermissions("system:user:add")
