@@ -50,7 +50,8 @@ public class ImgCodeFilter extends AbstractGatewayFilterFactory<ImgCodeFilter.Co
             ServerHttpRequest request = exchange.getRequest();
             URI uri = request.getURI();
             // 不是登录请求，直接向下执行
-            if (!StringUtils.containsIgnoreCase(uri.getPath(), AUTH_URL))
+            //if (!StringUtils.containsIgnoreCase(uri.getPath(), AUTH_URL))
+            if (!AUTH_URL.equalsIgnoreCase(uri.getPath()))
             {
                 return chain.filter(exchange);
             }
@@ -91,8 +92,6 @@ public class ImgCodeFilter extends AbstractGatewayFilterFactory<ImgCodeFilter.Co
 
     /**
      * 检查code
-     *
-     * @param request
      */
     @SneakyThrows
     private void checkCode(String code, String randomStr)
