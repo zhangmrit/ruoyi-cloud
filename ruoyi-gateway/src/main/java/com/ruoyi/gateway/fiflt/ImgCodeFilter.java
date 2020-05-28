@@ -33,7 +33,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class ImgCodeFilter extends AbstractGatewayFilterFactory<ImgCodeFilter.Config>
 {
-    private final static String AUTH_URL = "/auth/logined";
+    private final static String AUTH_URL = "/auth/login";
 
     @Autowired
     private StringRedisTemplate redisTemplate;
