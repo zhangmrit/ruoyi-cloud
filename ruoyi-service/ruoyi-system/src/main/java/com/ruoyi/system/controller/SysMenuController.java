@@ -80,6 +80,15 @@ public class SysMenuController extends BaseController
     {
         return result(sysMenuService.selectMenuList(sysMenu));
     }
+    /**
+     * 查询所有菜单权限列表
+     */
+    @HasPermissions("system:menu:view")
+    @GetMapping("all")
+    public R all(SysMenu sysMenu)
+    {
+        return result(sysMenuService.selectMenuList(sysMenu));
+    }
 
     /**
      * 新增保存菜单权限
