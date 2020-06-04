@@ -85,28 +85,32 @@ public class ActTaskController extends BaseController
         long count = query.count();
         int first = (page.getPageNum() - 1) * page.getPageSize();
         List<Task> taskList = query.listPage(first, page.getPageSize());
-        // 转换vo
-        taskList.forEach(e -> {
-            RuTask rt = new RuTask(e);
-            List<IdentityLink> identityLinks = runtimeService.getIdentityLinksForProcessInstance(rt.getProcInstId());
-            for (IdentityLink ik : identityLinks)
-            {
-                // 关联发起人
-                if ("starter".equals(ik.getType()) && StrUtil.isNotBlank(ik.getUserId()))
+        if (taskList.size() > 0)
+        {
+            // 转换vo
+            taskList.forEach(e -> {
+                RuTask rt = new RuTask(e);
+                List<IdentityLink> identityLinks = runtimeService
+                        .getIdentityLinksForProcessInstance(rt.getProcInstId());
+                for (IdentityLink ik : identityLinks)
                 {
-                    rt.setApplyer(
-                            remoteUserService.selectSysUserByUserId(Long.parseLong(ik.getUserId())).getUserName());
+                    // 关联发起人
+                    if ("starter".equals(ik.getType()) && StrUtil.isNotBlank(ik.getUserId()))
+                    {
+                        rt.setApplyer(
+                                remoteUserService.selectSysUserByUserId(Long.parseLong(ik.getUserId())).getUserName());
+                    }
                 }
-            }
-            // 关联业务key
-            ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(rt.getProcInstId())
-                    .singleResult();
-            rt.setBusinessKey(pi.getBusinessKey());
-            rt.setProcessName(pi.getName());
-            rt.setProcessDefKey(pi.getProcessDefinitionKey());
-            rt.setProcessDefName(pi.getProcessDefinitionName());
-            list.add(rt);
-        });
+                // 关联业务key
+                ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(rt.getProcInstId())
+                        .singleResult();
+                rt.setBusinessKey(pi.getBusinessKey());
+                rt.setProcessName(pi.getName());
+                rt.setProcessDefKey(pi.getProcessDefinitionKey());
+                rt.setProcessDefName(pi.getProcessDefinitionName());
+                list.add(rt);
+            });
+        }
         Map<String, Object> map = Maps.newHashMap();
         map.put("rows", list);
         map.put("pageNum", page.getPageNum());
