@@ -3,16 +3,15 @@ package com.ruoyi.auth.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anji.captcha.model.common.ResponseModel;
+import com.anji.captcha.service.CaptchaService;
 import com.ruoyi.auth.form.LoginForm;
 import com.ruoyi.auth.service.AccessTokenService;
 import com.ruoyi.auth.service.SysLoginService;
-import com.ruoyi.captcha.model.common.ResponseModel;
-import com.ruoyi.captcha.service.CaptchaService;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.system.domain.SysUser;
 
@@ -26,7 +25,6 @@ public class TokenController
     private SysLoginService    sysLoginService;
 
     @Autowired
-    @Lazy
     private CaptchaService     captchaService;
 
     @PostMapping("login")
@@ -41,7 +39,7 @@ public class TokenController
     @PostMapping("login/slide")
     public R loginSilde(@RequestBody LoginForm form)
     {
-        ResponseModel response = captchaService.verification(form.getVerify());
+        ResponseModel response = captchaService.verification(form.getCaptchaVO());
         if (response.isSuccess())
         {
             // 用户登录

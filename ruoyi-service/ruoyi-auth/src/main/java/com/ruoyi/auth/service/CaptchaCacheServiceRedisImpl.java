@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.captcha.service.CaptchaCacheService;
+import com.anji.captcha.service.CaptchaCacheService;
 
 /**
  * <p>File：CaptchaCacheServiceRedisImpl.java</p>
@@ -25,6 +25,11 @@ import com.ruoyi.captcha.service.CaptchaCacheService;
 @Service
 public class CaptchaCacheServiceRedisImpl implements CaptchaCacheService
 {
+    @Override
+    public String type() {
+        return "redis";
+    }
+    
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
