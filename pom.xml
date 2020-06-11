@@ -42,6 +42,7 @@
         <swagger.version>2.9.2</swagger.version>
         <swagger-ui.version>1.9.5</swagger-ui.version>
         <guava.version>26.0-jre</guava.version>
+		<anji-plus.version>1.2.3</anji-plus.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -217,6 +218,12 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
+			<dependency>
+				<groupId>com.github.anji-plus</groupId>
+				<artifactId>captcha-spring-boot-starter</artifactId>
+				<version>${anji-plus.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 

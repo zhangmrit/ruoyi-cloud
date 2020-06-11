@@ -64,9 +64,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.ruoyi.cloud</groupId>
-			<artifactId>ruoyi-common-captcha</artifactId>
-			<version>${ruoyi.version}</version>
+		   <groupId>com.github.anji-plus</groupId>
+		   <artifactId>captcha-spring-boot-starter</artifactId>
 		</dependency>
 
 
