@@ -15,6 +15,5 @@
         <module>ruoyi-common-log</module>
         <module>ruoyi-common-auth</module>
         <module>ruoyi-common-swagger</module>
-        <module>ruoyi-common-captcha</module>
     </modules>
 </project>
