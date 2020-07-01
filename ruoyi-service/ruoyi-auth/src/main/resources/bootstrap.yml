@@ -32,5 +32,10 @@ feign:
   hystrix: 
     enabled: true
 
+aj:
+ captcha:
+  water-mark: zmrit.com
+  interference-options: 2
+
     
  
