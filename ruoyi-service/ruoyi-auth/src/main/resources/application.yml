@@ -47,3 +47,8 @@ management:
     web:
       exposure:
         include: '*'
+# 滑块验证码配置
+aj:
+  captcha:
+    water-mark: zmrit.com
+    interference-options: 2
