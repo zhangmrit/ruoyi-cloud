@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE `sys_dept`  (
   `dept_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '部门id',
   `parent_id` int(11) NULL DEFAULT 0 COMMENT '父部门id',
-  `ancestors` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '祖级列表',
+  `ancestors` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '祖级列表',
   `dept_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '部门名称',
   `order_num` int(4) NULL DEFAULT 0 COMMENT '显示顺序',
   `leader` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '负责人',
