@@ -47,7 +47,7 @@ public class ActivitiConfig
             @Override
             public void configure(SpringProcessEngineConfiguration processEngineConfiguration)
             {
-                processEngineConfiguration.setIdGenerator(idGenerator);
+                //processEngineConfiguration.setIdGenerator(idGenerator);
                 processEngineConfiguration.setActivityFontName("宋体");
                 processEngineConfiguration.setAnnotationFontName("宋体");
                 processEngineConfiguration.setLabelFontName("宋体");
