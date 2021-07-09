@@ -1,14 +1,14 @@
 **描述你遇到的问题**
-A clear and concise description of what the bug is.
+清晰而简洁的错误描述
 
 **重现步骤**
 步骤如下:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. 打开 '...'
+2. 点击 '....'
+3. 滚动 '....'
+4. 看见错误
 
-**期望结果r**
+**期望结果**
 对你期望发生的事情的清晰而简明的描述。
 
 **实际结果**
@@ -21,5 +21,5 @@ A clear and concise description of what the bug is.
  - JDK version [e.g. 1.8]
  - ...
  
-**Additional context**
-附加信息
+**附加信息**
+关于问题的一些附加信息描述

@@ -19,6 +19,7 @@ import com.ruoyi.common.log.annotation.OperLog;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.utils.RandomUtil;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.util.PasswordUtil;
@@ -35,11 +36,16 @@ import cn.hutool.core.convert.Convert;
 @RequestMapping("user")
 public class SysUserController extends BaseController
 {
-    @Autowired
-    private ISysUserService sysUserService;
+    private static final String DEFALUT_PASSWORD_KEY = "defalut_password";
 
     @Autowired
-    private ISysMenuService sysMenuService;
+    private ISysUserService     sysUserService;
+
+    @Autowired
+    private ISysMenuService     sysMenuService;
+
+    @Autowired
+    private ISysConfigService   sysConfigService;
 
     /**
      * 查询用户
@@ -72,7 +78,7 @@ public class SysUserController extends BaseController
     @GetMapping("hasRoles")
     public Set<Long> hasRoles(String roleIds)
     {
-        Long[] arr=Convert.toLongArray(roleIds);
+        Long[] arr = Convert.toLongArray(roleIds);
         return sysUserService.selectUserIdsHasRoles(arr);
     }
 
@@ -80,9 +86,9 @@ public class SysUserController extends BaseController
      * 查询所有当前部门中的用户
      */
     @GetMapping("inDepts")
-    public Set<Long> inDept(String  deptIds)
+    public Set<Long> inDept(String deptIds)
     {
-        Long[] arr=Convert.toLongArray(deptIds);
+        Long[] arr = Convert.toLongArray(deptIds);
         return sysUserService.selectUserIdsInDepts(arr);
     }
 
@@ -95,7 +101,6 @@ public class SysUserController extends BaseController
         startPage();
         return result(sysUserService.selectUserList(sysUser));
     }
-
 
     /**
      * 新增保存用户
@@ -118,8 +123,8 @@ public class SysUserController extends BaseController
             return R.error("新增用户'" + sysUser.getLoginName() + "'失败，邮箱账号已存在");
         }
         sysUser.setSalt(RandomUtil.randomStr(6));
-        sysUser.setPassword(
-                PasswordUtil.encryptPassword(sysUser.getLoginName(), sysUser.getPassword(), sysUser.getSalt()));
+        sysUser.setPassword(PasswordUtil.encryptPassword(sysUser.getLoginName(),
+                sysConfigService.selectConfigByKey(DEFALUT_PASSWORD_KEY), sysUser.getSalt()));
         sysUser.setCreateBy(getLoginName());
         return toAjax(sysUserService.insertUser(sysUser));
     }
@@ -182,6 +187,17 @@ public class SysUserController extends BaseController
         {
             return R.error("不允许修改超级管理员用户");
         }
+        user.setSalt(RandomUtil.randomStr(6));
+        user.setPassword(PasswordUtil.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
+        return toAjax(sysUserService.resetUserPwd(user));
+    }
+
+    @OperLog(title = "修改密码", businessType = BusinessType.UPDATE)
+    @PostMapping("/updatePwd")
+    public R updatePwdSave(@RequestBody SysUser user)
+    {
+        Long userId = getCurrentUserId();
+        user.setUserId(userId);
         user.setSalt(RandomUtil.randomStr(6));
         user.setPassword(PasswordUtil.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         return toAjax(sysUserService.resetUserPwd(user));
