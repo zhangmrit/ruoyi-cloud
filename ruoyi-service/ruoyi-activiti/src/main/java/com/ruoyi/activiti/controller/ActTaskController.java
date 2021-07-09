@@ -173,6 +173,30 @@ public class ActTaskController extends BaseController
         return R.ok();
     }
 
+
+    @PostMapping("auto/audit")
+    public R autoAudit(@RequestBody BizAudit bizAudit)
+    {
+        List<Task> tasks = taskService.createTaskQuery().processInstanceId(bizAudit.getProcInstId()).list();
+        if (null != tasks && tasks.size() > 0)
+        {
+            Task task = tasks.get(0);
+            bizAudit.setTaskId(task.getId()).setProcName(task.getName());
+            Map<String, Object> variables = Maps.newHashMap();
+            variables.put("result", bizAudit.getResult());
+            // 审批
+            taskService.complete(task.getId(), variables);
+            SysUser user = remoteUserService.selectSysUserByUserId(getCurrentUserId());
+            bizAudit.setAuditor(user.getUserName() + "-" + user.getLoginName());
+            bizAudit.setAuditorId(user.getUserId());
+            // bizAuditService.insertBizAudit(bizAudit);
+            BizBusiness bizBusiness = businessService.selectBizBusinessById(bizAudit.getBusinessKey().toString());
+            businessService.setAuditor(bizBusiness, bizAudit.getResult(), getCurrentUserId());
+            return R.ok();
+        }
+        return R.error();
+    }
+
     @PostMapping("audit/batch")
     public R auditBatch(@RequestBody BizAudit bizAudit)
     {
